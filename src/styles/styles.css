@@ -3,50 +3,52 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #fff8f0;
+  background-color: #181818;
+  color: #f2ddc9;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-image: url("../public/images/rbeansbg.jpg");
+  background-image: none;
+  background-color: #222;
   background-size: cover;
   height: 120px;
   padding: 0 20px;
-  color: #e6cba2;
+  color: #f2ddc9;
   flex-wrap: wrap;
   gap: 10px;
 }
 
 .title {
-  display: flex;
+      display: flex;
   align-items: center;
   font-size: 32px;
   font-weight: bold;
-}
+    }
 
 .title img {
   height: 40px;
   margin-right: 10px;
-}
+    }
 
-.center-header {
+    .center-header {
   font-size: 24px;
-  color: #e6cba2;
+  color: #f2ddc9;
   font-weight: 600;
   text-align: center;
   flex: 1;
   margin: 0 20px;
-}
+    }
 
-.nav {
-  display: flex;
-  justify-content: center;
+    .nav {
+      display: flex;
+      justify-content: center;
   align-items: center;
   gap: 10px;
   padding: 12px;
-  background-color: #ffe4c4;
+  background-color: #2d2217;
   flex-wrap: wrap;
 }
 
@@ -54,8 +56,10 @@ body {
 .nav input {
   padding: 8px 12px;
   border-radius: 5px;
-  border: 1px solid #aaa;
+  border: 1px solid #5a4633;
   font-size: 14px;
+  background: #3a2c1a;
+  color: #f2ddc9;
 }
 
 .nav button.active {
@@ -73,10 +77,11 @@ body {
 }
 
 .card.recipe-card {
-  background: white;
+  background: #232323;
+  color: #f2ddc9;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
   cursor: pointer;
   transition: transform 0.2s;
   max-width: 350px;
@@ -96,27 +101,27 @@ body {
 }
 
 .card-body {
-  padding: 15px;
+      padding: 15px;
 }
 
 .card-title.recipe-title {
   font-size: 18px;
   margin: 0 0 10px;
-}
+    }
 
 .bi-heart {
   color: crimson;
   background: none;
-  border: none;
+      border: none;
   font-size: 20px;
-  cursor: pointer;
-}
+      cursor: pointer;
+    }
 
 footer {
   text-align: center;
   padding: 10px;
-  background: #ffe4c4;
-  color: #333;
+  background: #2d2217;
+  color: #f2ddc9;
 }
 
 .modal {
@@ -125,7 +130,8 @@ footer {
   top: 10%;
   left: 50%;
   transform: translateX(-50%);
-  background: white;
+  background: #232323;
+  color: #f2ddc9;
   z-index: 9999;
   max-height: 80%;
   overflow-y: auto;
@@ -133,10 +139,11 @@ footer {
   padding: 20px;
   justify-content: center;
   align-items: center;
-}
+    }
 
 .modal-content {
-  background: white;
+  background: #232323;
+  color: #f2ddc9;
   width: 90%;
   max-width: 900px;
   min-height: 260px;
@@ -153,9 +160,9 @@ footer {
 }
 .modal-left {
   flex: 0 0 260px;
-  display: flex;
+      display: flex;
   align-items: center;
-  justify-content: center;
+      justify-content: center;
   background: #222;
   min-height: 100%;
   min-width: 200px;
@@ -194,7 +201,8 @@ footer {
 
 .nutrition {
   margin-top: 20px;
-  background: #f9f9f9;
+  background: #2d2217;
+  color: #f2ddc9;
   padding: 10px;
   border-radius: 8px;
 }
@@ -213,50 +221,50 @@ footer {
 }
 
 /* Dark mode styles (add/adjust as needed for upgrades) */
-.dark-mode {
-  background-color: #181818 !important;
-  color: #f2ddc9 !important;
-  background-image: none !important;
+/* Light mode styles (when dark mode is disabled) */
+.light-mode {
+  background-color: #fff8f0 !important;
+  color: #333 !important;
 }
-.dark-mode .header {
-  background-image: none !important;
-  background-color: #222 !important;
-  color: #f2ddc9 !important;
+.light-mode .header {
+  background-image: url("../public/images/rbeansbg.jpg") !important;
+  background-color: transparent !important;
+  color: #e6cba2 !important;
 }
-.dark-mode .nav {
-  background: #2d2217 !important;
+.light-mode .nav {
+  background: #ffe4c4 !important;
 }
-.dark-mode .nav button,
-.dark-mode .nav input {
-  background: #3a2c1a !important;
-  color: #f2ddc9 !important;
-  border: 1px solid #5a4633 !important;
+.light-mode .nav button,
+.light-mode .nav input {
+  background: white !important;
+  color: #333 !important;
+  border: 1px solid #aaa !important;
 }
-.dark-mode .nav button.active {
-  background-color: #a0522d !important;
-  color: #fff !important;
+.light-mode .nav button.active {
+  background-color: #d2691e !important;
+  color: white !important;
 }
-.dark-mode .card,
-.dark-mode .recipe-card {
-  background: #232323 !important;
-  color: #f2ddc9 !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.5) !important;
+.light-mode .card,
+.light-mode .recipe-card {
+  background: white !important;
+  color: #333 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
 }
-.dark-mode .modal,
-.dark-mode .modal-content {
-  background: #232323 !important;
-  color: #f2ddc9 !important;
+.light-mode .modal,
+.light-mode .modal-content {
+  background: white !important;
+  color: #333 !important;
 }
-.dark-mode .nutrition {
-  background: #2d2217 !important;
-  color: #f2ddc9 !important;
+.light-mode .nutrition {
+  background: #f9f9f9 !important;
+  color: #333 !important;
 }
-.dark-mode footer {
-  background: #2d2217 !important;
-  color: #f2ddc9 !important;
+.light-mode footer {
+  background: #ffe4c4 !important;
+  color: #333 !important;
 }
-.dark-mode .bi-heart {
-  color: #ffb3b3 !important;
+.light-mode .bi-heart {
+  color: #ff6b6b !important;
 }
 
 /* --- Animated Transitions --- */
@@ -282,7 +290,7 @@ footer {
 .card.recipe-card:hover {
   transform: translateY(-8px) scale(1.03);
   box-shadow: 0 8px 24px rgba(0,0,0,0.18);
-}
+    }
 
 /* Button press/hover animation */
 .nav button, .close-btn {
@@ -302,7 +310,7 @@ footer {
 }
 /* 2. Radar chart in modal */
 #flavorRadarChart {
-  background: #fff;
+      background: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.07);
 }
@@ -346,9 +354,9 @@ footer {
   border-radius: 8px;
   padding: 7px 18px;
   font-size: 1em;
-  cursor: pointer;
+      cursor: pointer;
   transition: background 0.2s, color 0.2s;
-}
+    }
 #remixNavBtn:hover, #quizNavBtn:hover {
   background: #ffe6b3;
   color: #a0522d;
@@ -377,7 +385,7 @@ footer {
     background: #222;
   }
   .modal-left img {
-    width: 100%;
+      width: 100%;
     max-width: 320px;
     height: auto;
     margin: 0 auto 10px auto;
@@ -388,14 +396,14 @@ footer {
   }
   .modal-left, .modal-right {
     padding: 0;
-  }
+    }
 }
 
 @media (max-width: 600px) {
   .header {
     flex-direction: column;
     height: auto;
-    padding: 15px;
+      padding: 15px;
     text-align: center;
     gap: 15px;
   }
@@ -454,7 +462,7 @@ footer {
   color: #a0522d;
   font-weight: 600;
   box-shadow: 0 2px 8px rgba(160,82,45,0.08);
-}
+    }
 
 /* 1. Section/page transitions */
 #remixSection, #quizSection, #cardContainer {
@@ -477,7 +485,7 @@ footer {
 /* 3. Card hover effect */
 .card.recipe-card {
   transition: box-shadow 0.25s, transform 0.25s;
-}
+    }
 .card.recipe-card:hover {
   box-shadow: 0 6px 24px rgba(160,82,45,0.18);
   transform: scale(1.035);
@@ -500,7 +508,7 @@ footer {
 .filter-btn:focus, #remixNavBtn:focus, #quizNavBtn:focus, #homeLogo:focus {
   outline: none;
   box-shadow: 0 0 0 3px #ffe6b3, 0 2px 8px rgba(160,82,45,0.08);
-}
+    }
 
 /* 6. Section heading animation */
 .section-heading {
@@ -534,7 +542,7 @@ footer {
   z-index: 99999;
   box-shadow: 0 2px 12px rgba(160,82,45,0.10);
   transition: opacity 0.3s, top 0.3s;
-}
+    }
 #sectionToast.show {
   opacity: 1;
   top: 48px;
@@ -547,13 +555,13 @@ footer {
   display: none;
   background: #ffe6b3;
   color: #6b3e26;
-  border: none;
+      border: none;
   border-radius: 50%;
   width: 48px;
   height: 48px;
   box-shadow: 0 2px 8px rgba(160,82,45,0.12);
   font-size: 2rem;
-  cursor: pointer;
+      cursor: pointer;
   transition: background 0.2s, opacity 0.3s, bottom 0.3s;
   opacity: 0;
 }
@@ -566,7 +574,7 @@ footer {
   background: #ffe0a3;
   color: #a0522d;
   outline: none;
-}
+    }
 @media (max-width: 600px) {
   #backToTopBtn {
     right: 16px;
@@ -639,4 +647,4 @@ input:checked + .slider:before {
   background: #a0522d;
   color: #fff;
   border-radius: 0;
-}
+    }

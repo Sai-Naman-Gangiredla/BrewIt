@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
-
+ 
 Sitemap: https://sai-naman-gangiredla.github.io/BrewIt/sitemap.xml 

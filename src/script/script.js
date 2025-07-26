@@ -864,22 +864,23 @@ function initUI() {
   const body = document.body;
   function setDarkMode(enabled) {
     if (enabled) {
-      body.classList.add('dark-mode');
+      body.classList.remove('light-mode');
       darkModeToggle.innerHTML = '<i class="bi bi-sun"></i>';
       localStorage.setItem('darkMode', 'true');
     } else {
-      body.classList.remove('dark-mode');
+      body.classList.add('light-mode');
       darkModeToggle.innerHTML = '<i class="bi bi-moon"></i>';
       localStorage.setItem('darkMode', 'false');
     }
   }
   const saved = localStorage.getItem('darkMode');
-  setDarkMode(saved === 'true');
+  // Set dark mode as default if no preference is saved
+  setDarkMode(saved === null ? true : saved === 'true');
   // Remove all previous event listeners by replacing the element
   const newToggle = darkModeToggle.cloneNode(true);
   darkModeToggle.parentNode.replaceChild(newToggle, darkModeToggle);
   newToggle.addEventListener('click', () => {
-    setDarkMode(!body.classList.contains('dark-mode'));
+    setDarkMode(body.classList.contains('light-mode'));
   });
   // Search
   document.getElementById('searchInput').addEventListener('input', function() {
