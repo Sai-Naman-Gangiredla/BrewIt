@@ -31,6 +31,44 @@ A comprehensive, interactive web application featuring 170+ coffee recipes with 
 - **Find Your Brew Quiz** - Personalized coffee recommendations
 - **Toast Notifications** - User feedback for all interactions
 
+## 📸 Screenshots
+
+### **Main Interface - Dark Mode**
+![Main Interface](https://raw.githubusercontent.com/Sai-Naman-Gangiredla/BrewIt/main/public/images/screenshots/main-interface-dark.png)
+*The main interface showcasing the dark mode theme with recipe cards and navigation*
+
+### **Recipe Details Modal**
+![Recipe Details](https://raw.githubusercontent.com/Sai-Naman-Gangiredla/BrewIt/main/public/images/screenshots/recipe-modal.png)
+*Detailed recipe view with nutrition info*
+
+### **Customization Panel**
+![Customization](https://raw.githubusercontent.com/Sai-Naman-Gangiredla/BrewIt/main/public/images/screenshots/customization-panel.png)
+*Recipe customization with ingredient options and quantity controls*
+
+### **Flavor Profile Chart**
+![Flavor Profile](https://raw.githubusercontent.com/Sai-Naman-Gangiredla/BrewIt/main/public/images/screenshots/flavour-panel.png)
+*Interactive flavor profile radar chart showing bitterness, sweetness, acidity, strength, and body*
+
+### **Light Mode Theme**
+![Light Mode](https://raw.githubusercontent.com/Sai-Naman-Gangiredla/BrewIt/main/public/images/screenshots/light-mode.png)
+*Light mode theme with warm colors and improved readability*
+
+### **Mobile Responsive Design**
+![Mobile View](https://raw.githubusercontent.com/Sai-Naman-Gangiredla/BrewIt/main/public/images/screenshots/mobile-view.png)
+*Fully responsive design optimized for mobile devices*
+
+### **Search and Filtering**
+![Search Interface](https://raw.githubusercontent.com/Sai-Naman-Gangiredla/BrewIt/main/public/images/screenshots/search-filtering.png)
+*Advanced search and filtering capabilities with category buttons*
+
+### **Remix Generator**
+![Remix Generator](https://raw.githubusercontent.com/Sai-Naman-Gangiredla/BrewIt/main/public/images/screenshots/remix-generator.png)
+*Interactive remix generator for creating custom coffee combinations*
+
+### **Find Your Brew Quiz**
+![Quiz Interface](https://raw.githubusercontent.com/Sai-Naman-Gangiredla/BrewIt/main/public/images/screenshots/quiz-interface.png)
+*Personalized coffee recommendation quiz*
+
 ## 🛠️ Technologies Used
 
 - **Frontend**: HTML5, CSS3, JavaScript (ES6+)
@@ -156,10 +194,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- Coffee community for recipe inspiration
 - Chart.js for visualization capabilities
 - Bootstrap Icons for the icon set
-- All coffee enthusiasts who provided feedback
 
 ## 📞 Contact
 
