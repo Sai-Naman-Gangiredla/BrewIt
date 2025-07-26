@@ -1,0 +1,1278 @@
+{
+  "blackcoffee": {
+    "title": "Black Coffee",
+    "img": "./public/images/blackcoffee.jpeg",
+    "ingredients": ["Ground coffee", "Water"],
+    "process_jargon": "1. Brew coffee grounds with hot water and serve plain.",
+    "process_easy": [
+      "Add ground coffee to a filter or French press.",
+      "Pour hot water over the coffee grounds.",
+      "Let it steep for a few minutes.",
+      "Pour the coffee into a cup and enjoy it plain (no milk or sugar)."
+    ],
+    "baseNutrition": { "calories": 2, "carbs": 0, "protein": 0.3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "whitecoffee": {
+    "title": "White Coffee",
+    "img": "./public/images/whitecoffee.jpeg",
+    "ingredients": ["Coffee", "Cold or evaporated milk"],
+    "process_jargon": "1. Brew coffee, pour over milk and serve.",
+    "process_easy": [
+      "Brew a cup of coffee using your preferred method.",
+      "Pour the hot coffee into a cup with some cold or evaporated milk.",
+      "Stir gently and enjoy."
+    ],
+    "baseNutrition": { "calories": 55, "carbs": 6, "protein": 2.4 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 2, "sweetness": 3, "acidity": 2, "strength": 2, "body": 4 },
+    "caffeine": 75
+  },
+  "kopiluwak": {
+    "title": "Kopi Luwak",
+    "img": "./public/images/kopiluwak.jpeg",
+    "ingredients": ["Civet coffee beans", "Water"],
+    "process_jargon": "1. Brew coffee with civet-processed beans and serve black.",
+    "process_easy": [
+      "Use civet-processed coffee beans (these beans are eaten and passed by civet cats, making them rare).",
+      "Brew the coffee as you would regular coffee (drip, French press, etc.).",
+      "Serve the coffee plain, without milk or sugar."
+    ],
+    "baseNutrition": { "calories": 5, "carbs": 0, "protein": 0.3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "bulletproofcoffee": {
+    "title": "Bulletproof Coffee",
+    "img": "./public/images/bulletproofcoffee.jpeg",
+    "ingredients": ["Coffee", "Grass-fed butter", "MCT oil"],
+    "process_jargon": "1. Brew black coffee. Blend with butter and MCT oil until creamy.",
+    "process_easy": [
+      "Brew a cup of black coffee.",
+      "Add a spoonful of butter and a little MCT oil (a type of healthy fat, optional).",
+      "Blend everything together until the drink looks creamy and smooth.",
+      "Pour into a mug and enjoy while hot."
+    ],
+    "baseNutrition": { "calories": 230, "carbs": 0, "protein": 0.5 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "cafetouba": {
+    "title": "Café Touba",
+    "img": "./public/images/cafetouba.jpeg",
+    "ingredients": ["Coffee", "Grains of Selim (Guinea pepper)", "Cloves", "Sugar (optional)"],
+    "process": "1. Roast coffee with grains of Selim and cloves. Brew and sweeten to taste.",
+    "baseNutrition": { "calories": 10, "carbs": 2, "protein": 0 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 3, "sweetness": 1, "acidity": 3, "strength": 3, "body": 3 },
+    "caffeine": 95
+  },
+  "cafecubano": {
+    "title": "Café Cubano",
+    "img": "./public/images/cafecubano.jpeg",
+    "ingredients": ["Espresso", "Sugar"],
+    "process": "1. Brew espresso. Whip with sugar to create espuma. Serve in small cups.",
+    "baseNutrition": { "calories": 30, "carbs": 8, "protein": 0 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "kopijahe": {
+    "title": "Kopi Jahe",
+    "img": "./public/images/kopijahe.jpeg",
+    "ingredients": ["Coffee", "Ginger", "Sugar (optional)"],
+    "process": "1. Brew coffee with ginger. Add sugar if desired. Serve hot.",
+    "baseNutrition": { "calories": 15, "carbs": 3, "protein": 0 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "cafedeolla": {
+    "title": "Cafe de Olla",
+    "img": "./public/images/cafedeolla.jpeg",
+    "ingredients": ["Coffee", "Cinnamon stick", "Piloncillo", "Water"],
+    "process": "1. Boil water with cinnamon and piloncillo. Add coffee, simmer briefly. Strain and serve.",
+    "baseNutrition": { "calories": 60, "carbs": 15, "protein": 0 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "cafebrulot": {
+    "title": "Café Brûlot",
+    "img": "./public/images/cafebrulot.jpeg",
+    "ingredients": ["Coffee", "Brandy", "Orange peel", "Cloves", "Cinnamon", "Sugar"],
+    "process": "1. Combine brandy, orange peel, cloves, cinnamon, and sugar. Ignite, then pour over coffee. Serve hot.",
+    "baseNutrition": { "calories": 80, "carbs": 10, "protein": 0 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "redtie": {
+    "title": "Red Tie",
+    "img": "./public/images/redtie.jpeg",
+    "ingredients": ["Thai tea", "Espresso", "Sweetened condensed milk", "Ice"],
+    "process": "1. Brew Thai tea and espresso. Pour over ice with condensed milk. Serve chilled.",
+    "baseNutrition": { "calories": 120, "carbs": 18, "protein": 3 },
+    "type": "iced",
+    "flavorProfile": { "bitterness": 3, "sweetness": 1, "acidity": 3, "strength": 3, "body": 3 },
+    "caffeine": 95
+  },
+  "cafelecheyleche": {
+    "title": "Café Leche y Leche",
+    "img": "./public/images/cafelecheyleche.jpeg",
+    "ingredients": ["Espresso", "Condensed milk", "Steamed milk"],
+    "process": "1. Add condensed milk to a glass. Pour in espresso and steamed milk. Serve hot.",
+    "baseNutrition": { "calories": 140, "carbs": 20, "protein": 4 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "cafezorro": {
+    "title": "Café Zorro",
+    "img": "./public/images/cafezorro.jpeg",
+    "ingredients": ["Double espresso", "Hot water"],
+    "process": "1. Brew a double shot of espresso. Add equal part hot water. Serve immediately.",
+    "baseNutrition": { "calories": 10, "carbs": 2, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "kopisusu": {
+    "title": "Kopi Susu",
+    "img": "./public/images/kopisusu.jpeg",
+    "ingredients": ["Coffee", "Sweetened condensed milk"],
+    "process": "1. Brew coffee. Add sweetened condensed milk. Stir and serve hot or iced.",
+    "baseNutrition": { "calories": 120, "carbs": 18, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 2, "sweetness": 3, "acidity": 2, "strength": 2, "body": 4 },
+    "caffeine": 75
+  },
+  "einspanner": {
+    "title": "Einspänner",
+    "img": "./public/images/einspanner.jpeg",
+    "ingredients": ["Coffee", "Whipped cream"],
+    "process": "1. Brew strong coffee. Top with whipped cream. Serve in a glass.",
+    "baseNutrition": { "calories": 110, "carbs": 8, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "cafeborgia": {
+    "title": "Café Borgia",
+    "img": "./public/images/cafeborgia.jpeg",
+    "ingredients": ["Espresso", "Orange zest", "Chocolate", "Whipped cream"],
+    "process": "1. Brew espresso. Add orange zest and chocolate. Top with whipped cream.",
+    "baseNutrition": { "calories": 150, "carbs": 20, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "yuanyang": {
+    "title": "Yuanyang",
+    "img": "./public/images/yuanyang.jpeg",
+    "ingredients": ["Coffee", "Hong Kong-style milk tea", "Sugar"],
+    "process": "1. Brew coffee and milk tea. Mix together with sugar. Serve hot or iced.",
+    "baseNutrition": { "calories": 90, "carbs": 14, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 3, "sweetness": 1, "acidity": 3, "strength": 3, "body": 3 },
+    "caffeine": 95
+  },
+  "blacktie": {
+    "title": "Black Tie",
+    "img": "./public/images/blacktie.jpeg",
+    "ingredients": ["Thai tea", "Espresso", "Sweetened condensed milk", "Ice"],
+    "process": "1. Brew Thai tea and espresso. Pour over ice with condensed milk. Serve chilled.",
+    "baseNutrition": { "calories": 120, "carbs": 18, "protein": 3 },
+    "type": "iced",
+    "flavorProfile": { "bitterness": 3, "sweetness": 1, "acidity": 3, "strength": 3, "body": 3 },
+    "caffeine": 95
+  },
+  "dirtychai": {
+    "title": "Dirty Chai",
+    "img": "./public/images/dirtychai.jpeg",
+    "ingredients": ["Chai tea", "Espresso", "Milk"],
+    "process": "1. Brew chai tea and espresso. Mix with steamed milk. Serve hot.",
+    "baseNutrition": { "calories": 110, "carbs": 15, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "kopiguyou": {
+    "title": "Kopi Gu You",
+    "img": "./public/images/kopiguyou.jpeg",
+    "ingredients": ["Coffee", "Butter"],
+    "process": "1. Brew coffee. Add a pat of butter. Stir and serve hot.",
+    "baseNutrition": { "calories": 80, "carbs": 0, "protein": 0.5 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "caphesuada": {
+    "title": "Cà Phê Sữa Đá",
+    "img": "./public/images/caphesuada.jpeg",
+    "ingredients": ["Coffee", "Sweetened condensed milk", "Ice"],
+    "process": "1. Brew coffee. Add sweetened condensed milk. Pour over ice and serve.",
+    "baseNutrition": { "calories": 120, "carbs": 18, "protein": 3 },
+    "type": "iced",
+    "flavorProfile": { "bitterness": 2, "sweetness": 3, "acidity": 2, "strength": 2, "body": 4 },
+    "caffeine": 75
+  },
+  "espressoconpanna": {
+    "title": "Espresso con Panna",
+    "img": "./public/images/espressoconpanna.jpeg",
+    "ingredients": ["Espresso", "Whipped cream"],
+    "process": "1. Brew espresso. Top with whipped cream. Serve immediately.",
+    "baseNutrition": { "calories": 60, "carbs": 3, "protein": 1 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "cafemela": {
+    "title": "Café Méla",
+    "img": "./public/images/cafemela.jpeg",
+    "ingredients": ["Espresso", "Steamed milk", "Honey"],
+    "process": "1. Brew espresso. Add honey and steamed milk. Serve hot.",
+    "baseNutrition": { "calories": 100, "carbs": 15, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "marocchino": {
+    "title": "Marocchino",
+    "img": "./public/images/marocchino.jpeg",
+    "ingredients": ["Espresso", "Cocoa powder", "Milk foam"],
+    "process": "1. Brew espresso. Add cocoa powder and milk foam. Serve in a small glass.",
+    "baseNutrition": { "calories": 60, "carbs": 8, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "melya": {
+    "title": "Melya",
+    "img": "./public/images/melya.jpeg",
+    "ingredients": ["Espresso", "Honey", "Cocoa powder", "Whipped cream"],
+    "process": "1. Brew espresso. Add honey and cocoa powder. Top with whipped cream.",
+    "baseNutrition": { "calories": 90, "carbs": 14, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "cafecanadien": {
+    "title": "Café Canadien",
+    "img": "./public/images/cafecanadien.jpeg",
+    "ingredients": ["Coffee", "Maple syrup", "Milk"],
+    "process": "1. Brew coffee. Add maple syrup and milk. Serve hot.",
+    "baseNutrition": { "calories": 100, "carbs": 18, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 3, "sweetness": 1, "acidity": 3, "strength": 3, "body": 3 },
+    "caffeine": 95
+  },
+  "cafeviennois": {
+    "title": "Café Viennois",
+    "img": "./public/images/cafeviennois.jpeg",
+    "ingredients": ["Coffee", "Whipped cream"],
+    "process": "1. Brew coffee. Top with whipped cream. Serve hot.",
+    "baseNutrition": { "calories": 110, "carbs": 8, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "cafedublin": {
+    "title": "Café Dublín",
+    "img": "./public/images/cafedublin.jpeg",
+    "ingredients": ["Coffee", "Irish whiskey", "Sugar", "Cream"],
+    "process": "1. Brew coffee. Add whiskey and sugar. Top with cream. Serve hot.",
+    "baseNutrition": { "calories": 150, "carbs": 10, "protein": 1 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "cafelagrima": {
+    "title": "Café Lagrima",
+    "img": "./public/images/cafelagrima.jpeg",
+    "ingredients": ["Steamed milk", "Espresso (optional)"],
+    "process": "1. Steam milk. Add a drop of espresso if desired. Serve hot.",
+    "baseNutrition": { "calories": 80, "carbs": 10, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "cafemelange": {
+    "title": "Café Melange",
+    "img": "./public/images/cafemelange.jpeg",
+    "ingredients": ["Coffee", "Whipped cream"],
+    "process_jargon": "1. Brew coffee. Top with whipped cream. Serve hot.",
+    "process_easy": [
+      "Brew a cup of coffee using your preferred method.",
+      "Pour the coffee into a mug.",
+      "Add a generous spoonful of whipped cream on top.",
+      "Enjoy while hot."
+    ],
+    "baseNutrition": { "calories": 110, "carbs": 8, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "cafemarocain": {
+    "title": "Café Marocain",
+    "img": "./public/images/cafemarocain.jpeg",
+    "ingredients": ["Coffee", "Spices", "Sugar"],
+    "process_jargon": "1. Brew coffee with spices. Add sugar to taste. Serve hot.",
+    "process_easy": [
+      "Add ground coffee and your favorite spices (like cinnamon or cardamom) to a coffee maker or pot.",
+      "Pour hot water over the mixture and let it brew.",
+      "Strain the coffee into a cup.",
+      "Add sugar to taste and stir.",
+      "Enjoy while hot."
+    ],
+    "baseNutrition": { "calories": 60, "carbs": 10, "protein": 1 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "coffeetonic": {
+    "title": "Coffee Tonic",
+    "img": "./public/images/coffeetonic.jpeg",
+    "ingredients": ["Espresso", "Tonic water", "Ice"],
+    "process": "1. Brew espresso. Pour over tonic water and ice. Serve chilled.",
+    "baseNutrition": { "calories": 40, "carbs": 9, "protein": 0 },
+    "type": "iced",
+    "flavorProfile": { "bitterness": 3, "sweetness": 1, "acidity": 3, "strength": 3, "body": 3 },
+    "caffeine": 95
+  },
+  "portuguesemazagran": {
+    "title": "Portuguese Mazagran",
+    "img": "./public/images/portuguesemazagran.jpeg",
+    "ingredients": ["Coffee", "Lemon juice", "Sugar", "Ice"],
+    "process": "1. Brew coffee. Add lemon juice and sugar. Pour over ice and serve.",
+    "baseNutrition": { "calories": 40, "carbs": 9, "protein": 0 },
+    "type": "iced",
+    "flavorProfile": { "bitterness": 3, "sweetness": 1, "acidity": 3, "strength": 3, "body": 3 },
+    "caffeine": 95
+  },
+  "biedermeierkaffee": {
+    "title": "Biedermeier Kaffee",
+    "img": "./public/images/biedermeierkaffee.jpeg",
+    "ingredients": ["Coffee", "Apricot liqueur", "Whipped cream"],
+    "process": "1. Brew coffee. Add apricot liqueur. Top with whipped cream.",
+    "baseNutrition": { "calories": 120, "carbs": 10, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "caferoyal": {
+    "title": "Café Royal",
+    "img": "./public/images/caferoyal.jpeg",
+    "ingredients": ["Coffee", "Sugar cube", "Brandy"],
+    "process": "1. Place sugar cube in a spoon, soak with brandy, ignite, and drop into coffee. Serve hot.",
+    "baseNutrition": { "calories": 90, "carbs": 10, "protein": 0 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "cafecreme": {
+    "title": "Café Crème",
+    "img": "./public/images/cafecreme.jpeg",
+    "ingredients": ["Espresso", "Heavy cream"],
+    "process": "1. Brew espresso. Add heavy cream. Serve hot.",
+    "baseNutrition": { "calories": 100, "carbs": 2, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "cafeaubeurre": {
+    "title": "Café au Beurre",
+    "img": "./public/images/cafeaubeurre.jpeg",
+    "ingredients": ["Coffee", "Butter"],
+    "process": "1. Brew coffee. Add butter and stir. Serve hot.",
+    "baseNutrition": { "calories": 80, "carbs": 0, "protein": 0.5 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "eggcoffee(scandinavia)": {
+    "title": "Egg Coffee (Scandinavia)",
+    "img": "./public/images/eggcoffee(scandinavia).jpeg",
+    "ingredients": ["Coffee", "Egg", "Water"],
+    "process": "1. Mix egg with coffee grounds and water. Boil, strain, and serve hot.",
+    "baseNutrition": { "calories": 40, "carbs": 1, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "kopijoss": {
+    "title": "Kopi Joss",
+    "img": "./public/images/kopijoss.jpeg",
+    "ingredients": ["Coffee", "Burning charcoal"],
+    "process": "1. Brew coffee. Add a piece of burning charcoal. Serve hot.",
+    "baseNutrition": { "calories": 10, "carbs": 2, "protein": 0 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "pharisaerkaffee": {
+    "title": "Pharisäer Kaffee",
+    "img": "./public/images/pharisaerkaffee.jpeg",
+    "ingredients": ["Coffee", "Rum", "Whipped cream"],
+    "process": "1. Brew coffee. Add rum. Top with whipped cream.",
+    "baseNutrition": { "calories": 120, "carbs": 10, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "cafeconhielo": {
+    "title": "Café con Hielo",
+    "img": "./public/images/cafeconhielo.jpeg",
+    "ingredients": ["Coffee", "Ice", "Sugar (optional)"],
+    "process": "1. Brew coffee. Pour over ice. Add sugar if desired.",
+    "baseNutrition": { "calories": 10, "carbs": 2, "protein": 0 },
+    "type": "iced",
+    "flavorProfile": { "bitterness": 3, "sweetness": 1, "acidity": 3, "strength": 3, "body": 3 },
+    "caffeine": 95
+  },
+  "cafecorrecto": {
+    "title": "Café Correcto",
+    "img": "./public/images/cafecorrecto.jpeg",
+    "ingredients": ["Espresso", "Liquor (e.g., grappa, brandy)"],
+    "process": "1. Brew espresso. Add a splash of liquor. Serve hot.",
+    "baseNutrition": { "calories": 60, "carbs": 1, "protein": 0 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "kopitarik": {
+    "title": "Kopi Tarik",
+    "img": "./public/images/kopitarik.jpeg",
+    "ingredients": ["Coffee", "Condensed milk"],
+    "process": "1. Brew coffee. Add condensed milk. 'Pull' the coffee between two vessels to froth. Serve hot.",
+    "baseNutrition": { "calories": 120, "carbs": 18, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "cafefrances": {
+    "title": "Café Francés",
+    "img": "./public/images/cafefrances.jpeg",
+    "ingredients": ["Coffee", "Cognac", "Sugar"],
+    "process": "1. Brew coffee. Add cognac and sugar. Serve hot.",
+    "baseNutrition": { "calories": 90, "carbs": 10, "protein": 0 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "wienermelange": {
+    "title": "Wiener Melange",
+    "img": "./public/images/wienermelange.jpeg",
+    "ingredients": ["Coffee", "Milk", "Whipped cream"],
+    "process": "1. Brew coffee. Add milk and top with whipped cream. Serve hot.",
+    "baseNutrition": { "calories": 110, "carbs": 10, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "affogatoalcaffe": {
+    "title": "Affogato al Caffè",
+    "img": "./public/images/affogatoalcaffe.jpeg",
+    "ingredients": ["Espresso", "Vanilla ice cream"],
+    "process": "1. Place a scoop of vanilla ice cream in a bowl. Brew espresso and pour over ice cream. Serve immediately.",
+    "baseNutrition": { "calories": 180, "carbs": 20, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "iceddirtyhorchata": {
+    "title": "Iced Dirty Horchata",
+    "img": "./public/images/iceddirtyhorchata.jpeg",
+    "ingredients": ["Horchata", "Espresso", "Ice"],
+    "process": "1. Fill a glass with ice. Add horchata and espresso. Stir and serve chilled.",
+    "baseNutrition": { "calories": 120, "carbs": 22, "protein": 2 },
+    "type": "iced",
+    "flavorProfile": { "bitterness": 3, "sweetness": 1, "acidity": 3, "strength": 3, "body": 3 },
+    "caffeine": 95
+  },
+  "cafebarroco": {
+    "title": "Café Barroco",
+    "img": "./public/images/cafebarroco.jpeg",
+    "ingredients": ["Espresso", "Chocolate", "Cinnamon", "Milk"],
+    "process": "1. Brew espresso. Add chocolate and cinnamon. Mix with milk. Serve hot.",
+    "baseNutrition": { "calories": 120, "carbs": 18, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "whitemocha": {
+    "title": "White Mocha",
+    "img": "./public/images/whitemocha.jpeg",
+    "ingredients": ["Espresso", "White chocolate", "Steamed milk"],
+    "process": "1. Brew espresso. Add white chocolate and steamed milk. Serve hot.",
+    "baseNutrition": { "calories": 180, "carbs": 25, "protein": 5 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "sweetcreamcoldbrew": {
+    "title": "Sweet Cream Cold Brew",
+    "img": "./public/images/sweetcreamcoldbrew.jpeg",
+    "ingredients": ["Cold brew coffee", "Sweet cream", "Ice"],
+    "process": "1. Pour cold brew coffee over ice. Top with sweet cream. Serve chilled.",
+    "baseNutrition": { "calories": 110, "carbs": 14, "protein": 2 },
+    "type": "iced",
+    "flavorProfile": { "bitterness": 3, "sweetness": 1, "acidity": 3, "strength": 3, "body": 3 },
+    "caffeine": 95
+  },
+  "caphesuanong": {
+    "title": "Cà Phê Sữa Nóng",
+    "img": "./public/images/caphesuanong.jpeg",
+    "ingredients": ["Coffee", "Sweetened condensed milk"],
+    "process": "1. Brew coffee. Add sweetened condensed milk. Serve hot.",
+    "baseNutrition": { "calories": 120, "carbs": 18, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 2, "sweetness": 3, "acidity": 2, "strength": 2, "body": 4 },
+    "caffeine": 75
+  },
+  "kopicham": {
+    "title": "Kopi Cham",
+    "img": "./public/images/kopicham.jpeg",
+    "ingredients": ["Coffee", "Tea", "Condensed milk"],
+    "process": "1. Brew coffee and tea. Mix with condensed milk. Serve hot or iced.",
+    "baseNutrition": { "calories": 110, "carbs": 16, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "spicedcoffee": {
+    "title": "Spiced Coffee",
+    "img": "./public/images/spicedcoffee.jpeg",
+    "ingredients": ["Coffee", "Spices (cinnamon, cardamom, etc.)"],
+    "process": "1. Brew coffee with spices. Serve hot.",
+    "baseNutrition": { "calories": 10, "carbs": 2, "protein": 0 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "mochavalencia": {
+    "title": "Mocha Valencia",
+    "img": "./public/images/mochavalencia.jpeg",
+    "ingredients": ["Espresso", "Chocolate", "Orange syrup", "Steamed milk"],
+    "process": "1. Brew espresso. Add chocolate, orange syrup, and steamed milk. Serve hot.",
+    "baseNutrition": { "calories": 160, "carbs": 22, "protein": 4 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "irishcreamcoffee": {
+    "title": "Irish Cream Coffee",
+    "img": "./public/images/irishcreamcoffee.jpeg",
+    "ingredients": ["Coffee", "Irish cream liqueur", "Whipped cream"],
+    "process": "1. Brew coffee. Add Irish cream liqueur. Top with whipped cream. Serve hot.",
+    "baseNutrition": { "calories": 180, "carbs": 12, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "cafeamaretto": {
+    "title": "Café Amaretto",
+    "img": "./public/images/cafeamaretto.jpeg",
+    "ingredients": ["Coffee", "Amaretto liqueur", "Whipped cream"],
+    "process": "1. Brew coffee. Add amaretto liqueur. Top with whipped cream. Serve hot.",
+    "baseNutrition": { "calories": 140, "carbs": 10, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "cinnamonrollcoffee": {
+    "title": "Cinnamon Roll Coffee",
+    "img": "./public/images/cinnamonrollcoffee.jpeg",
+    "ingredients": ["Coffee", "Cinnamon", "Vanilla", "Milk"],
+    "process": "1. Brew coffee. Add cinnamon, vanilla, and milk. Serve hot.",
+    "baseNutrition": { "calories": 90, "carbs": 14, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "maplepecancoffee": {
+    "title": "Maple Pecan Coffee",
+    "img": "./public/images/maplepecancoffee.jpeg",
+    "ingredients": ["Coffee", "Maple syrup", "Pecan flavor", "Milk"],
+    "process_jargon": "1. Brew coffee. Add maple syrup, pecan flavor, and milk. Serve hot.",
+    "process_easy": [
+      "Brew a cup of coffee using your preferred method.",
+      "Add a splash of maple syrup and a little pecan flavoring (if available).",
+      "Pour in some milk and stir well.",
+      "Enjoy your coffee while hot."
+    ],
+    "baseNutrition": { "calories": 110, "carbs": 16, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 3, "sweetness": 1, "acidity": 3, "strength": 3, "body": 3 },
+    "caffeine": 95
+  },
+  "almondcoffee": {
+    "title": "Almond Coffee",
+    "img": "./public/images/almondcoffee.jpeg",
+    "ingredients": ["Coffee", "Almond syrup", "Milk"],
+    "process_jargon": "1. Brew coffee. Add almond syrup and milk. Serve hot.",
+    "process_easy": [
+      "Brew a cup of coffee.",
+      "Add a splash of almond syrup and some milk.",
+      "Stir and enjoy while hot."
+    ],
+    "baseNutrition": { "calories": 90, "carbs": 12, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "spanishcarajillo": {
+    "title": "Spanish Carajillo",
+    "img": "./public/images/spanishcarajillo.jpeg",
+    "ingredients": ["Coffee", "Brandy or Licor 43"],
+    "process": "1. Brew coffee. Add brandy or Licor 43. Serve hot.",
+    "baseNutrition": { "calories": 80, "carbs": 5, "protein": 0 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "viennesemelange": {
+    "title": "Viennese Mélange",
+    "img": "./public/images/viennesemelange.jpeg",
+    "ingredients": ["Coffee", "Milk", "Whipped cream"],
+    "process": "1. Brew coffee. Add milk and top with whipped cream. Serve hot.",
+    "baseNutrition": { "calories": 110, "carbs": 10, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "turkishmenengic": {
+    "title": "Turkish Menengic",
+    "img": "./public/images/turkishmenengic.jpeg",
+    "ingredients": ["Menengic (wild pistachio)", "Milk", "Sugar (optional)"],
+    "process": "1. Cook menengic paste with milk and sugar. Serve hot.",
+    "baseNutrition": { "calories": 120, "carbs": 10, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "chococcino": {
+    "title": "Chococcino",
+    "img": "./public/images/chococcino.jpeg",
+    "ingredients": ["Espresso", "Chocolate", "Steamed milk"],
+    "process": "1. Brew espresso. Add chocolate and steamed milk. Serve hot.",
+    "baseNutrition": { "calories": 140, "carbs": 20, "protein": 4 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "icedlemoncoffee": {
+    "title": "Iced Lemon Coffee",
+    "img": "./public/images/icedlemoncoffee.jpeg",
+    "ingredients": ["Coffee", "Lemon juice", "Ice", "Sugar (optional)"],
+    "process": "1. Brew coffee. Add lemon juice and sugar. Pour over ice and serve.",
+    "baseNutrition": { "calories": 40, "carbs": 9, "protein": 0 },
+    "type": "iced",
+    "flavorProfile": { "bitterness": 3, "sweetness": 1, "acidity": 3, "strength": 3, "body": 3 },
+    "caffeine": 95
+  },
+  "roselatte": {
+    "title": "Rose Latte",
+    "img": "./public/images/roselatte.jpeg",
+    "ingredients": ["Espresso", "Rose syrup", "Steamed milk"],
+    "process": "1. Brew espresso. Add rose syrup and steamed milk. Serve hot.",
+    "baseNutrition": { "calories": 120, "carbs": 18, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "butterscotchcoffee": {
+    "title": "Butterscotch Coffee",
+    "img": "./public/images/butterscotchcoffee.jpeg",
+    "ingredients": ["Coffee", "Butterscotch syrup", "Milk"],
+    "process": "1. Brew coffee. Add butterscotch syrup and milk. Serve hot.",
+    "baseNutrition": { "calories": 110, "carbs": 16, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "maplecreamcoffee": {
+    "title": "Maple Cream Coffee",
+    "img": "./public/images/maplecreamcoffee.jpeg",
+    "ingredients": ["Coffee", "Maple syrup", "Cream"],
+    "process": "1. Brew coffee. Add maple syrup and cream. Serve hot.",
+    "baseNutrition": { "calories": 120, "carbs": 12, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 3, "sweetness": 1, "acidity": 3, "strength": 3, "body": 3 },
+    "caffeine": 95
+  },
+  "hazelnutcoffee": {
+    "title": "Hazelnut Coffee",
+    "img": "./public/images/hazelnutcoffee.jpeg",
+    "ingredients": ["Coffee", "Hazelnut syrup", "Milk"],
+    "process": "1. Brew coffee. Add hazelnut syrup and milk. Serve hot.",
+    "baseNutrition": { "calories": 90, "carbs": 12, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "cardamomcoffee": {
+    "title": "Cardamom Coffee",
+    "img": "./public/images/cardamomcoffee.jpeg",
+    "ingredients": ["Coffee", "Cardamom", "Sugar (optional)"],
+    "process": "1. Brew coffee with cardamom. Add sugar if desired. Serve hot.",
+    "baseNutrition": { "calories": 10, "carbs": 2, "protein": 0 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "toastedmarshmallowcoffee": {
+    "title": "Toasted Marshmallow Coffee",
+    "img": "./public/images/toastedmarshmallowcoffee.jpeg",
+    "ingredients": ["Coffee", "Toasted marshmallow syrup", "Milk"],
+    "process": "1. Brew coffee. Add toasted marshmallow syrup and milk. Serve hot.",
+    "baseNutrition": { "calories": 110, "carbs": 16, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "javachipcoffee": {
+    "title": "Java Chip Coffee",
+    "img": "./public/images/javachipcoffee.jpeg",
+    "ingredients": ["Coffee", "Chocolate chips", "Milk"],
+    "process": "1. Brew coffee. Add chocolate chips and milk. Serve hot or iced.",
+    "baseNutrition": { "calories": 130, "carbs": 18, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "maplecinnamoncoffee": {
+    "title": "Maple Cinnamon Coffee",
+    "img": "./public/images/maplecinnamoncoffee.jpeg",
+    "ingredients": ["Coffee", "Maple syrup", "Cinnamon", "Milk"],
+    "process": "1. Brew coffee. Add maple syrup, cinnamon, and milk. Serve hot.",
+    "baseNutrition": { "calories": 110, "carbs": 16, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "coffeesangria": {
+    "title": "Coffee Sangria",
+    "img": "./public/images/coffeesangria.jpeg",
+    "ingredients": ["Coffee", "Fruit juice", "Citrus", "Sugar", "Ice"],
+    "process": "1. Brew coffee. Mix with fruit juice, citrus, and sugar. Pour over ice and serve.",
+    "baseNutrition": { "calories": 60, "carbs": 14, "protein": 1 },
+    "type": "iced",
+    "flavorProfile": { "bitterness": 3, "sweetness": 1, "acidity": 3, "strength": 3, "body": 3 },
+    "caffeine": 95
+  },
+  "gingercoffee": {
+    "title": "Ginger Coffee",
+    "img": "./public/images/gingercoffee.jpeg",
+    "ingredients": ["Coffee", "Ginger", "Sugar (optional)"],
+    "process": "1. Brew coffee with ginger. Add sugar if desired. Serve hot.",
+    "baseNutrition": { "calories": 15, "carbs": 3, "protein": 0 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "almondjoycoffee": {
+    "title": "Almond Joy Coffee",
+    "img": "./public/images/almondjoycoffee.jpeg",
+    "ingredients": ["Coffee", "Almond syrup", "Coconut", "Chocolate", "Milk"],
+    "process": "1. Brew coffee. Add almond syrup, coconut, chocolate, and milk. Serve hot.",
+    "baseNutrition": { "calories": 120, "carbs": 18, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "bostonicedcoffee": {
+    "title": "Boston Iced Coffee",
+    "img": "./public/images/bostonicedcoffee.jpeg",
+    "ingredients": ["Coffee", "Milk", "Ice", "Sugar (optional)"],
+    "process": "1. Brew coffee. Add milk and sugar. Pour over ice and serve.",
+    "baseNutrition": { "calories": 60, "carbs": 10, "protein": 2 },
+    "type": "iced",
+    "flavorProfile": { "bitterness": 3, "sweetness": 1, "acidity": 3, "strength": 3, "body": 3 },
+    "caffeine": 95
+  },
+  "honeybeecoffee": {
+    "title": "Honey Bee Coffee",
+    "img": "./public/images/honeybeecoffee.jpeg",
+    "ingredients": ["Coffee", "Honey", "Milk"],
+    "process": "1. Brew coffee. Add honey and milk. Serve hot.",
+    "baseNutrition": { "calories": 90, "carbs": 14, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "blackforestcoffee": {
+    "title": "Black Forest Coffee",
+    "img": "./public/images/blackforestcoffee.jpeg",
+    "ingredients": ["Coffee", "Chocolate", "Cherry syrup", "Whipped cream"],
+    "process": "1. Brew coffee. Add chocolate and cherry syrup. Top with whipped cream. Serve hot.",
+    "baseNutrition": { "calories": 140, "carbs": 20, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "espressolemonade": {
+    "title": "Espresso Lemonade",
+    "img": "./public/images/espressolemonade.jpeg",
+    "ingredients": ["Espresso", "Lemonade", "Ice"],
+    "process": "1. Brew espresso. Mix with lemonade. Pour over ice and serve.",
+    "baseNutrition": { "calories": 60, "carbs": 14, "protein": 1 },
+    "type": "iced",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "hazelnutcoldbrew": {
+    "title": "Hazelnut Cold Brew",
+    "img": "./public/images/hazelnutcoldbrew.jpeg",
+    "ingredients": ["Cold brew coffee", "Hazelnut syrup", "Ice"],
+    "process": "1. Pour cold brew coffee over ice. Add hazelnut syrup. Serve chilled.",
+    "baseNutrition": { "calories": 60, "carbs": 10, "protein": 1 },
+    "type": "iced",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "irishmochamint": {
+    "title": "Irish Mocha Mint",
+    "img": "./public/images/irishmochamint.jpeg",
+    "ingredients": ["Coffee", "Chocolate", "Mint syrup", "Irish cream liqueur", "Whipped cream"],
+    "process": "1. Brew coffee. Add chocolate, mint syrup, and Irish cream liqueur. Top with whipped cream. Serve hot.",
+    "baseNutrition": { "calories": 160, "carbs": 18, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "cafefrappefloat": {
+    "title": "Café Frappe Float",
+    "img": "./public/images/cafefrappefloat.jpeg",
+    "ingredients": ["Coffee", "Ice cream", "Ice", "Sugar (optional)"],
+    "process": "1. Brew coffee. Add ice cream and ice. Add sugar if desired. Serve chilled.",
+    "baseNutrition": { "calories": 180, "carbs": 22, "protein": 3 },
+    "type": "iced",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "almondbuttercoffee": {
+    "title": "Almond Butter Coffee",
+    "img": "./public/images/almondbuttercoffee.jpeg",
+    "ingredients": ["Coffee", "Almond butter", "Milk"],
+    "process": "1. Brew coffee. Add almond butter and milk. Serve hot.",
+    "baseNutrition": { "calories": 120, "carbs": 10, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "caramelbrulee": {
+    "title": "Caramel Brûlée",
+    "img": "./public/images/caramelbrulee.jpeg",
+    "ingredients": ["Coffee", "Caramel syrup", "Milk", "Whipped cream"],
+    "process": "1. Brew coffee. Add caramel syrup and milk. Top with whipped cream. Serve hot.",
+    "baseNutrition": { "calories": 140, "carbs": 20, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "bourboncoffee": {
+    "title": "Bourbon Coffee",
+    "img": "./public/images/bourboncoffee.jpeg",
+    "ingredients": ["Coffee", "Bourbon whiskey", "Sugar", "Whipped cream"],
+    "process": "1. Brew coffee. Add bourbon whiskey and sugar. Top with whipped cream. Serve hot.",
+    "baseNutrition": { "calories": 150, "carbs": 10, "protein": 1 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "chaispicedmocha": {
+    "title": "Chai-Spiced Mocha",
+    "img": "./public/images/chaispicedmocha.jpeg",
+    "ingredients": ["Espresso", "Chai spices", "Chocolate", "Steamed milk"],
+    "process": "1. Brew espresso. Add chai spices, chocolate, and steamed milk. Serve hot.",
+    "baseNutrition": { "calories": 140, "carbs": 18, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "blueberrylatte": {
+    "title": "Blueberry Latte",
+    "img": "./public/images/blueberrylatte.jpeg",
+    "ingredients": ["Espresso", "Blueberry syrup", "Steamed milk"],
+    "process_jargon": "1. Brew espresso. Add blueberry syrup and steamed milk. Serve hot.",
+    "process_easy": [
+      "Brew a shot of espresso (or strong coffee).",
+      "Add blueberry syrup to the espresso.",
+      "Pour in steamed milk and stir gently.",
+      "Enjoy your blueberry latte while hot."
+    ],
+    "baseNutrition": { "calories": 120, "carbs": 18, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "horchatacoffee": {
+    "title": "Horchata Coffee",
+    "img": "./public/images/horchatacoffee.jpeg",
+    "ingredients": ["Coffee", "Horchata", "Ice"],
+    "process": "1. Brew coffee. Add horchata. Pour over ice and serve.",
+    "baseNutrition": { "calories": 90, "carbs": 18, "protein": 2 },
+    "type": "iced",
+    "flavorProfile": { "bitterness": 3, "sweetness": 1, "acidity": 3, "strength": 3, "body": 3 },
+    "caffeine": 95
+  },
+  "whitechocolateraspberrycoffee": {
+    "title": "White Chocolate Raspberry Coffee",
+    "img": "./public/images/whitechocolateraspberrycoffee.jpeg",
+    "ingredients": ["Coffee", "White chocolate", "Raspberry syrup", "Milk"],
+    "process": "1. Brew coffee. Add white chocolate, raspberry syrup, and milk. Serve hot.",
+    "baseNutrition": { "calories": 140, "carbs": 20, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "lavendercoffee": {
+    "title": "Lavender Coffee",
+    "img": "./public/images/lavendercoffee.jpeg",
+    "ingredients": ["Coffee", "Lavender syrup", "Milk"],
+    "process": "1. Brew coffee. Add lavender syrup and milk. Serve hot.",
+    "baseNutrition": { "calories": 90, "carbs": 14, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "coffeegintonic": {
+    "title": "Coffee Gin Tonic",
+    "img": "./public/images/coffeegintonic.jpeg",
+    "ingredients": ["Coffee", "Gin", "Tonic water", "Ice"],
+    "process": "1. Brew coffee. Add gin and tonic water. Serve over ice.",
+    "baseNutrition": { "calories": 90, "carbs": 10, "protein": 0 },
+    "type": "iced",
+    "flavorProfile": { "bitterness": 3, "sweetness": 1, "acidity": 3, "strength": 3, "body": 3 },
+    "caffeine": 95
+  },
+  "pandancoffee": {
+    "title": "Pandan Coffee",
+    "img": "./public/images/pandancoffee.jpeg",
+    "ingredients": ["Coffee", "Pandan syrup", "Milk"],
+    "process": "1. Brew coffee. Add pandan syrup and milk. Serve hot.",
+    "baseNutrition": { "calories": 90, "carbs": 14, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 2, "sweetness": 3, "acidity": 2, "strength": 2, "body": 4 },
+    "caffeine": 75
+  },
+  "walnutcoffee": {
+    "title": "Walnut Coffee",
+    "img": "./public/images/walnutcoffee.jpeg",
+    "ingredients": ["Coffee", "Walnut syrup", "Milk"],
+    "process": "1. Brew coffee. Add walnut syrup and milk. Serve hot.",
+    "baseNutrition": { "calories": 90, "carbs": 14, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "cardamomicedcoffee": {
+    "title": "Cardamom Iced Coffee",
+    "img": "./public/images/cardamomicedcoffee.jpeg",
+    "ingredients": ["Coffee", "Cardamom", "Ice", "Sugar (optional)", "Milk (optional)"],
+    "process": "1. Brew coffee with cardamom. Let cool. Pour over ice. Add sugar and milk if desired.",
+    "baseNutrition": { "calories": 40, "carbs": 8, "protein": 1 },
+    "type": "iced",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "figcoffee": {
+    "title": "Fig Coffee",
+    "img": "./public/images/figcoffee.jpeg",
+    "ingredients": ["Coffee", "Fig syrup", "Milk (optional)"],
+    "process": "1. Brew coffee. Stir in fig syrup. Add milk if desired. Serve hot.",
+    "baseNutrition": { "calories": 70, "carbs": 15, "protein": 1 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "saltedhoneycappuccino": {
+    "title": "Salted Honey Cappuccino",
+    "img": "./public/images/saltedhoneycappuccino.jpeg",
+    "ingredients": ["Espresso", "Steamed milk", "Honey", "Salt"],
+    "process": "1. Brew a shot of espresso. Steam milk and mix with honey and a pinch of salt. Pour milk over espresso. Serve hot.",
+    "baseNutrition": { "calories": 100, "carbs": 16, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "coffeebramble": {
+    "title": "Coffee Bramble",
+    "img": "./public/images/coffeebramble.jpeg",
+    "ingredients": ["Coffee", "Blackberry syrup", "Lemon juice", "Ice"],
+    "process": "1. Brew coffee and let cool. Add blackberry syrup and lemon juice. Shake with ice and strain into a glass. Serve chilled.",
+    "baseNutrition": { "calories": 60, "carbs": 14, "protein": 1 },
+    "type": "iced",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "chestnutpralinecoffee": {
+    "title": "Chestnut Praline Coffee",
+    "img": "./public/images/chestnutpralinecoffee.jpeg",
+    "ingredients": ["Coffee", "Chestnut praline syrup", "Milk (optional)", "Sugar (optional)"],
+    "process": "1. Brew coffee as desired. Add chestnut praline syrup to taste. Stir in milk and sugar if desired. Serve hot.",
+    "baseNutrition": { "calories": 80, "carbs": 12, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "corretto": {
+    "title": "Corretto",
+    "img": "./public/images/corretto.jpeg",
+    "ingredients": ["Espresso", "Grappa or Sambuca"],
+    "process": "1. Brew a shot of espresso. 2. Add a splash of grappa or sambuca. 3. Serve immediately.",
+    "baseNutrition": { "calories": 60, "carbs": 1, "protein": 0 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "espressomartini": {
+    "title": "Espresso Martini",
+    "img": "./public/images/espressomartini.jpeg",
+    "ingredients": ["Espresso", "Vodka", "Coffee Liqueur", "Sugar Syrup"],
+    "process": "1. Brew a shot of espresso and chill. 2. Shake espresso, vodka, liqueur, and syrup with ice. 3. Strain into a martini glass. 4. Garnish with coffee beans.",
+    "baseNutrition": { "calories": 180, "carbs": 15, "protein": 0 },
+    "type": "iced",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "greek": {
+    "title": "Greek Coffee",
+    "img": "./public/images/greek.jpeg",
+    "ingredients": ["Finely ground coffee", "Water", "Sugar (optional)"],
+    "process": "1. Combine coffee, water, and sugar in a briki. 2. Heat slowly, do not stir after foam forms. 3. Pour into a small cup, let grounds settle. 4. Serve unfiltered.",
+    "baseNutrition": { "calories": 10, "carbs": 2, "protein": 0 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "eiskaffee": {
+    "title": "Eiskaffee",
+    "img": "./public/images/eiskaffee.jpeg",
+    "ingredients": ["Chilled Coffee", "Vanilla Ice Cream", "Whipped Cream"],
+    "process": "1. Brew and chill strong coffee. 2. Add a scoop of vanilla ice cream to a tall glass. 3. Pour coffee over ice cream. 4. Top with whipped cream.",
+    "baseNutrition": { "calories": 180, "carbs": 22, "protein": 3 },
+    "type": "iced",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "shakerato": {
+    "title": "Shakerato",
+    "img": "./public/images/shakerato.jpeg",
+    "ingredients": ["Espresso", "Ice", "Sugar (optional)"],
+    "process": "1. Brew a shot of espresso. 2. Shake with ice (and sugar if desired) in a cocktail shaker. 3. Strain into a chilled glass.",
+    "baseNutrition": { "calories": 5, "carbs": 1, "protein": 1 },
+    "type": "iced",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "conleche": {
+    "title": "Café con Leche",
+    "img": "./public/images/conleche.jpeg",
+    "ingredients": ["Brewed Coffee", "Steamed Milk"],
+    "process": "1. Brew strong coffee. 2. Add equal part steamed milk. 3. Serve in a large cup.",
+    "baseNutrition": { "calories": 80, "carbs": 8, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "gibraltar": {
+    "title": "Gibraltar",
+    "img": "./public/images/gibraltar.jpeg",
+    "ingredients": ["Double Espresso", "Steamed Milk"],
+    "process": "1. Brew a double shot of espresso. 2. Add 90ml steamed milk. 3. Serve in a Gibraltar glass.",
+    "baseNutrition": { "calories": 60, "carbs": 5, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "blackeye": {
+    "title": "Black Eye",
+    "img": "./public/images/blackeye.jpeg",
+    "ingredients": ["Brewed Coffee", "Double Espresso"],
+    "process": "1. Brew a cup of drip coffee. 2. Add two shots of espresso. 3. Stir and serve.",
+    "baseNutrition": { "calories": 12, "carbs": 3, "protein": 3 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },
+    "caffeine": 64
+  },
+  "americano": {"title": "Americano","img": "./public/images/americano.jpeg","ingredients": ["Espresso", "Hot Water"],"process": "1. Brew a shot of espresso. 2. Add hot water to dilute. 3. Serve hot.","baseNutrition": { "calories": 5, "carbs": 1, "protein": 0 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "breve": {"title": "Breve","img": "./public/images/breve.jpeg","ingredients": ["Espresso", "Steamed Half-and-Half"],"process": "1. Brew a shot of espresso. 2. Steam half-and-half. 3. Pour over espresso and serve.","baseNutrition": { "calories": 150, "carbs": 10, "protein": 4 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "brownsugarshakenespresso": {"title": "Brown Sugar Shaken Espresso","img": "./public/images/brownsugarshakenespresso.jpeg","ingredients": ["Espresso", "Brown Sugar", "Ice", "Milk"],"process": "1. Brew espresso. 2. Shake with brown sugar and ice. 3. Top with milk.","baseNutrition": { "calories": 80, "carbs": 16, "protein": 2 },"type": "iced","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "butterscotchlatte": {"title": "Butterscotch Latte","img": "./public/images/butterscotchlatte.jpeg","ingredients": ["Espresso", "Steamed Milk", "Butterscotch Syrup"],"process": "1. Brew espresso. 2. Add butterscotch syrup. 3. Pour steamed milk over and serve.","baseNutrition": { "calories": 160, "carbs": 22, "protein": 4 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "cafeaulait": {"title": "Café au Lait","img": "./public/images/cafeaulait.jpeg","ingredients": ["Brewed Coffee", "Steamed Milk"],"process": "1. Brew strong coffee. 2. Steam milk. 3. Mix equal parts and serve.","baseNutrition": { "calories": 80, "carbs": 8, "protein": 3 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "cappuccino": {"title": "Cappuccino","img": "./public/images/cappuccino.jpeg","ingredients": ["Espresso", "Steamed Milk", "Milk Foam"],"process": "1. Brew espresso. 2. Add equal parts steamed milk and foam. 3. Serve hot.","baseNutrition": { "calories": 80, "carbs": 9, "protein": 4 },"type": "hot","flavorProfile": { "bitterness": 2, "sweetness": 3, "acidity": 2, "strength": 2, "body": 4 },"caffeine": 75},
+  "caramelmacchiato": {"title": "Caramel Macchiato","img": "./public/images/caramelmacchiato.jpeg","ingredients": ["Espresso", "Steamed Milk", "Vanilla Syrup", "Caramel Sauce"],"process": "1. Add vanilla syrup to cup. 2. Pour in steamed milk. 3. Brew espresso and pour over. 4. Drizzle caramel sauce.","baseNutrition": { "calories": 190, "carbs": 22, "protein": 4 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "caramelsaltedcoldbrew": {"title": "Caramel Salted Cold Brew","img": "./public/images/caramelsaltedcoldbrew.jpeg","ingredients": ["Cold Brew Coffee", "Salted Caramel Syrup", "Ice"],"process": "1. Pour cold brew over ice. 2. Add salted caramel syrup. 3. Stir and serve.","baseNutrition": { "calories": 90, "carbs": 18, "protein": 1 },"type": "iced","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "chocolatecoldbrew": {"title": "Chocolate Cold Brew","img": "./public/images/chocolatecoldbrew.jpeg","ingredients": ["Cold Brew Coffee", "Chocolate Syrup", "Ice"],"process": "1. Pour cold brew over ice. 2. Add chocolate syrup. 3. Stir and serve.","baseNutrition": { "calories": 80, "carbs": 16, "protein": 1 },"type": "iced","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "cinnamonicedcoffee": {"title": "Cinnamon Iced Coffee","img": "./public/images/cinnamonicedcoffee.jpeg","ingredients": ["Coffee", "Cinnamon", "Ice", "Sugar (optional)"],"process": "1. Brew coffee. 2. Add cinnamon and sugar. 3. Pour over ice and serve.","baseNutrition": { "calories": 20, "carbs": 4, "protein": 0 },"type": "iced","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "coconuticedcoffee": {"title": "Coconut Iced Coffee","img": "./public/images/coconuticedcoffee.jpeg","ingredients": ["Cold Brew Coffee", "Coconut Milk", "Ice"],"process": "1. Pour cold brew over ice. 2. Add coconut milk. 3. Stir and serve.","baseNutrition": { "calories": 70, "carbs": 5, "protein": 1 },"type": "iced","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "coldbrew": {"title": "Cold Brew","img": "./public/images/coldbrew.jpeg","ingredients": ["Coarse-ground Coffee", "Cold Water"],"process": "1. Combine coffee and water. 2. Steep in fridge 12–24 hours. 3. Strain and serve over ice.","baseNutrition": { "calories": 2, "carbs": 0, "protein": 0 },"type": "iced","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "cortado": {"title": "Cortado","img": "./public/images/cortado.jpeg","ingredients": ["Espresso", "Steamed Milk"],"process": "1. Brew espresso. 2. Add equal amount steamed milk. 3. Serve in small glass.","baseNutrition": { "calories": 35, "carbs": 3, "protein": 2 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "dalgona": {"title": "Dalgona Coffee","img": "./public/images/dalgona.jpeg","ingredients": ["Instant Coffee", "Sugar", "Hot Water", "Milk", "Ice (optional)"],"process": "1. Whisk instant coffee, sugar, and hot water until frothy. 2. Fill glass with milk and ice. 3. Spoon whipped coffee on top.","baseNutrition": { "calories": 130, "carbs": 20, "protein": 2 },"type": "iced","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "espresso": {"title": "Espresso","img": "./public/images/espresso.jpeg","ingredients": ["Finely ground coffee"],"process": "1. Use 7–9g finely ground coffee per shot. 2. Brew at 90–96°C for 25–30 seconds. 3. Serve in demitasse cup.","baseNutrition": { "calories": 5, "carbs": 1, "protein": 1 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "espressomilkshake": {"title": "Espresso Milkshake","img": "./public/images/espressomilkshake.jpeg","ingredients": ["Espresso", "Ice Cream", "Milk"],"process": "1. Brew espresso. 2. Blend with ice cream and milk. 3. Serve chilled.","baseNutrition": { "calories": 220, "carbs": 32, "protein": 5 },"type": "iced","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "espressotonic": {"title": "Espresso Tonic","img": "./public/images/espressotonic.jpeg","ingredients": ["Espresso", "Tonic Water", "Ice"],"process": "1. Brew espresso. 2. Pour over tonic water and ice. 3. Serve chilled.","baseNutrition": { "calories": 40, "carbs": 9, "protein": 0 },"type": "iced","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "filtercoffee": {"title": "Filter Coffee","img": "./public/images/filtercoffee.jpeg","ingredients": ["Ground Coffee", "Water", "Milk (optional)", "Sugar (optional)"],"process": "1. Brew coffee using filter method. 2. Add milk and sugar if desired. 3. Serve hot.","baseNutrition": { "calories": 20, "carbs": 3, "protein": 1 },"type": "hot","flavorProfile": { "bitterness": 3, "sweetness": 1, "acidity": 3, "strength": 3, "body": 3 },"caffeine": 95},
+  "flatwhite": {"title": "Flat White","img": "./public/images/flatwhite.jpeg","ingredients": ["Espresso", "Microfoam Milk"],"process": "1. Brew double shot espresso. 2. Steam milk to microfoam. 3. Pour over espresso.","baseNutrition": { "calories": 100, "carbs": 10, "protein": 4 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "frappe": {"title": "Frappe","img": "./public/images/frappe.jpeg","ingredients": ["Instant Coffee", "Sugar", "Water", "Ice", "Milk (optional)"],"process": "1. Mix instant coffee, sugar, and water. 2. Shake or blend until frothy. 3. Pour over ice, add milk if desired.","baseNutrition": { "calories": 60, "carbs": 12, "protein": 1 },"type": "iced","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "french": {"title": "French Press Coffee","img": "./public/images/french.jpeg","ingredients": ["Coarse Coffee Grounds", "Hot Water"],"process": "1. Add coffee grounds to French press. 2. Pour hot water and stir. 3. Steep 4 minutes. 4. Press plunger and serve.","baseNutrition": { "calories": 2, "carbs": 0, "protein": 0 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "galao": {"title": "Galão","img": "./public/images/galao.jpeg","ingredients": ["Espresso", "Foamed Milk"],"process": "1. Brew espresso. 2. Add 3 parts foamed milk. 3. Serve in tall glass.","baseNutrition": { "calories": 85, "carbs": 10, "protein": 3 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "hazelnutlatte": {"title": "Hazelnut Latte","img": "./public/images/hazelnutlatte.jpeg","ingredients": ["Espresso", "Steamed Milk", "Hazelnut Syrup"],"process": "1. Brew espresso. 2. Add hazelnut syrup. 3. Pour steamed milk over and serve.","baseNutrition": { "calories": 160, "carbs": 22, "protein": 4 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "honeyalmondlatte": {"title": "Honey Almond Latte","img": "./public/images/honeyalmondlatte.jpeg","ingredients": ["Espresso", "Steamed Almond Milk", "Honey"],"process": "1. Brew espresso. 2. Add honey. 3. Pour steamed almond milk over and serve.","baseNutrition": { "calories": 120, "carbs": 18, "protein": 2 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "icedamericano": {"title": "Iced Americano","img": "./public/images/icedamericano.jpeg","ingredients": ["Espresso", "Cold Water", "Ice"],"process": "1. Fill glass with ice. 2. Brew espresso. 3. Pour espresso over ice. 4. Add cold water and stir.","baseNutrition": { "calories": 5, "carbs": 1, "protein": 0 },"type": "iced","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "icedblackcoffee": {"title": "Iced Black Coffee","img": "./public/images/icedblackcoffee.jpeg","ingredients": ["Brewed Coffee", "Ice"],"process": "1. Brew coffee. 2. Pour over ice and serve.","baseNutrition": { "calories": 2, "carbs": 0, "protein": 0 },"type": "iced","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "icedcaramelmacchiato": {"title": "Iced Caramel Macchiato","img": "./public/images/icedcaramelmacchiato.jpeg","ingredients": ["Espresso", "Cold Milk", "Vanilla Syrup", "Caramel Sauce", "Ice"],"process": "1. Add vanilla syrup to glass. 2. Add ice and cold milk. 3. Brew espresso and pour over. 4. Drizzle caramel sauce.","baseNutrition": { "calories": 190, "carbs": 22, "protein": 4 },"type": "iced","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "icedcoffee": {"title": "Iced Coffee","img": "./public/images/icedcoffee.jpeg","ingredients": ["Brewed Coffee", "Sugar (optional)", "Milk", "Ice cubes"],"process": "1. Brew coffee double strength. 2. Let cool. 3. Fill glass with ice. 4. Pour coffee over ice, add milk and sugar.","baseNutrition": { "calories": 40, "carbs": 6, "protein": 1 },"type": "iced","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "icedlatte": {"title": "Iced Latte","img": "./public/images/icedlatte.jpeg","ingredients": ["Espresso", "Cold Milk", "Ice"],"process": "1. Fill glass with ice. 2. Brew espresso. 3. Pour espresso over ice. 4. Add cold milk and stir.","baseNutrition": { "calories": 70, "carbs": 10, "protein": 2 },"type": "iced","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "icedmacchiato": {"title": "Iced Macchiato","img": "./public/images/icedmacchiato.jpeg","ingredients": ["Espresso", "Cold Milk", "Ice"],"process": "1. Fill glass with ice. 2. Brew espresso. 3. Pour espresso over ice. 4. Add cold milk and stir.","baseNutrition": { "calories": 70, "carbs": 10, "protein": 2 },"type": "iced","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "icedmocha": {"title": "Iced Mocha","img": "./public/images/icedmocha.jpeg","ingredients": ["Espresso", "Cold Milk", "Chocolate Syrup", "Ice"],"process": "1. Fill glass with ice. 2. Brew espresso. 3. Add chocolate syrup and cold milk. 4. Stir and serve.","baseNutrition": { "calories": 120, "carbs": 18, "protein": 4 },"type": "iced","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "icedpumpkinlatte": {"title": "Iced Pumpkin Latte","img": "./public/images/icedpumpkinlatte.jpeg","ingredients": ["Espresso", "Cold Milk", "Pumpkin Puree", "Pumpkin Spice", "Sugar", "Ice"],"process": "1. Mix pumpkin puree, spice, and sugar. 2. Brew espresso. 3. Add pumpkin mix. 4. Add cold milk and ice. 5. Stir and serve.","baseNutrition": { "calories": 200, "carbs": 30, "protein": 4 },"type": "iced","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "latte": {"title": "Latte","img": "./public/images/latte.jpeg","ingredients": ["Espresso", "Steamed Milk"],"process": "1. Brew a fresh shot of espresso. 2. Steam milk until velvety. 3. Pour steamed milk over espresso. 4. Top with thin layer of foam.","baseNutrition": { "calories": 90, "carbs": 12, "protein": 3 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "lavenderlatte": {"title": "Lavender Latte","img": "./public/images/lavenderlatte.jpeg","ingredients": ["Espresso", "Steamed Milk", "Lavender Syrup"],"process": "1. Brew espresso. 2. Add lavender syrup. 3. Pour steamed milk over and serve.","baseNutrition": { "calories": 160, "carbs": 22, "protein": 4 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "lungo": {"title": "Lungo","img": "./public/images/lungo.jpeg","ingredients": ["Espresso", "Extra Water"],"process": "1. Brew espresso with double the usual water. 2. Serve in a larger cup.","baseNutrition": { "calories": 5, "carbs": 1, "protein": 1 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "macchiato": {"title": "Macchiato","img": "./public/images/macchiato.jpeg","ingredients": ["Espresso", "Milk Foam"],"process": "1. Brew espresso. 2. Add a dollop of milk foam on top. 3. Serve immediately.","baseNutrition": { "calories": 30, "carbs": 2, "protein": 2 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "maplecinnamonlatte": {"title": "Maple Cinnamon Latte","img": "./public/images/maplecinnamonlatte.jpeg","ingredients": ["Espresso", "Steamed Milk", "Maple Syrup", "Cinnamon"],"process": "1. Brew espresso. 2. Add maple syrup and cinnamon. 3. Pour steamed milk over and serve.","baseNutrition": { "calories": 160, "carbs": 22, "protein": 4 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "matchaespressofusion": {"title": "Matcha Espresso Fusion","img": "./public/images/matchaespressofusion.jpeg","ingredients": ["Espresso", "Matcha", "Milk", "Ice"],"process": "1. Prepare matcha and milk. 2. Add ice. 3. Pour espresso over the top.","baseNutrition": { "calories": 80, "carbs": 12, "protein": 2 },"type": "iced","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "mazagran": {"title": "Mazagran","img": "./public/images/mazagran.jpeg","ingredients": ["Strong Coffee", "Lemon Juice", "Sugar", "Ice"],"process": "1. Brew strong coffee and let cool. 2. Add lemon juice and sugar. 3. Pour over ice and serve.","baseNutrition": { "calories": 40, "carbs": 9, "protein": 0 },"type": "iced","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "mintmocha": {"title": "Mint Mocha","img": "./public/images/mintmocha.jpeg","ingredients": ["Espresso", "Steamed Milk", "Chocolate Syrup", "Mint Syrup"],"process": "1. Brew espresso. 2. Add chocolate and mint syrups. 3. Pour steamed milk over and serve.","baseNutrition": { "calories": 160, "carbs": 22, "protein": 3 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "mocha": {"title": "Mocha","img": "./public/images/mocha.jpeg","ingredients": ["Espresso", "Steamed Milk", "Chocolate Syrup"],"process": "1. Add chocolate syrup to cup. 2. Brew espresso over syrup and stir. 3. Steam milk and pour over. 4. Top with whipped cream.","baseNutrition": { "calories": 120, "carbs": 18, "protein": 4 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "neworleansiced": {"title": "New Orleans Iced Coffee","img": "./public/images/neworleansiced.jpeg","ingredients": ["Cold Brew Coffee", "Chicory", "Milk", "Ice"],"process": "1. Brew cold brew with chicory. 2. Add milk and ice. 3. Serve chilled.","baseNutrition": { "calories": 60, "carbs": 10, "protein": 2 },"type": "iced","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "nitrocoldbrew": {"title": "Nitro Cold Brew","img": "./public/images/nitrocoldbrew.jpeg","ingredients": ["Cold Brew Coffee", "Nitrogen"],"process": "1. Infuse cold brew coffee with nitrogen. 2. Serve chilled.","baseNutrition": { "calories": 2, "carbs": 0, "protein": 0 },"type": "iced","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "oliveoilcoffee": {"title": "Olive Oil Coffee","img": "./public/images/oliveoilcoffee.jpeg","ingredients": ["Coffee", "Olive Oil"],"process": "1. Brew coffee. 2. Add olive oil and stir. 3. Serve hot.","baseNutrition": { "calories": 40, "carbs": 0, "protein": 0 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "orangeespresso": {"title": "Orange Espresso","img": "./public/images/orangeespresso.jpeg","ingredients": ["Espresso", "Orange Juice", "Ice"],"process": "1. Brew espresso. 2. Add orange juice and ice. 3. Stir and serve.","baseNutrition": { "calories": 50, "carbs": 10, "protein": 1 },"type": "iced","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "peppermintmocha": {"title": "Peppermint Mocha","img": "./public/images/peppermintmocha.jpeg","ingredients": ["Espresso", "Steamed Milk", "Chocolate Syrup", "Peppermint Syrup"],"process": "1. Brew espresso. 2. Add chocolate and peppermint syrups. 3. Pour steamed milk over and serve.","baseNutrition": { "calories": 160, "carbs": 22, "protein": 3 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "peppermintwhitemocha": {"title": "Peppermint White Mocha","img": "./public/images/peppermintwhitemocha.jpeg","ingredients": ["Espresso", "Steamed Milk", "White Chocolate", "Peppermint Syrup"],"process": "1. Brew espresso. 2. Add white chocolate and peppermint syrup. 3. Pour steamed milk over and serve.","baseNutrition": { "calories": 180, "carbs": 25, "protein": 5 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "piccolo": {"title": "Piccolo Latte","img": "./public/images/piccolo.jpeg","ingredients": ["Ristretto", "Steamed Milk"],"process": "1. Brew a ristretto shot. 2. Add steamed milk in a small glass. 3. Serve immediately.","baseNutrition": { "calories": 40, "carbs": 4, "protein": 2 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "pumpkinspicelatte": {"title": "Pumpkin Spice Latte","img": "./public/images/pumpkinspicelatte.jpeg","ingredients": ["Espresso", "Steamed Milk", "Pumpkin Puree", "Pumpkin Spice", "Sugar"],"process": "1. Mix pumpkin puree, spice, and sugar. 2. Brew espresso. 3. Add pumpkin mix. 4. Pour steamed milk, top with whipped cream.","baseNutrition": { "calories": 200, "carbs": 30, "protein": 4 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "ristretto": {"title": "Ristretto","img": "./public/images/ristretto.jpeg","ingredients": ["Finely ground coffee"],"process": "1. Use 7g finely ground coffee per shot. 2. Brew with half the water of a standard espresso. 3. Serve in a demitasse cup.","baseNutrition": { "calories": 5, "carbs": 1, "protein": 1 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "romano": {"title": "Espresso Romano","img": "./public/images/romano.jpeg","ingredients": ["Espresso", "Lemon slice"],"process": "1. Brew a shot of espresso. 2. Serve with a thin slice of lemon on the rim.","baseNutrition": { "calories": 5, "carbs": 1, "protein": 1 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "saffronlatte": {"title": "Saffron Latte","img": "./public/images/saffronlatte.jpeg","ingredients": ["Espresso", "Steamed Milk", "Saffron Syrup"],"process": "1. Brew espresso. 2. Add saffron syrup. 3. Pour steamed milk over and serve.","baseNutrition": { "calories": 160, "carbs": 22, "protein": 4 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "spicedeggnoglatte": {"title": "Spiced Eggnog Latte","img": "./public/images/spicedeggnoglatte.jpeg","ingredients": ["Espresso", "Steamed Milk", "Eggnog", "Spices"],"process": "1. Brew espresso. 2. Add eggnog and spices. 3. Pour steamed milk over and serve.","baseNutrition": { "calories": 180, "carbs": 24, "protein": 5 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "swissmocha": {"title": "Swiss Mocha","img": "./public/images/swissmocha.jpeg","ingredients": ["Espresso", "Steamed Milk", "Chocolate", "Whipped Cream"],"process": "1. Brew espresso. 2. Add chocolate. 3. Pour steamed milk over. 4. Top with whipped cream.","baseNutrition": { "calories": 140, "carbs": 20, "protein": 4 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "tiramisulatte": {"title": "Tiramisu Latte","img": "./public/images/tiramisulatte.jpeg","ingredients": ["Espresso", "Steamed Milk", "Mascarpone", "Cocoa Powder"],"process": "1. Brew espresso. 2. Add mascarpone and cocoa powder. 3. Pour steamed milk over and serve.","baseNutrition": { "calories": 180, "carbs": 22, "protein": 5 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "toffeenutlatte": {"title": "Toffee Nut Latte","img": "./public/images/toffeenutlatte.jpeg","ingredients": ["Espresso", "Steamed Milk", "Toffee Nut Syrup"],"process": "1. Brew espresso. 2. Add toffee nut syrup. 3. Pour steamed milk over and serve.","baseNutrition": { "calories": 160, "carbs": 22, "protein": 4 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "turkishcoffee": {"title": "Turkish Coffee","img": "./public/images/turkishcoffee.jpeg","ingredients": ["Finely ground coffee", "Water", "Sugar (optional)", "Cardamom (optional)"],"process": "1. Combine coffee, water, and sugar in a cezve. 2. Heat slowly, stirring, until foam forms. 3. Pour into a small cup, let grounds settle. 4. Serve unfiltered.","baseNutrition": { "calories": 10, "carbs": 2, "protein": 0 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "vienna": {"title": "Vienna Coffee","img": "./public/images/vienna.jpeg","ingredients": ["Espresso", "Whipped Cream"],"process": "1. Brew two shots of espresso. 2. Top generously with whipped cream. 3. Serve without stirring.","baseNutrition": { "calories": 140, "carbs": 6, "protein": 2 },"type": "hot","flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 },"caffeine": 64},
+  "viennese": { "title": "Viennese Coffee", "img": "./public/images/viennese.jpeg", "ingredients": ["Espresso", "Whipped Cream", "Chocolate"], "process": "1. Brew espresso. 2. Add chocolate. 3. Top with whipped cream.", "baseNutrition": { "calories": 150, "carbs": 10, "protein": 2 }, "type": "hot", "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 3, "strength": 5, "body": 4 }, "caffeine": 64 },
+  "affogato": {
+    "title": "Affogato",
+    "img": "./public/images/affogato.jpeg",
+    "ingredients": ["Espresso", "Vanilla Ice Cream"],
+    "process_jargon": "1. Scoop vanilla ice cream into a glass. 2. Pour hot espresso over the ice cream. 3. Serve immediately.",
+    "process_easy": [
+      "Put a scoop of vanilla ice cream in a small glass or cup.",
+      "Make a shot of espresso (strong coffee).",
+      "Pour the hot espresso over the ice cream.",
+      "Serve right away while the ice cream is melting."
+    ],
+    "baseNutrition": { "calories": 180, "carbs": 25, "protein": 4 },
+    "type": "iced",
+    "flavorProfile": { "bitterness": 3, "sweetness": 4, "acidity": 2, "strength": 3, "body": 5 },
+    "caffeine": 64
+  },
+  "bananacoffeesmoothie": {
+    "title": "Banana Coffee Smoothie",
+    "img": "./public/images/bananacoffeesmoothie.jpeg",
+    "ingredients": ["Brewed Coffee", "Banana", "Milk", "Honey", "Ice"],
+    "process_jargon": "1. Brew coffee and let cool. 2. Blend with banana, milk, honey, and ice. 3. Serve chilled.",
+    "process_easy": [
+      "Make coffee and let it cool down.",
+      "Put the cooled coffee in a blender.",
+      "Add a ripe banana, some milk, honey, and ice cubes.",
+      "Blend everything until smooth and creamy.",
+      "Pour into a glass and enjoy your smoothie!"
+    ],
+    "baseNutrition": { "calories": 200, "carbs": 35, "protein": 6 },
+    "type": "iced",
+    "flavorProfile": { "bitterness": 2, "sweetness": 4, "acidity": 2, "strength": 2, "body": 4 },
+    "caffeine": 64
+  },
+  "blackforestmocha": {
+    "title": "Black Forest Mocha",
+    "img": "./public/images/blackforestmocha.jpeg",
+    "ingredients": ["Espresso", "Steamed Milk", "Chocolate Syrup", "Cherry Syrup", "Whipped Cream"],
+    "process_jargon": "1. Brew espresso. 2. Add chocolate and cherry syrups. 3. Pour steamed milk over. 4. Top with whipped cream.",
+    "process_easy": [
+      "Make a shot of espresso (strong coffee).",
+      "Add chocolate syrup and cherry syrup to the cup.",
+      "Pour steamed milk over the coffee and syrups.",
+      "Top with whipped cream and serve."
+    ],
+    "baseNutrition": { "calories": 220, "carbs": 28, "protein": 5 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 3, "sweetness": 4, "acidity": 2, "strength": 3, "body": 4 },
+    "caffeine": 64
+  },
+  "chilimocha": {
+    "title": "Chili Mocha",
+    "img": "./public/images/chilimocha.jpeg",
+    "ingredients": ["Espresso", "Steamed Milk", "Chocolate Syrup", "Chili Powder"],
+    "process_jargon": "1. Brew espresso. 2. Add chocolate syrup and chili powder. 3. Pour steamed milk over and serve.",
+    "process_easy": [
+      "Make a shot of espresso (strong coffee).",
+      "Add chocolate syrup to the cup.",
+      "Sprinkle a little chili powder for heat.",
+      "Pour steamed milk over everything.",
+      "Stir gently and enjoy the spicy chocolate coffee!"
+    ],
+    "baseNutrition": { "calories": 160, "carbs": 22, "protein": 4 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 3, "sweetness": 3, "acidity": 2, "strength": 4, "body": 4 },
+    "caffeine": 64
+  },
+  "doppio": {
+    "title": "Doppio",
+    "img": "./public/images/doppio.jpeg",
+    "ingredients": ["Finely ground coffee"],
+    "process_jargon": "1. Use 14-18g finely ground coffee. 2. Brew double shot of espresso. 3. Serve in a larger cup.",
+    "process_easy": [
+      "Use twice as much coffee grounds as a regular espresso.",
+      "Brew the coffee using an espresso machine.",
+      "The result is a double shot of strong coffee.",
+      "Serve in a larger cup than a regular espresso."
+    ],
+    "baseNutrition": { "calories": 10, "carbs": 2, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 4, "strength": 5, "body": 4 },
+    "caffeine": 128
+  },
+  "irishcoffee": {
+    "title": "Irish Coffee",
+    "img": "./public/images/irishcoffee.jpeg",
+    "ingredients": ["Hot Coffee", "Irish Whiskey", "Sugar", "Whipped Cream"],
+    "process_jargon": "1. Warm a glass with hot water. 2. Add sugar and whiskey. 3. Pour hot coffee and stir. 4. Float whipped cream on top.",
+    "process_easy": [
+      "Warm a glass by filling it with hot water, then pour it out.",
+      "Add sugar and Irish whiskey to the warm glass.",
+      "Pour hot coffee into the glass and stir well.",
+      "Gently float whipped cream on top (don't stir it in).",
+      "Serve while hot with the cream floating on top."
+    ],
+    "baseNutrition": { "calories": 180, "carbs": 15, "protein": 2 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 4, "sweetness": 3, "acidity": 2, "strength": 4, "body": 4 },
+    "caffeine": 64
+  },
+  "redeye": {
+    "title": "Red Eye",
+    "img": "./public/images/redeye.jpeg",
+    "ingredients": ["Brewed Coffee", "Espresso"],
+    "process_jargon": "1. Brew a cup of drip coffee. 2. Add one shot of espresso. 3. Stir and serve.",
+    "process_easy": [
+      "Make a regular cup of coffee using your preferred method.",
+      "Make one shot of espresso (strong coffee).",
+      "Pour the espresso into the regular coffee.",
+      "Stir well and enjoy the extra strong coffee!"
+    ],
+    "baseNutrition": { "calories": 8, "carbs": 2, "protein": 1 },
+    "type": "hot",
+    "flavorProfile": { "bitterness": 5, "sweetness": 1, "acidity": 4, "strength": 5, "body": 4 },
+    "caffeine": 128
+  }
+}

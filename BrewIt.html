@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BrewIt</title>
+  <link rel="stylesheet" href="./node_modules/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="./src/styles/styles.css">
+  <!-- 1. Chart.js CDN in <head> -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="main-content" id="mainContent" role="main">
+
+  <header class="header">
+    <a id="homeLogo" style="text-decoration:none;cursor:pointer;">
+      <img src="./public/images/letter-b.png" alt="BrewIt logo" style="height:40px;vertical-align:middle;">
+      <span style="font-size:2.2rem;font-weight:700;color:#f5ede3;vertical-align:middle;">BrewIt</span>
+    </a>
+    <!-- Daily fact/tip banner moved here -->
+    <div id="dailyFactBanner" style="margin: 0 0 0 24px; text-align: center; font-size: 1.1em; color: #6b3e26; background: #fffbe7; border-radius: 12px; padding: 10px 24px; max-width: 480px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); display: inline-block; vertical-align: middle;"></div>
+    <div class="center-header">Your Coffee Encyclopedia...</div>
+  </header>
+
+  <nav class="nav" aria-label="Recipe filters and search">
+  <button data-category="all" id="allBtn" class="filter-btn active" aria-current="page">All</button>
+<button data-category="hot" id="hotBtn" class="filter-btn">Hot</button>
+<button data-category="iced" id="icedBtn" class="filter-btn">Iced</button>
+<button data-category="favourites" id="favBtn" class="filter-btn"><i class="bi bi-heart"></i></button>
+  <!-- 2. Navigation links/buttons for Remix and Quiz -->
+  <button id="remixNavBtn">Remix</button>
+  <button id="quizNavBtn">Find Your Brew</button>
+  <input type="text" id="searchInput" placeholder="Search recipes..." aria-label="Search recipes" />
+  <select id="sortSelect" style="margin-left:8px; padding:7px 10px; border-radius:5px; border:1px solid #aaa; font-size:14px;" aria-label="Sort recipes">
+    <option value="default">Sort by</option>
+    <option value="name">Name (A–Z)</option>
+    <option value="calories">Calories (Low–High)</option>
+    <option value="type">Type (Hot/Iced)</option>
+  </select>
+  <button id="darkModeToggle" title="Toggle dark mode" aria-label="Toggle dark mode" style="font-size: 1.3rem; background: none; border: none; cursor: pointer;"><i class="bi bi-moon"></i></button>
+</nav>
+
+  <div class="card-container" id="cardContainer" aria-live="polite"></div>
+  <div id="noResults" style="display:none;text-align:center;font-size:1.2em;color:#a0522d;margin:30px 0 0 0;">No results found.</div>
+
+  </div> <!-- end of main-content -->
+  <button id="bottomScrollToTopBtn" style="display:block;margin:40px auto 16px auto;background:#ffe6b3;color:#6b3e26;border:none;border-radius:24px;width:80px;height:40px;font-size:1.2em;cursor:pointer;box-shadow:0 2px 8px rgba(160,82,45,0.12);">↑ Top</button>
+  <div style="text-align:center;font-size:0.98em;color:#a0522d;margin:18px 0 0 0;">
+    Images are for reference only. Actual appearance, colors, and results may vary in real life.
+  </div>
+  <footer role="contentinfo" style="width:100%;text-align:center;margin-top:32px;">&copy; 2025 BrewIt</footer>
+  <div class="modal" id="recipeModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
+    <div class="modal-content">
+      <div class="modal-left">
+        <img id="modalImage" src="" alt="Coffee Image">
+      </div>
+      <div class="modal-right">
+        <h2 id="modalTitle">Title</h2>
+
+        <h4>Ingredients</h4>
+        <ul id="modalIngredients"></ul>
+
+        <div id="jargonToggleGroup" style="margin: 10px 0 18px 0; display: flex; align-items: center; gap: 10px;">
+          <label for="jargonEasyBtn" style="font-size: 1em; font-weight: 500;">Process instructions:</label>
+          <div class="segmented-toggle" role="group" aria-label="Process instructions toggle">
+            <button id="jargonEasyBtn" type="button" class="seg-btn seg-btn-active" aria-pressed="true">I don’t know coffee jargon</button>
+            <button id="jargonJargonBtn" type="button" class="seg-btn" aria-pressed="false">I know coffee jargon</button>
+          </div>
+        </div>
+        <h4 style="font-size:1.18em;font-weight:bold;margin-bottom:8px;">Process</h4>
+        <p id="modalProcess"></p>
+
+        <div class="selectors">
+          <h4>Customize:</h4>
+          <ul style="list-style-type: disc; margin: 0 0 0 20px; padding: 0;">
+            <li>
+              <label>Milk Type:
+                <select id="milkType" style="width:120px;">
+                  <option value="whole">Whole</option>
+                  <option value="skim">Skim</option>
+                  <option value="oat">Oat</option>
+                  <option value="almond">Almond</option>
+                  <option value="soy">Soy</option>
+                  <option value="coconut">Coconut</option>
+                </select>
+              </label>
+            </li>
+            <li><label><input type="checkbox" id="addMilk"> Milk</label>
+              <input type="number" id="milkQty" min="0" max="200" value="0" style="width:60px;display:none;" aria-label="Milk quantity (ml)"> ml
+            </li>
+            <li><label><input type="checkbox" id="addSugar"> Sugar</label>
+              <input type="number" id="sugarQty" min="0" max="20" value="0" style="width:60px;display:none;" aria-label="Sugar quantity (g)"> g
+            </li>
+            <li><label><input type="checkbox" id="addIce"> Ice</label>
+              <input type="number" id="iceQty" min="0" max="200" value="0" style="width:60px;display:none;" aria-label="Ice quantity (g)"> g
+            </li>
+            <li><label><input type="checkbox" id="addFoam"> Foam</label>
+              <input type="number" id="foamQty" min="0" max="100" value="0" style="width:60px;display:none;" aria-label="Foam quantity (ml)"> ml
+            </li>
+            <li><label>Topping:
+              <select id="toppingType" style="width:120px;">
+                <option value="">None</option>
+                <option value="whipped">Whipped Cream</option>
+                <option value="chocolate">Chocolate</option>
+                <option value="cinnamon">Cinnamon</option>
+                <option value="caramel">Caramel</option>
+                <option value="hazelnut">Hazelnut Syrup</option>
+                <option value="honey">Honey</option>
+                <option value="maple">Maple Syrup</option>
+                <option value="custom">Custom Ingredient</option>
+              </select>
+              <input type="number" id="toppingQty" min="0" max="50" value="0" style="width:60px;display:none;" aria-label="Topping quantity (g/ml)">
+            </label>
+              <div id="customToppingFields" style="display:none;margin-top:4px;">
+                <input type="text" id="customToppingName" placeholder="Name" style="width:90px;">
+                <input type="number" id="customToppingCal" placeholder="kcal/g" style="width:60px;">
+                <input type="number" id="customToppingCarb" placeholder="carb/g" style="width:60px;">
+                <input type="number" id="customToppingProt" placeholder="prot/g" style="width:60px;">
+              </div>
+            </li>
+            <li style="margin-top:8px;"><button type="button" id="resetCustomize">Reset</button></li>
+          </ul>
+        </div>
+
+        <div class="nutrition">
+          <strong>Nutrition:</strong>
+          <p>Calories: <span id="calories">0</span> kcal</p>
+          <p>Carbs: <span id="carbs">0</span> g</p>
+          <p>Protein: <span id="protein">0</span> g</p>
+          <div style="font-size:0.95em;color:#a0522d;margin-top:8px;">Nutrition values are estimates and may vary based on ingredients and preparation. <a href="https://fdc.nal.usda.gov/" target="_blank" rel="noopener">(USDA FoodData Central)</a></div>
+        </div>
+
+        <!-- 5. Radar chart canvas in modal -->
+        <canvas id="flavorRadarChart" width="260" height="260" style="margin: 18px auto 0 auto; display: block;"></canvas>
+        <!-- 6. Brew strength slider/input -->
+        <label for="brewStrength">Brew Strength:</label>
+        <input type="range" id="brewStrength" min="1" max="5" value="3" style="width: 120px;">
+        <span id="brewStrengthValue">3</span>
+        <!-- 7. Caffeine estimate display -->
+        <div id="caffeineEstimate" style="margin-top: 8px; font-size: 1em; color: #a0522d;"></div>
+
+        <button class="close-btn" onclick="closeModal()" aria-label="Close recipe details">Back to Recipes</button>
+      </div>
+    </div>
+  </div>
+  <script src="./src/script/script.js"></script>
+  <div id="toast" style="position:fixed;left:50%;bottom:40px;transform:translateX(-50%);background:#333;color:#fff;padding:12px 28px;border-radius:24px;font-size:16px;opacity:0;pointer-events:none;z-index:99999;transition:opacity 0.3s, bottom 0.3s;"></div>
+  <!-- Toast notification for section changes -->
+  <div id="sectionToast"></div>
+  <!-- 8. Animated steam/pour container in card and/or modal image area -->
+  <div class="steam-animation" aria-hidden="true"></div>
+  <!-- Add Back to Top button at the end of body -->
+  <button id="backToTopBtn" title="Back to Top" style="position:fixed;right:32px;bottom:32px;z-index:9999;display:none;background:#ffe6b3;color:#6b3e26;border:none;border-radius:50%;width:48px;height:48px;box-shadow:0 2px 8px rgba(160,82,45,0.12);font-size:2rem;cursor:pointer;transition:background 0.2s;">↑</button>
+</body>
+</html>

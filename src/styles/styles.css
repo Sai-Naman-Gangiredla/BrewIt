@@ -1,0 +1,634 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #fff8f0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-image: url("../public/images/rbeansbg.jpg");
+  background-size: cover;
+  height: 100px;
+  padding: 0 20px;
+  color: #e6cba2;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.title img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.center-header {
+  font-size: 20px;
+  color: #e6cba2;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background-color: #ffe4c4;
+  flex-wrap: wrap;
+}
+
+.nav button,
+.nav input {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+  font-size: 14px;
+}
+
+.nav button.active {
+  background-color: #d2691e;
+  color: white;
+  font-weight: bold;
+  border: 1px solid #a0522d;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.card.recipe-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s;
+  max-width: 350px;
+  min-width: 250px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 15px;
+}
+
+.card-title.recipe-title {
+  font-size: 18px;
+  margin: 0 0 10px;
+}
+
+.bi-heart {
+  color: crimson;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
+  background: #ffe4c4;
+  color: #333;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  z-index: 9999;
+  max-height: 80%;
+  overflow-y: auto;
+  border-radius: 10px;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  width: 90%;
+  max-width: 900px;
+  min-height: 260px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  padding: 0;
+  border-radius: 10px;
+  gap: 0;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  overflow: hidden;
+  height: 70vh;
+  max-height: 600px;
+}
+.modal-left {
+  flex: 0 0 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #222;
+  min-height: 100%;
+  min-width: 200px;
+  max-width: 260px;
+  height: 100%;
+  position: relative;
+}
+.modal-left img {
+  display: block;
+  max-width: 220px;
+  max-height: 90%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+  margin: 0 auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  background: #fff;
+}
+.modal-right {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 28px 32px 28px 32px;
+  overflow-y: auto;
+  max-height: 100%;
+}
+
+.modal-right h2 {
+  margin-top: 0;
+}
+
+.selectors label {
+  margin-right: 15px;
+  font-size: 14px;
+}
+
+.nutrition {
+  margin-top: 20px;
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.close-btn {
+  margin-top: 20px;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.blurred {
+  filter: blur(6px);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Dark mode styles (add/adjust as needed for upgrades) */
+.dark-mode {
+  background-color: #181818 !important;
+  color: #f2ddc9 !important;
+  background-image: none !important;
+}
+.dark-mode .header {
+  background-image: none !important;
+  background-color: #222 !important;
+  color: #f2ddc9 !important;
+}
+.dark-mode .nav {
+  background: #2d2217 !important;
+}
+.dark-mode .nav button,
+.dark-mode .nav input {
+  background: #3a2c1a !important;
+  color: #f2ddc9 !important;
+  border: 1px solid #5a4633 !important;
+}
+.dark-mode .nav button.active {
+  background-color: #a0522d !important;
+  color: #fff !important;
+}
+.dark-mode .card,
+.dark-mode .recipe-card {
+  background: #232323 !important;
+  color: #f2ddc9 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5) !important;
+}
+.dark-mode .modal,
+.dark-mode .modal-content {
+  background: #232323 !important;
+  color: #f2ddc9 !important;
+}
+.dark-mode .nutrition {
+  background: #2d2217 !important;
+  color: #f2ddc9 !important;
+}
+.dark-mode footer {
+  background: #2d2217 !important;
+  color: #f2ddc9 !important;
+}
+.dark-mode .bi-heart {
+  color: #ffb3b3 !important;
+}
+
+/* --- Animated Transitions --- */
+
+/* Modal fade/scale-in */
+.modal {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) scale(0.95);
+  transition: opacity 0.3s cubic-bezier(.4,0,.2,1), transform 0.3s cubic-bezier(.4,0,.2,1);
+}
+.modal[style*="display: flex"] {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) scale(1);
+}
+
+/* Card hover: scale and shadow */
+.card.recipe-card {
+  transition: transform 0.25s cubic-bezier(.4,0,.2,1), box-shadow 0.25s cubic-bezier(.4,0,.2,1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.card.recipe-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+
+/* Button press/hover animation */
+.nav button, .close-btn {
+  transition: background 0.2s, color 0.2s, transform 0.1s;
+}
+.nav button:active, .close-btn:active {
+  transform: scale(0.96);
+  filter: brightness(0.95);
+}
+
+/* 1. Daily fact/tip banner */
+#dailyFactBanner {
+  font-family: inherit;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: background 0.3s;
+}
+/* 2. Radar chart in modal */
+#flavorRadarChart {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+/* 3. Brew strength slider and caffeine estimate */
+#brewStrength {
+  margin: 0 8px;
+}
+#caffeineEstimate {
+  font-weight: 600;
+}
+/* 4. Remix and Quiz sections */
+#remixSection, #quizSection {
+  background: #f7f3ed;
+  border-radius: 16px;
+  margin: 32px auto;
+  padding: 32px 18px;
+  max-width: 600px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+}
+/* 5. Animated steam/pour effect */
+.steam-animation {
+  position: absolute;
+  left: 50%;
+  top: 10px;
+  width: 40px;
+  height: 60px;
+  pointer-events: none;
+  z-index: 2;
+}
+.steam-animation svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+/* 6. Navigation buttons for Remix/Quiz */
+#remixNavBtn, #quizNavBtn {
+  margin-left: 12px;
+  background: #fffbe7;
+  color: #6b3e26;
+  border: 1px solid #e0cfa9;
+  border-radius: 8px;
+  padding: 7px 18px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+#remixNavBtn:hover, #quizNavBtn:hover {
+  background: #ffe6b3;
+  color: #a0522d;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 900px) {
+  .card-container {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    padding: 10px;
+  }
+  .modal-content {
+    flex-direction: column;
+    height: auto;
+    max-height: 90vh;
+  }
+  .modal-left {
+    flex: none;
+    max-width: 100vw;
+    min-width: 0;
+    height: auto;
+    min-height: 0;
+    justify-content: center;
+    margin-bottom: 10px;
+    background: #222;
+  }
+  .modal-left img {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    margin: 0 auto 10px auto;
+  }
+  .modal-right {
+    padding: 18px 10px 18px 10px;
+    max-height: 60vh;
+  }
+  .modal-left, .modal-right {
+    padding: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    height: auto;
+    padding: 10px 5px;
+    text-align: center;
+  }
+  .title {
+    font-size: 22px;
+  }
+  .center-header {
+    font-size: 14px;
+  }
+  .nav {
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px;
+  }
+  .nav button, .nav input {
+    font-size: 13px;
+    padding: 7px 8px;
+  }
+  .card-container {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 5px;
+  }
+  .card.recipe-card {
+    min-width: 0;
+    width: 100%;
+  }
+  .modal-content {
+    width: 100vw;
+    max-width: 100vw;
+    min-width: 0;
+    padding: 5px;
+  }
+  .modal-left img {
+    max-width: 100vw;
+    height: auto;
+  }
+  .modal {
+    padding: 2px;
+  }
+  .close-btn {
+    width: 100%;
+    font-size: 15px;
+  }
+  .nutrition {
+    font-size: 13px;
+    padding: 6px;
+  }
+}
+#homeLogo {
+  cursor: pointer;
+}
+.filter-btn.active, #remixNavBtn.active, #quizNavBtn.active {
+  background: #ffe6b3;
+  color: #a0522d;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(160,82,45,0.08);
+}
+
+/* 1. Section/page transitions */
+#remixSection, #quizSection, #cardContainer {
+  transition: opacity 0.4s, transform 0.4s;
+  opacity: 1;
+  transform: translateY(0);
+}
+.section-hidden {
+  display: none !important;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(30px);
+}
+
+/* 2. Nav button active animation */
+.filter-btn, #remixNavBtn, #quizNavBtn {
+  transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+}
+
+/* 3. Card hover effect */
+.card.recipe-card {
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+.card.recipe-card:hover {
+  box-shadow: 0 6px 24px rgba(160,82,45,0.18);
+  transform: scale(1.035);
+  z-index: 2;
+}
+
+/* 4. Modal fade/slide */
+#recipeModal {
+  transition: opacity 0.35s, transform 0.35s;
+  opacity: 1;
+  transform: translateY(0);
+}
+#recipeModal.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(40px);
+}
+
+/* 5. Custom focus ring */
+.filter-btn:focus, #remixNavBtn:focus, #quizNavBtn:focus, #homeLogo:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px #ffe6b3, 0 2px 8px rgba(160,82,45,0.08);
+}
+
+/* 6. Section heading animation */
+.section-heading {
+  color: #3a2a1a;
+  font-weight: 700;
+  opacity: 1;
+  transform: translateY(-20px);
+  animation: fadeInDown 0.7s forwards;
+}
+@keyframes fadeInDown {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 7. Toast notification for section changes */
+#sectionToast {
+  position: fixed;
+  left: 50%;
+  top: 24px;
+  transform: translateX(-50%);
+  background: #ffe6b3;
+  color: #6b3e26;
+  padding: 10px 32px;
+  border-radius: 24px;
+  font-size: 1.1em;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 99999;
+  box-shadow: 0 2px 12px rgba(160,82,45,0.10);
+  transition: opacity 0.3s, top 0.3s;
+}
+#sectionToast.show {
+  opacity: 1;
+  top: 48px;
+}
+#backToTopBtn {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  z-index: 9999;
+  display: none;
+  background: #ffe6b3;
+  color: #6b3e26;
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  box-shadow: 0 2px 8px rgba(160,82,45,0.12);
+  font-size: 2rem;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.3s, bottom 0.3s;
+  opacity: 0;
+}
+#backToTopBtn.show {
+  display: block;
+  opacity: 1;
+  bottom: 32px;
+}
+#backToTopBtn:hover, #backToTopBtn:focus {
+  background: #ffe0a3;
+  color: #a0522d;
+  outline: none;
+}
+@media (max-width: 600px) {
+  #backToTopBtn {
+    right: 16px;
+    bottom: 16px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+}
+.header #homeLogo img {
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+.switch input {display:none;}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+input:checked + .slider {
+  background-color: #a0522d;
+}
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+.segmented-toggle {
+  display: inline-flex;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+  background: #23201c;
+}
+.seg-btn {
+  border: none;
+  background: none;
+  color: #e6d3b3;
+  padding: 7px 18px;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+  outline: none;
+}
+.seg-btn:not(:last-child) {
+  border-right: 1px solid #3a3327;
+}
+.seg-btn-active, .seg-btn:focus {
+  background: #a0522d;
+  color: #fff;
+  border-radius: 0;
+}
