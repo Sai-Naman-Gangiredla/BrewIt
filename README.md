@@ -165,6 +165,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Sai Naman Gangiredla** - [sainamangangiredla@gmail.com](mailto:sainamangangiredla@gmail.com)
 
+**Nallam Sruja** - [nallamsruja@gmail.com](mailto:nallamsruja@gmail.com)
+
 Project Link: [https://github.com/Sai-Naman-Gangiredla/BrewIt](https://github.com/Sai-Naman-Gangiredla/BrewIt)
 
 Live Demo: [https://sai-naman-gangiredla.github.io/BrewIt](https://sai-naman-gangiredla.github.io/BrewIt)
