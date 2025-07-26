@@ -1,5 +1,7 @@
 # ☕ BrewIt - Coffee Recipe Hub
 
+[![Live Site](https://img.shields.io/badge/Live%20Site-View%20Demo-blue?style=for-the-badge&logo=github)](https://sai-naman-gangiredla.github.io/BrewIt)
+
 A comprehensive, interactive web application featuring 170+ coffee recipes with detailed instructions, nutrition information, and customization options.
 
 ## 🌟 Features
@@ -164,6 +166,24 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **Sai Naman Gangiredla** - [sainamangangiredla@gmail.com](mailto:sainamangangiredla@gmail.com)
 
 Project Link: [https://github.com/Sai-Naman-Gangiredla/BrewIt](https://github.com/Sai-Naman-Gangiredla/BrewIt)
+
+Live Demo: [https://sai-naman-gangiredla.github.io/BrewIt](https://sai-naman-gangiredla.github.io/BrewIt)
+
+---
+
+## 🏷️ Repository Topics
+
+Add these topics to your repository for better discoverability:
+- `coffee`
+- `recipes`
+- `javascript`
+- `html`
+- `css`
+- `web-app`
+- `interactive`
+- `responsive`
+- `dark-mode`
+- `localstorage`
 
 ---
 
