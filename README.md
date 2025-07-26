@@ -173,20 +173,4 @@ Live Demo: [https://sai-naman-gangiredla.github.io/BrewIt](https://sai-naman-gan
 
 ---
 
-## 🏷️ Repository Topics
-
-Add these topics to your repository for better discoverability:
-- `coffee`
-- `recipes`
-- `javascript`
-- `html`
-- `css`
-- `web-app`
-- `interactive`
-- `responsive`
-- `dark-mode`
-- `localstorage`
-
----
-
 ⭐ **Star this repository if you found it helpful!** 
