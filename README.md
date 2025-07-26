@@ -72,7 +72,7 @@ BrewIt/
    cd BrewIt
    ```
 
-2. Open `BrewIt.html` in your web browser
+2. Open `index.html` in your web browser
 
 3. Start exploring coffee recipes!
 
