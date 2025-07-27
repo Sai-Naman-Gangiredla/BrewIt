@@ -77,12 +77,15 @@ showLoading();
 // Enhanced fetch with better error handling and mobile optimization
 fetch('./src/data/recipes.json')
   .then(response => {
+    console.log('Fetch response status:', response.status);
+    console.log('Fetch response ok:', response.ok);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     return response.json();
   })
   .then(data => {
+    console.log('Successfully loaded recipes data:', data);
     // Normalize all recipes to have process_jargon and process_easy
     Object.keys(data).forEach(key => {
       const rec = data[key];
@@ -107,21 +110,55 @@ fetch('./src/data/recipes.json')
   })
   .catch(error => {
     console.error('Error loading recipes:', error);
+    console.error('Error details:', error.message);
     hideLoading();
     
-    // Check if we're on mobile and show appropriate error
-    if (window.innerWidth <= 768) {
-      showMobileError();
-    } else {
-      const errMsg = document.createElement('div');
-      errMsg.style.cssText = 'color: #ff6b6b; text-align: center; margin: 20px; padding: 20px; background: rgba(255,107,107,0.1); border-radius: 8px; border: 1px solid #ff6b6b;';
-      errMsg.innerHTML = `
-        <h3>⚠️ Error Loading Recipes</h3>
-        <p>Unable to load recipes. Please check your internet connection and try refreshing the page.</p>
-        <button onclick="location.reload()" style="background: #d2691e; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 10px;">Retry</button>
-      `;
-      document.body.prepend(errMsg);
-    }
+    // Try alternative path if first fails
+    console.log('Trying alternative path...');
+    fetch('src/data/recipes.json')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Successfully loaded recipes with alternative path');
+        Object.keys(data).forEach(key => {
+          const rec = data[key];
+          if (!rec.process_jargon && rec.process) {
+            rec.process_jargon = rec.process;
+          }
+          if (!rec.process_easy && rec.process) {
+            rec.process_easy = rec.process;
+          }
+        });
+        recipes = data;
+        console.log('Loaded recipes:', Object.keys(recipes).length);
+        window.selectedCategory = 'all';
+        hideLoading();
+        renderCards();
+        initUI();
+        addRecipeStructuredData();
+      })
+      .catch(secondError => {
+        console.error('Second fetch also failed:', secondError);
+        hideLoading();
+        
+        // Check if we're on mobile and show appropriate error
+        if (window.innerWidth <= 768) {
+          showMobileError();
+        } else {
+          const errMsg = document.createElement('div');
+          errMsg.style.cssText = 'color: #ff6b6b; text-align: center; margin: 20px; padding: 20px; background: rgba(255,107,107,0.1); border-radius: 8px; border: 1px solid #ff6b6b;';
+          errMsg.innerHTML = `
+            <h3>⚠️ Error Loading Recipes</h3>
+            <p>Unable to load recipes. Please check your internet connection and try refreshing the page.</p>
+            <button onclick="location.reload()" style="background: #d2691e; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 10px;">Retry</button>
+          `;
+          document.body.prepend(errMsg);
+        }
+      });
   });
 
 const additions = {
@@ -305,182 +342,326 @@ function renderCards() {
 
 // --- MODAL LOGIC ---
 function openModal(recipeKey) {
-  const recipe = recipes[recipeKey];
-  const modal = document.getElementById("recipeModal");
-  
-  // Prevent body scroll on mobile
-  if (window.innerWidth <= 768) {
-    document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
-    document.body.style.width = '100%';
-  }
-  
-  document.getElementById("modalTitle").textContent = recipe.title;
-  document.getElementById("modalImage").src = recipe.img;
-
-  // Ingredients
-  const ingredientsList = document.getElementById("modalIngredients");
-  ingredientsList.innerHTML = "";
-  recipe.ingredients.forEach(ing => {
-    const li = document.createElement("li");
-    li.textContent = ing;
-    ingredientsList.appendChild(li);
-  });
-
-  // Segmented button toggle logic
-  const processElem = document.getElementById("modalProcess");
-  const easyBtn = document.getElementById("jargonEasyBtn");
-  const jargonBtn = document.getElementById("jargonJargonBtn");
-  function renderProcess(showJargon) {
-    if (showJargon && recipe.process_jargon) {
-      processElem.innerHTML = Array.isArray(recipe.process_jargon)
-        ? '<ul>' + recipe.process_jargon.map(step => `<li>${step}</li>`).join('') + '</ul>'
-        : `<ul><li>${recipe.process_jargon}</li></ul>`;
-    } else if (recipe.process_easy) {
-      processElem.innerHTML = Array.isArray(recipe.process_easy)
-        ? '<ul>' + recipe.process_easy.map(step => `<li>${step}</li>`).join('') + '</ul>'
-        : `<ul><li>${recipe.process_easy}</li></ul>`;
-    } else if (recipe.process_jargon) {
-      processElem.innerHTML = Array.isArray(recipe.process_jargon)
-        ? '<ul>' + recipe.process_jargon.map(step => `<li>${step}</li>`).join('') + '</ul>'
-        : `<ul><li>${recipe.process_jargon}</li></ul>`;
-    } else {
-      processElem.innerHTML = '';
+  try {
+    const recipe = recipes[recipeKey];
+    if (!recipe) {
+      console.error('Recipe not found for key:', recipeKey);
+      showToast('Recipe not found. Please try again.');
+      return;
     }
-  }
-  // Default: show easy if available, else jargon
-  let showJargon = false;
-  if (easyBtn && jargonBtn) {
-    easyBtn.classList.add('seg-btn-active');
-    easyBtn.setAttribute('aria-pressed', 'true');
-    jargonBtn.classList.remove('seg-btn-active');
-    jargonBtn.setAttribute('aria-pressed', 'false');
-    easyBtn.onclick = () => {
-      showJargon = false;
+    
+    const modal = document.getElementById("recipeModal");
+    if (!modal) {
+      console.error('Modal element not found');
+      showToast('Modal not found. Please refresh the page.');
+      return;
+    }
+    
+    // Prevent body scroll on mobile
+    if (window.innerWidth <= 768) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    }
+    
+    // Set modal title and image
+    const modalTitle = document.getElementById("modalTitle");
+    const modalImage = document.getElementById("modalImage");
+    if (modalTitle) modalTitle.textContent = recipe.title;
+    if (modalImage) modalImage.src = recipe.img;
+
+    // Ingredients
+    const ingredientsList = document.getElementById("modalIngredients");
+    if (ingredientsList) {
+      ingredientsList.innerHTML = "";
+      if (recipe.ingredients && Array.isArray(recipe.ingredients)) {
+        recipe.ingredients.forEach(ing => {
+          const li = document.createElement("li");
+          li.textContent = ing;
+          ingredientsList.appendChild(li);
+        });
+      }
+    }
+
+    // Segmented button toggle logic
+    const processElem = document.getElementById("modalProcess");
+    const easyBtn = document.getElementById("jargonEasyBtn");
+    const jargonBtn = document.getElementById("jargonJargonBtn");
+    
+    function renderProcess(showJargon) {
+      if (!processElem) return;
+      
+      if (showJargon && recipe.process_jargon) {
+        processElem.innerHTML = Array.isArray(recipe.process_jargon)
+          ? '<ul>' + recipe.process_jargon.map(step => `<li>${step}</li>`).join('') + '</ul>'
+          : `<ul><li>${recipe.process_jargon}</li></ul>`;
+      } else if (recipe.process_easy) {
+        processElem.innerHTML = Array.isArray(recipe.process_easy)
+          ? '<ul>' + recipe.process_easy.map(step => `<li>${step}</li>`).join('') + '</ul>'
+          : `<ul><li>${recipe.process_easy}</li></ul>`;
+      } else if (recipe.process_jargon) {
+        processElem.innerHTML = Array.isArray(recipe.process_jargon)
+          ? '<ul>' + recipe.process_jargon.map(step => `<li>${step}</li>`).join('') + '</ul>'
+          : `<ul><li>${recipe.process_jargon}</li></ul>`;
+      } else {
+        processElem.innerHTML = '';
+      }
+    }
+    
+    // Default: show easy if available, else jargon
+    let showJargon = false;
+    if (easyBtn && jargonBtn) {
       easyBtn.classList.add('seg-btn-active');
       easyBtn.setAttribute('aria-pressed', 'true');
       jargonBtn.classList.remove('seg-btn-active');
       jargonBtn.setAttribute('aria-pressed', 'false');
-      renderProcess(false);
+      easyBtn.onclick = () => {
+        showJargon = false;
+        easyBtn.classList.add('seg-btn-active');
+        easyBtn.setAttribute('aria-pressed', 'true');
+        jargonBtn.classList.remove('seg-btn-active');
+        jargonBtn.setAttribute('aria-pressed', 'false');
+        renderProcess(false);
+      };
+      jargonBtn.onclick = () => {
+        showJargon = true;
+        jargonBtn.classList.add('seg-btn-active');
+        jargonBtn.setAttribute('aria-pressed', 'true');
+        easyBtn.classList.remove('seg-btn-active');
+        easyBtn.setAttribute('aria-pressed', 'false');
+        renderProcess(true);
+      };
+    }
+    renderProcess(showJargon);
+
+    // Nutrition values
+    if (recipe.baseNutrition) {
+      const caloriesElem = document.getElementById("calories");
+      const carbsElem = document.getElementById("carbs");
+      const proteinElem = document.getElementById("protein");
+      
+      if (caloriesElem) caloriesElem.textContent = recipe.baseNutrition.calories;
+      if (carbsElem) carbsElem.textContent = recipe.baseNutrition.carbs;
+      if (proteinElem) proteinElem.textContent = recipe.baseNutrition.protein;
+    }
+
+    // Radar chart
+    if (recipe.flavorProfile) {
+      const chartContainer = document.getElementById("flavorRadarChart");
+      if (chartContainer) {
+        renderFlavorRadarChart(recipe.flavorProfile);
+      }
+    }
+
+    // Brew strength & caffeine estimate
+    if (typeof recipe.caffeine !== 'undefined') {
+      const brewStrength = document.getElementById('brewStrength');
+      const brewStrengthValue = document.getElementById('brewStrengthValue');
+      const caffeineEstimate = document.getElementById('caffeineEstimate');
+      
+      if (brewStrength) brewStrength.value = 3;
+      if (brewStrengthValue) brewStrengthValue.textContent = 3;
+      
+      function updateCaffeine() {
+        if (caffeineEstimate) {
+          const strength = brewStrength ? brewStrength.value : 3;
+          const caffeineEstimateValue = updateCaffeineEstimate(recipe, strength);
+          caffeineEstimate.textContent = `Estimated Caffeine: ${caffeineEstimateValue} mg`;
+        }
+      }
+      
+      if (brewStrength) {
+        brewStrength.oninput = updateCaffeine;
+      }
+      updateCaffeine();
+    }
+
+    // --- Customization logic ---
+    const addMilk = document.getElementById('addMilk');
+    const addSugar = document.getElementById('addSugar');
+    const milkQty = document.getElementById('milkQty');
+    const sugarQty = document.getElementById('sugarQty');
+    const addIce = document.getElementById('addIce');
+    const iceQty = document.getElementById('iceQty');
+    const addFoam = document.getElementById('addFoam');
+    const foamQty = document.getElementById('foamQty');
+    const toppingType = document.getElementById('toppingType');
+    const toppingQty = document.getElementById('toppingQty');
+    const resetBtn = document.getElementById('resetCustomize');
+    const milkType = document.getElementById('milkType');
+    const customToppingFields = document.getElementById('customToppingFields');
+    const customToppingName = document.getElementById('customToppingName');
+    const customToppingCal = document.getElementById('customToppingCal');
+    const customToppingCarb = document.getElementById('customToppingCarb');
+    const customToppingProt = document.getElementById('customToppingProt');
+
+    // Nutrition values per ml/g for milk types
+    const milkNutrition = {
+      whole:   { cal: 0.5, carb: 0.05, prot: 0.03 },
+      skim:    { cal: 0.35, carb: 0.05, prot: 0.035 },
+      oat:     { cal: 0.43, carb: 0.07, prot: 0.01 },
+      almond:  { cal: 0.17, carb: 0.007, prot: 0.006 },
+      soy:     { cal: 0.33, carb: 0.015, prot: 0.03 },
+      coconut: { cal: 0.2, carb: 0.01, prot: 0.002 }
     };
-    jargonBtn.onclick = () => {
-      showJargon = true;
-      jargonBtn.classList.add('seg-btn-active');
-      jargonBtn.setAttribute('aria-pressed', 'true');
-      easyBtn.classList.remove('seg-btn-active');
-      easyBtn.setAttribute('aria-pressed', 'false');
-      renderProcess(true);
+    
+    // Nutrition values per g/ml for toppings
+    const toppingNutrition = {
+      whipped:  { cal: 3, carb: 0.2, prot: 0.1 },
+      chocolate:{ cal: 5.5, carb: 0.7, prot: 0.05 },
+      cinnamon: { cal: 2.5, carb: 0.8, prot: 0 },
+      caramel:  { cal: 4.5, carb: 1.1, prot: 0 },
+      hazelnut: { cal: 3.2, carb: 0.8, prot: 0 },
+      honey:    { cal: 3, carb: 0.82, prot: 0 },
+      maple:    { cal: 2.6, carb: 0.67, prot: 0 },
     };
-  }
-  renderProcess(showJargon);
 
-  // Nutrition
-  const nutritionElem = document.getElementById("modalNutrition");
-  const baseNutrition = recipe.baseNutrition || { calories: 0, carbs: 0, protein: 0 };
-  nutritionElem.innerHTML = `
-    <div class="nutrition">
-      <span>Calories: ${baseNutrition.calories}</span>
-      <span>Carbs: ${baseNutrition.carbs}g</span>
-      <span>Protein: ${baseNutrition.protein}g</span>
-    </div>
-  `;
+    function updateNutritionCustom() {
+      let cal = recipe.baseNutrition ? recipe.baseNutrition.calories : 0;
+      let carbs = recipe.baseNutrition ? recipe.baseNutrition.carbs : 0;
+      let protein = recipe.baseNutrition ? recipe.baseNutrition.protein : 0;
+      const milkTypeVal = milkType ? milkType.value : 'whole';
+      const milkNut = milkNutrition[milkTypeVal] || milkNutrition.whole;
+      
+      if (addMilk && addMilk.checked) {
+        const m = parseInt(milkQty ? milkQty.value : 0) || 0;
+        cal += m * milkNut.cal;
+        carbs += m * milkNut.carb;
+        protein += m * milkNut.prot;
+      }
+      if (addSugar && addSugar.checked) {
+        const s = parseInt(sugarQty ? sugarQty.value : 0) || 0;
+        cal += s * 4;
+        carbs += s * 1;
+      }
+      if (addIce && addIce.checked) {
+        // negligible nutrition
+      }
+      if (addFoam && addFoam.checked) {
+        const f = parseInt(foamQty ? foamQty.value : 0) || 0;
+        cal += f * milkNut.cal;
+        carbs += f * milkNut.carb;
+        protein += f * milkNut.prot;
+      }
+      if (toppingType && toppingType.value && parseInt(toppingQty ? toppingQty.value : 0) > 0) {
+        const t = parseInt(toppingQty ? toppingQty.value : 0) || 0;
+        if (toppingType.value === 'custom') {
+          const ccal = parseFloat(customToppingCal ? customToppingCal.value : 0) || 0;
+          const ccarb = parseFloat(customToppingCarb ? customToppingCarb.value : 0) || 0;
+          const cprot = parseFloat(customToppingProt ? customToppingProt.value : 0) || 0;
+          cal += t * ccal;
+          carbs += t * ccarb;
+          protein += t * cprot;
+        } else if (toppingNutrition[toppingType.value]) {
+          const nut = toppingNutrition[toppingType.value];
+          cal += t * nut.cal;
+          carbs += t * nut.carb;
+          protein += t * nut.prot;
+        }
+      }
+      
+      const caloriesElem = document.getElementById("calories");
+      const carbsElem = document.getElementById("carbs");
+      const proteinElem = document.getElementById("protein");
+      
+      if (caloriesElem) caloriesElem.textContent = Math.round(cal * 10) / 10;
+      if (carbsElem) carbsElem.textContent = Math.round(carbs * 10) / 10;
+      if (proteinElem) proteinElem.textContent = Math.round(protein * 10) / 10;
+    }
 
-  // Customization
-  const customElem = document.getElementById("modalCustom");
-  customElem.innerHTML = `
-    <h4>Customize Your Drink</h4>
-    <div class="customization-options">
-      <label><input type="checkbox" id="addMilk"> Add Milk (+50 cal)</label>
-      <label><input type="checkbox" id="addSugar"> Add Sugar (+30 cal)</label>
-    </div>
-    <div class="custom-nutrition">
-      <span>Total Calories: <span id="totalCalories">${baseNutrition.calories}</span></span>
-      <span>Total Carbs: <span id="totalCarbs">${baseNutrition.carbs}g</span></span>
-      <span>Total Protein: <span id="totalProtein">${baseNutrition.protein}g</span></span>
-    </div>
-  `;
-
-  // Customization logic
-  const milkCheckbox = document.getElementById("addMilk");
-  const sugarCheckbox = document.getElementById("addSugar");
-  
-  function updateCaffeine() {
-    const caffeineElem = document.getElementById("modalCaffeine");
-    if (caffeineElem && recipe.caffeine) {
-      const strength = document.getElementById("brewStrength")?.value || "medium";
-      const caffeineEstimate = updateCaffeineEstimate(recipe, strength);
-      caffeineElem.textContent = `Caffeine: ~${caffeineEstimate}mg`;
-    }
-  }
-  
-  function updateNutritionCustom() {
-    let totalCalories = baseNutrition.calories;
-    let totalCarbs = baseNutrition.carbs;
-    let totalProtein = baseNutrition.protein;
-    
-    if (milkCheckbox && milkCheckbox.checked) {
-      totalCalories += additions.milk.calories;
-      totalCarbs += additions.milk.carbs;
-      totalProtein += additions.milk.protein;
-    }
-    if (sugarCheckbox && sugarCheckbox.checked) {
-      totalCalories += additions.sugar.calories;
-      totalCarbs += additions.sugar.carbs;
-      totalProtein += additions.sugar.protein;
-    }
-    
-    document.getElementById("totalCalories").textContent = totalCalories;
-    document.getElementById("totalCarbs").textContent = totalCarbs + "g";
-    document.getElementById("totalProtein").textContent = totalProtein + "g";
-  }
-  
-  if (milkCheckbox) {
-    milkCheckbox.addEventListener('change', updateNutritionCustom);
-  }
-  if (sugarCheckbox) {
-    sugarCheckbox.addEventListener('change', updateNutritionCustom);
-  }
-  
-  // Brew strength selector
-  const strengthSelect = document.getElementById("brewStrength");
-  if (strengthSelect) {
-    strengthSelect.addEventListener('change', updateCaffeine);
-  }
-  
-  // Flavor profile chart
-  if (recipe.flavorProfile) {
-    const chartContainer = document.getElementById("flavorRadarChart");
-    if (chartContainer) {
-      renderFlavorRadarChart(recipe.flavorProfile);
-    }
-  }
-  
-  // Show modal with mobile optimization
-  modal.style.display = "flex";
-  modal.classList.remove("hidden");
-  
-  // Focus management for accessibility
-  const closeBtn = modal.querySelector('.close-btn');
-  if (closeBtn) {
-    closeBtn.focus();
-  }
-  
-  // Mobile-specific optimizations
-  if (window.innerWidth <= 768) {
-    // Scroll to top of modal content
-    const modalContent = modal.querySelector('.modal-content');
-    if (modalContent) {
-      modalContent.scrollTop = 0;
+    // Show/hide input fields based on checkboxes
+    function toggleInput(checkbox, input) {
+      if (checkbox && input) {
+        input.style.display = checkbox.checked ? '' : 'none';
+        if (!checkbox.checked) input.value = 0;
+      }
     }
     
-    // Add touch event listeners for better mobile interaction
-    modal.addEventListener('touchstart', function(e) {
-      e.stopPropagation();
-    }, { passive: true });
+    if (addMilk) addMilk.onchange = function() { toggleInput(addMilk, milkQty); updateNutritionCustom(); };
+    if (addSugar) addSugar.onchange = function() { toggleInput(addSugar, sugarQty); updateNutritionCustom(); };
+    if (addIce) addIce.onchange = function() { toggleInput(addIce, iceQty); updateNutritionCustom(); };
+    if (addFoam) addFoam.onchange = function() { toggleInput(addFoam, foamQty); updateNutritionCustom(); };
+    
+    if (milkQty) milkQty.oninput = updateNutritionCustom;
+    if (sugarQty) sugarQty.oninput = updateNutritionCustom;
+    if (iceQty) iceQty.oninput = updateNutritionCustom;
+    if (foamQty) foamQty.oninput = updateNutritionCustom;
+    if (milkType) milkType.onchange = updateNutritionCustom;
+    
+    if (toppingType) {
+      toppingType.onchange = function() {
+        if (toppingQty) toppingQty.style.display = toppingType.value ? '' : 'none';
+        if (customToppingFields) customToppingFields.style.display = toppingType.value === 'custom' ? '' : 'none';
+        updateNutritionCustom();
+      };
+    }
+    
+    if (toppingQty) toppingQty.oninput = updateNutritionCustom;
+    if (customToppingCal) customToppingCal.oninput = updateNutritionCustom;
+    if (customToppingCarb) customToppingCarb.oninput = updateNutritionCustom;
+    if (customToppingProt) customToppingProt.oninput = updateNutritionCustom;
+    
+    if (resetBtn) {
+      resetBtn.onclick = function() {
+        if (addMilk) addMilk.checked = false;
+        if (addSugar) addSugar.checked = false;
+        if (addIce) addIce.checked = false;
+        if (addFoam) addFoam.checked = false;
+        if (milkQty) milkQty.value = 0;
+        if (sugarQty) sugarQty.value = 0;
+        if (iceQty) iceQty.value = 0;
+        if (foamQty) foamQty.value = 0;
+        if (toppingType) toppingType.value = '';
+        if (toppingQty) toppingQty.value = 0;
+        if (milkQty) milkQty.style.display = 'none';
+        if (sugarQty) sugarQty.style.display = 'none';
+        if (iceQty) iceQty.style.display = 'none';
+        if (foamQty) foamQty.style.display = 'none';
+        if (toppingQty) toppingQty.style.display = 'none';
+        if (customToppingFields) customToppingFields.style.display = 'none';
+        updateNutritionCustom();
+      };
+    }
+    
+    // Initialize input visibility
+    if (addMilk && milkQty) toggleInput(addMilk, milkQty);
+    if (addSugar && sugarQty) toggleInput(addSugar, sugarQty);
+    if (addIce && iceQty) toggleInput(addIce, iceQty);
+    if (addFoam && foamQty) toggleInput(addFoam, foamQty);
+    if (toppingType && toppingQty) toppingQty.style.display = toppingType.value ? '' : 'none';
+    if (customToppingFields) customToppingFields.style.display = toppingType.value === 'custom' ? '' : 'none';
+    updateNutritionCustom();
+
+    // Show modal
+    modal.classList.remove('hidden');
+    modal.style.display = 'flex';
+    const mainContent = document.getElementById("mainContent");
+    if (mainContent) mainContent.classList.add("blurred");
+    
+    // Focus management for accessibility
+    const closeBtn = modal.querySelector('.close-btn');
+    if (closeBtn) {
+      closeBtn.focus();
+    }
+    
+    // Mobile-specific optimizations
+    if (window.innerWidth <= 768) {
+      // Scroll to top of modal content
+      const modalContent = modal.querySelector('.modal-content');
+      if (modalContent) {
+        modalContent.scrollTop = 0;
+      }
+      
+      // Add touch event listeners for better mobile interaction
+      modal.addEventListener('touchstart', function(e) {
+        e.stopPropagation();
+      }, { passive: true });
+    }
+    
+  } catch (error) {
+    console.error('Error opening modal:', error);
+    showToast('Something went wrong. Please refresh the page.');
   }
-  
-  updateCaffeine();
-  updateNutritionCustom();
 }
 
 function closeModal() {
