@@ -76,22 +76,51 @@ function showMobileError() {
 function loadRecipes() {
   showLoading();
 
-  // Enhanced fetch with better error handling and mobile optimization
-  fetch('src/data/recipes.json')
-    .then(response => {
-      console.log('Fetch response status:', response.status);
-      console.log('Fetch response ok:', response.ok);
+  // Try multiple fetch strategies
+  const fetchStrategies = [
+    () => fetch('src/data/recipes.json'),
+    () => fetch('./src/data/recipes.json'),
+    () => fetch('/BrewIt/src/data/recipes.json'),
+    () => fetch('https://sai-naman-gangiredla.github.io/BrewIt/src/data/recipes.json'),
+    () => fetch(window.location.origin + '/BrewIt/src/data/recipes.json'),
+    () => fetch(window.location.origin + '/src/data/recipes.json')
+  ];
+
+  async function tryFetch(strategyIndex = 0) {
+    if (strategyIndex >= fetchStrategies.length) {
+      console.error('All fetch strategies failed');
+      hideLoading();
+      
+      // Show error message
+      if (window.innerWidth <= 768) {
+        showMobileError();
+      } else {
+        const errMsg = document.createElement('div');
+        errMsg.style.cssText = 'color: #ff6b6b; text-align: center; margin: 20px; padding: 20px; background: rgba(255,107,107,0.1); border-radius: 8px; border: 1px solid #ff6b6b;';
+        errMsg.innerHTML = `
+          <h3>⚠️ Error Loading Recipes</h3>
+          <p>Unable to load recipes. Please check your internet connection and try refreshing the page.</p>
+          <button onclick="location.reload()" style="background: #d2691e; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 10px;">Retry</button>
+        `;
+        document.body.prepend(errMsg);
+      }
+      return;
+    }
+
+    try {
+      console.log(`Trying fetch strategy ${strategyIndex + 1}...`);
+      const response = await fetchStrategies[strategyIndex]();
+      
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      return response.json();
-    })
-    .then(data => {
-      console.log('Successfully loaded recipes data:', data);
+      
+      const data = await response.json();
+      console.log(`Successfully loaded recipes with strategy ${strategyIndex + 1}:`, data);
+      
       // Normalize all recipes to have process_jargon and process_easy
       Object.keys(data).forEach(key => {
         const rec = data[key];
-        // If only 'process' exists, use it for both fields
         if (!rec.process_jargon && rec.process) {
           rec.process_jargon = rec.process;
         }
@@ -99,102 +128,24 @@ function loadRecipes() {
           rec.process_easy = rec.process;
         }
       });
+      
       recipes = data;
       console.log('Loaded recipes:', Object.keys(recipes).length);
-      window.selectedCategory = 'all'; // Always show all recipes by default
+      window.selectedCategory = 'all';
       hideLoading();
-      renderCards(); // Call your function to render the recipe cards after loading
-      // Place any other code that depends on recipes here
-      initUI(); // Ensure UI is initialized after cards are rendered
-      
-      // Generate structured data for SEO
+      renderCards();
+      initUI();
       addRecipeStructuredData();
-    })
-    .catch(error => {
-      console.error('Error loading recipes:', error);
-      console.error('Error details:', error.message);
-      hideLoading();
       
-      // Try alternative path if first fails
-      console.log('Trying alternative path...');
-      fetch('./src/data/recipes.json')
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then(data => {
-          console.log('Successfully loaded recipes with alternative path');
-          Object.keys(data).forEach(key => {
-            const rec = data[key];
-            if (!rec.process_jargon && rec.process) {
-              rec.process_jargon = rec.process;
-            }
-            if (!rec.process_easy && rec.process) {
-              rec.process_easy = rec.process;
-            }
-          });
-          recipes = data;
-          console.log('Loaded recipes:', Object.keys(recipes).length);
-          window.selectedCategory = 'all';
-          hideLoading();
-          renderCards();
-          initUI();
-          addRecipeStructuredData();
-        })
-        .catch(secondError => {
-          console.error('Second fetch also failed:', secondError);
-          hideLoading();
-          
-          // Try third alternative path
-          console.log('Trying third alternative path...');
-          fetch('/BrewIt/src/data/recipes.json')
-            .then(response => {
-              if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-              }
-              return response.json();
-            })
-            .then(data => {
-              console.log('Successfully loaded recipes with third path');
-              Object.keys(data).forEach(key => {
-                const rec = data[key];
-                if (!rec.process_jargon && rec.process) {
-                  rec.process_jargon = rec.process;
-                }
-                if (!rec.process_easy && rec.process) {
-                  rec.process_easy = rec.process;
-                }
-              });
-              recipes = data;
-              console.log('Loaded recipes:', Object.keys(recipes).length);
-              window.selectedCategory = 'all';
-              hideLoading();
-              renderCards();
-              initUI();
-              addRecipeStructuredData();
-            })
-            .catch(thirdError => {
-              console.error('All fetch attempts failed:', thirdError);
-              hideLoading();
-              
-              // Check if we're on mobile and show appropriate error
-              if (window.innerWidth <= 768) {
-                showMobileError();
-              } else {
-                const errMsg = document.createElement('div');
-                errMsg.style.cssText = 'color: #ff6b6b; text-align: center; margin: 20px; padding: 20px; background: rgba(255,107,107,0.1); border-radius: 8px; border: 1px solid #ff6b6b;';
-                errMsg.innerHTML = `
-                  <h3>⚠️ Error Loading Recipes</h3>
-                  <p>Unable to load recipes. Please check your internet connection and try refreshing the page.</p>
-                  <button onclick="location.reload()" style="background: #d2691e; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 10px;">Retry</button>
-                `;
-                document.body.prepend(errMsg);
-              }
-            });
-        });
-    });
+    } catch (error) {
+      console.error(`Fetch strategy ${strategyIndex + 1} failed:`, error);
+      // Try next strategy
+      setTimeout(() => tryFetch(strategyIndex + 1), 100);
+    }
+  }
+
+  // Start with first strategy
+  tryFetch(0);
 }
 
 // Wait for DOM to be ready before loading recipes
