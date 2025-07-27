@@ -343,22 +343,25 @@
   </header>
 
   <nav class="nav" aria-label="Recipe filters and search">
-  <button data-category="all" id="allBtn" class="filter-btn active" aria-current="page" aria-label="Show all recipes">All</button>
-<button data-category="hot" id="hotBtn" class="filter-btn" aria-label="Show hot coffee recipes">Hot</button>
-<button data-category="iced" id="icedBtn" class="filter-btn" aria-label="Show iced coffee recipes">Iced</button>
-<button data-category="favourites" id="favBtn" class="filter-btn" aria-label="Show favorite recipes"><i class="bi bi-heart" aria-hidden="true"></i></button>
-  <!-- 2. Navigation links/buttons for Remix and Quiz -->
-  <button id="remixNavBtn" aria-label="Go to recipe remix section">Remix</button>
-  <button id="quizNavBtn" aria-label="Take coffee quiz to find your brew">Find Your Brew</button>
-  <input type="text" id="searchInput" placeholder="Search recipes..." aria-label="Search recipes by name or ingredients" />
-  <select id="sortSelect" style="margin-left:8px; padding:7px 10px; border-radius:5px; border:1px solid #aaa; font-size:14px;" aria-label="Sort recipes by different criteria">
-    <option value="default">Sort by</option>
-    <option value="name">Name (A–Z)</option>
-    <option value="calories">Calories (Low–High)</option>
-    <option value="type">Type (Hot/Iced)</option>
-  </select>
-  <button id="darkModeToggle" aria-label="Toggle dark mode"><i class="bi bi-moon" aria-hidden="true"></i></button>
-</nav>
+    <div class="filter-buttons">
+      <button data-category="all" id="allBtn" class="filter-btn active" aria-current="page" aria-label="Show all recipes">All</button>
+      <button data-category="hot" id="hotBtn" class="filter-btn" aria-label="Show hot coffee recipes">Hot</button>
+      <button data-category="iced" id="icedBtn" class="filter-btn" aria-label="Show iced coffee recipes">Iced</button>
+      <button data-category="favourites" id="favBtn" class="filter-btn" aria-label="Show favorite recipes"><i class="bi bi-heart" aria-hidden="true"></i></button>
+      <button id="remixNavBtn" aria-label="Go to recipe remix section">Remix</button>
+      <button id="quizNavBtn" aria-label="Take coffee quiz to find your brew">Find Your Brew</button>
+    </div>
+    <div class="search-sort-row">
+      <input type="text" id="searchInput" placeholder="Search recipes..." aria-label="Search recipes by name or ingredients" />
+      <select id="sortSelect" aria-label="Sort recipes by different criteria">
+        <option value="default">Sort by</option>
+        <option value="name">Name (A–Z)</option>
+        <option value="calories">Calories (Low–High)</option>
+        <option value="type">Type (Hot/Iced)</option>
+      </select>
+      <button id="darkModeToggle" aria-label="Toggle dark mode"><i class="bi bi-moon" aria-hidden="true"></i></button>
+    </div>
+  </nav>
 
   <div class="card-container" id="cardContainer" aria-live="polite"></div>
   <div id="noResults" style="display:none;text-align:center;font-size:1.2em;color:#a0522d;margin:30px 0 0 0;">No results found.</div>

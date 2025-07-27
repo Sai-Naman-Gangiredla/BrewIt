@@ -762,6 +762,7 @@ footer {
 }
 
 /* Improved accessibility for mobile */
+/* Mobile Navigation Improvements */
 @media (max-width: 768px) {
   /* Better focus indicators */
   .recipe-card:focus,
@@ -790,6 +791,169 @@ footer {
   .card.recipe-card {
     max-width: 100%;
     margin: 0;
+  }
+  
+  /* MOBILE NAVIGATION REDESIGN */
+  .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 12px;
+    background-color: #2d2217;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  /* Horizontal scrollable filter buttons */
+  .nav .filter-buttons {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 4px 0;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+  
+  .nav .filter-buttons::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+  
+  .nav .filter-buttons button {
+    flex-shrink: 0;
+    white-space: nowrap;
+    min-width: auto;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 20px;
+    border: 1px solid #5a4633;
+    background: #3a2c1a;
+    color: #f2ddc9;
+    transition: all 0.2s;
+  }
+  
+  .nav .filter-buttons button.active {
+    background-color: #d2691e;
+    color: white;
+    font-weight: bold;
+    border: 1px solid #a0522d;
+  }
+  
+  /* Search and sort row */
+  .nav .search-sort-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 4px;
+  }
+  
+  .nav .search-sort-row input,
+  .nav .search-sort-row select {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #5a4633;
+    background: #3a2c1a;
+    color: #f2ddc9;
+    font-size: 14px;
+  }
+  
+  .nav .search-sort-row select {
+    flex: 0 0 auto;
+    min-width: 100px;
+  }
+  
+  /* Dark mode toggle */
+  .nav #darkModeToggle {
+    flex-shrink: 0;
+    padding: 8px;
+    border-radius: 50%;
+    border: 1px solid #5a4633;
+    background: #3a2c1a;
+    color: #f2ddc9;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Compact header */
+  .header {
+    padding: 8px 12px;
+    height: auto;
+    min-height: 60px;
+  }
+  
+  .header .title {
+    font-size: 24px;
+  }
+  
+  .header .center-header {
+    font-size: 16px;
+    margin: 4px 0;
+  }
+  
+  /* More space for cards */
+  .card-container {
+    padding: 12px;
+    gap: 16px;
+  }
+  
+  /* Better touch targets */
+  .nav button, .nav input, .close-btn {
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+  
+  /* Improved card layout for mobile */
+  .card.recipe-card {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .card.recipe-card:active {
+    transform: scale(0.98);
+  }
+  
+  /* Compact card design for mobile */
+  .card.recipe-card .card-body {
+    padding: 12px;
+  }
+  
+  .card.recipe-card .card-title {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+  
+  .card.recipe-card img {
+    height: 140px;
+  }
+  
+  /* Better spacing for mobile */
+  .header {
+    margin-bottom: 0;
+  }
+  
+  .nav {
+    margin-bottom: 8px;
+  }
+  
+  /* Ensure proper scrolling */
+  .filter-buttons {
+    scroll-behavior: smooth;
+  }
+  
+  /* Active state improvements */
+  .filter-buttons button.active {
+    box-shadow: 0 2px 8px rgba(210, 105, 30, 0.3);
+  }
+  
+  /* Hover effects for better feedback */
+  .filter-buttons button:hover {
+    background: #4a3c2a;
+    transform: translateY(-1px);
   }
 }
 
