@@ -418,11 +418,111 @@ footer {
     font-size: 18px;
     margin: 0 10px;
   }
+  /* CRITICAL: Override old nav styles with new horizontal layout */
   .nav {
-    flex-direction: column;
-    gap: 6px;
-    padding: 8px;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    padding: 8px 12px !important;
+    background-color: #2d2217 !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
   }
+  
+  /* Force horizontal scrollable filter buttons */
+  .nav .filter-buttons {
+    display: flex !important;
+    gap: 8px !important;
+    overflow-x: auto !important;
+    padding: 4px 0 !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+  }
+  
+  .nav .filter-buttons::-webkit-scrollbar {
+    display: none !important;
+  }
+  
+  .nav .filter-buttons button {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    min-width: auto !important;
+    padding: 8px 16px !important;
+    font-size: 14px !important;
+    border-radius: 20px !important;
+    border: 1px solid #5a4633 !important;
+    background: #3a2c1a !important;
+    color: #f2ddc9 !important;
+    transition: all 0.2s !important;
+    display: inline-block !important;
+    margin: 0 !important;
+  }
+  
+  .nav .filter-buttons button.active {
+    background-color: #d2691e !important;
+    color: white !important;
+    font-weight: bold !important;
+    border: 1px solid #a0522d !important;
+  }
+  
+  /* Search and sort row */
+  .nav .search-sort-row {
+    display: flex !important;
+    gap: 8px !important;
+    align-items: center !important;
+    margin-top: 4px !important;
+    flex-wrap: wrap !important;
+  }
+  
+  .nav .search-sort-row input,
+  .nav .search-sort-row select {
+    flex: 1 !important;
+    padding: 8px 12px !important;
+    border-radius: 8px !important;
+    border: 1px solid #5a4633 !important;
+    background: #3a2c1a !important;
+    color: #f2ddc9 !important;
+    font-size: 14px !important;
+    min-height: 44px !important;
+  }
+  
+  .nav .search-sort-row select {
+    flex: 0 0 auto !important;
+    min-width: 100px !important;
+  }
+  
+  /* Dark mode toggle */
+  .nav #darkModeToggle {
+    flex-shrink: 0 !important;
+    padding: 8px !important;
+    border-radius: 50% !important;
+    border: 1px solid #5a4633 !important;
+    background: #3a2c1a !important;
+    color: #f2ddc9 !important;
+    width: 40px !important;
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  /* Hide old nav elements */
+  .nav > button {
+    display: none !important;
+  }
+  
+  .nav > input {
+    display: none !important;
+  }
+  
+  .nav > select {
+    display: none !important;
+  }
+  
   .nav button, .nav input {
     font-size: 13px;
     padding: 7px 8px;
@@ -700,14 +800,112 @@ footer {
     padding: 10px;
   }
   
-  /* Better mobile navigation */
+  /* CRITICAL: Override old nav styles with new horizontal layout */
   .nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: #2d2217;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    }
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    padding: 8px 12px !important;
+    background-color: #2d2217 !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+  }
+  
+  /* Force horizontal scrollable filter buttons */
+  .nav .filter-buttons {
+    display: flex !important;
+    gap: 8px !important;
+    overflow-x: auto !important;
+    padding: 4px 0 !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+  }
+  
+  .nav .filter-buttons::-webkit-scrollbar {
+    display: none !important;
+  }
+  
+  .nav .filter-buttons button {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    min-width: auto !important;
+    padding: 8px 16px !important;
+    font-size: 14px !important;
+    border-radius: 20px !important;
+    border: 1px solid #5a4633 !important;
+    background: #3a2c1a !important;
+    color: #f2ddc9 !important;
+    transition: all 0.2s !important;
+    display: inline-block !important;
+    margin: 0 !important;
+    min-height: 48px !important;
+  }
+  
+  .nav .filter-buttons button.active {
+    background-color: #d2691e !important;
+    color: white !important;
+    font-weight: bold !important;
+    border: 1px solid #a0522d !important;
+  }
+  
+  /* Search and sort row */
+  .nav .search-sort-row {
+    display: flex !important;
+    gap: 8px !important;
+    align-items: center !important;
+    margin-top: 4px !important;
+    flex-wrap: wrap !important;
+  }
+  
+  .nav .search-sort-row input,
+  .nav .search-sort-row select {
+    flex: 1 !important;
+    padding: 8px 12px !important;
+    border-radius: 8px !important;
+    border: 1px solid #5a4633 !important;
+    background: #3a2c1a !important;
+    color: #f2ddc9 !important;
+    font-size: 14px !important;
+    min-height: 48px !important;
+  }
+  
+  .nav .search-sort-row select {
+    flex: 0 0 auto !important;
+    min-width: 100px !important;
+  }
+  
+  /* Dark mode toggle */
+  .nav #darkModeToggle {
+    flex-shrink: 0 !important;
+    padding: 8px !important;
+    border-radius: 50% !important;
+    border: 1px solid #5a4633 !important;
+    background: #3a2c1a !important;
+    color: #f2ddc9 !important;
+    width: 40px !important;
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  /* Hide old nav elements */
+  .nav > button {
+    display: none !important;
+  }
+  
+  .nav > input {
+    display: none !important;
+  }
+  
+  .nav > select {
+    display: none !important;
+  }
 
   /* Improved touch targets */
   .card.recipe-card {
