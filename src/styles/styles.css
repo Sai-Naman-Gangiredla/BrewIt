@@ -525,6 +525,8 @@ footer {
     visibility: visible !important;
     opacity: 1 !important;
     display: block !important;
+    position: relative !important;
+    z-index: 1001 !important;
   }
   
   /* Ensure ingredients list is visible */
@@ -533,6 +535,8 @@ footer {
     visibility: visible !important;
     opacity: 1 !important;
     color: #f2ddc9 !important;
+    position: relative !important;
+    z-index: 1001 !important;
   }
   
   #modalIngredients li {
@@ -541,6 +545,8 @@ footer {
     margin: 5px 0 !important;
     visibility: visible !important;
     opacity: 1 !important;
+    position: relative !important;
+    z-index: 1001 !important;
   }
   
   /* Ensure process content is visible */
@@ -549,11 +555,15 @@ footer {
     visibility: visible !important;
     opacity: 1 !important;
     color: #f2ddc9 !important;
+    position: relative !important;
+    z-index: 1001 !important;
   }
   
   #modalProcess ul {
     display: block !important;
     margin: 10px 0 !important;
+    position: relative !important;
+    z-index: 1001 !important;
   }
   
   #modalProcess li {
@@ -562,6 +572,8 @@ footer {
     margin: 5px 0 !important;
     visibility: visible !important;
     opacity: 1 !important;
+    position: relative !important;
+    z-index: 1001 !important;
   }
   
   /* Ensure nutrition section is visible */
@@ -574,6 +586,8 @@ footer {
     padding: 10px !important;
     margin: 10px 0 !important;
     border-radius: 8px !important;
+    position: relative !important;
+    z-index: 1001 !important;
   }
   
   /* Ensure modal title is visible */
@@ -585,6 +599,8 @@ footer {
     font-size: 1.5em !important;
     font-weight: bold !important;
     margin-bottom: 15px !important;
+    position: relative !important;
+    z-index: 1001 !important;
   }
   
   /* Ensure all form elements are visible */
@@ -596,6 +612,8 @@ footer {
     opacity: 1 !important;
     color: #333 !important;
     background: white !important;
+    position: relative !important;
+    z-index: 1001 !important;
   }
   
   /* CRITICAL: Override any inherited styles */
@@ -604,6 +622,8 @@ footer {
     color: #f2ddc9 !important;
     visibility: visible !important;
     opacity: 1 !important;
+    position: relative !important;
+    z-index: 1001 !important;
   }
   
   /* Force text content to be visible */
@@ -614,6 +634,26 @@ footer {
     visibility: visible !important;
     opacity: 1 !important;
     display: block !important;
+    position: relative !important;
+    z-index: 1001 !important;
+  }
+  
+  /* CRITICAL: Ensure modal itself is properly positioned */
+  .modal {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    z-index: 10000 !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+  }
+  
+  /* CRITICAL: Ensure modal content is properly positioned */
+  .modal-content {
+    position: relative !important;
+    z-index: 10001 !important;
+    background: #232323 !important;
   }
   
   /* Better touch targets for mobile */
