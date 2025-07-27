@@ -1,4 +1,5 @@
-const CACHE_NAME = 'brewit-v1';
+// Service Worker for BrewIt - Coffee Recipe Hub
+const CACHE_NAME = 'brewit-v1.0.4';
 const urlsToCache = [
   './',
   './index.html',
@@ -6,6 +7,7 @@ const urlsToCache = [
   './src/script/script.js',
   './src/data/recipes.json',
   './manifest.json',
+  './public/images/coffeebeans.jpg',
   './public/images/letter-b.png',
   'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css',
   'https://cdn.jsdelivr.net/npm/chart.js'
@@ -13,105 +15,126 @@ const urlsToCache = [
 
 // Install event - cache resources
 self.addEventListener('install', event => {
+  console.log('SW installing...');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Opened cache');
+        console.log('SW opened cache');
         return cache.addAll(urlsToCache);
       })
       .catch(error => {
-        console.log('Cache installation failed:', error);
-      })
-  );
-});
-
-// Fetch event - serve from cache when offline
-self.addEventListener('fetch', event => {
-  // Skip unsupported schemes and non-GET requests
-  if (event.request.method !== 'GET' || 
-      event.request.url.startsWith('chrome-extension://') || 
-      event.request.url.startsWith('moz-extension://') ||
-      event.request.url.startsWith('ms-browser-extension://') ||
-      event.request.url.startsWith('safari-extension://') ||
-      event.request.url.startsWith('opera-extension://') ||
-      event.request.url.startsWith('edge-extension://')) {
-    return;
-  }
-  
-  // Skip data URLs and blob URLs
-  if (event.request.url.startsWith('data:') || 
-      event.request.url.startsWith('blob:') ||
-      event.request.url.startsWith('file:')) {
-    return;
-  }
-  
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Return cached version or fetch from network
-        if (response) {
-          return response;
-        }
-        
-        return fetch(event.request).then(response => {
-          // Don't cache if not a valid response
-          if (!response || response.status !== 200 || response.type !== 'basic') {
-            return response;
-          }
-          
-          // Clone the response
-          const responseToCache = response.clone();
-          
-          // Only cache same-origin requests or specific external resources
-          const url = new URL(event.request.url);
-          const isSameOrigin = url.origin === self.location.origin;
-          const isAllowedExternal = [
-            'cdn.jsdelivr.net',
-            'fonts.googleapis.com',
-            'fonts.gstatic.com'
-          ].some(domain => url.hostname.includes(domain));
-          
-          if (isSameOrigin || isAllowedExternal) {
-            caches.open(CACHE_NAME)
-              .then(cache => {
-                return cache.put(event.request, responseToCache);
-              })
-              .catch(error => {
-                console.log('Cache put failed for:', event.request.url, error);
-              });
-          }
-          
-          return response;
-        }).catch(error => {
-          console.log('Fetch failed for:', event.request.url, error);
-          // If both cache and network fail, show offline page
-          if (event.request.destination === 'document') {
-            return caches.match('./index.html');
-          }
-        });
-      })
-      .catch(() => {
-        // If both cache and network fail, show offline page
-        if (event.request.destination === 'document') {
-          return caches.match('./index.html');
-        }
+        console.error('SW cache addAll failed:', error);
       })
   );
 });
 
 // Activate event - clean up old caches
 self.addEventListener('activate', event => {
+  console.log('SW activating...');
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheName !== CACHE_NAME) {
-            console.log('Deleting old cache:', cacheName);
+            console.log('SW deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }
         })
       );
     })
+  );
+});
+
+// Fetch event - serve from cache or network
+self.addEventListener('fetch', event => {
+  // Skip non-GET requests
+  if (event.request.method !== 'GET') {
+    return;
+  }
+
+  // Skip unsupported schemes
+  const url = new URL(event.request.url);
+  if (url.protocol === 'chrome-extension:' || 
+      url.protocol === 'moz-extension:' || 
+      url.protocol === 'ms-browser-extension:' || 
+      url.protocol === 'safari-extension:' || 
+      url.protocol === 'opera-extension:' || 
+      url.protocol === 'edge-extension:' ||
+      url.protocol === 'data:' ||
+      url.protocol === 'blob:' ||
+      url.protocol === 'file:') {
+    return;
+  }
+
+  // Only cache same-origin requests or specific external resources
+  const isSameOrigin = url.origin === location.origin;
+  const isAllowedExternal = url.hostname === 'cdn.jsdelivr.net' || 
+                           url.hostname === 'fonts.googleapis.com' || 
+                           url.hostname === 'fonts.gstatic.com';
+
+  if (!isSameOrigin && !isAllowedExternal) {
+    return;
+  }
+
+  // Special handling for CSS files - always try network first for fresh styles
+  if (event.request.url.includes('styles.css')) {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          // Cache the fresh response
+          const responseClone = response.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, responseClone);
+          });
+          return response;
+        })
+        .catch(() => {
+          // Fallback to cache if network fails
+          return caches.match(event.request);
+        })
+    );
+    return;
+  }
+
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        // Return cached version if available
+        if (response) {
+          return response;
+        }
+
+        // Otherwise, fetch from network
+        return fetch(event.request)
+          .then(response => {
+            // Check if we received a valid response
+            if (!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
+            }
+
+            // Clone the response
+            const responseToCache = response.clone();
+
+            // Add to cache
+            caches.open(CACHE_NAME)
+              .then(cache => {
+                cache.put(event.request, responseToCache);
+              })
+              .catch(error => {
+                console.error('SW cache.put failed:', error);
+              });
+
+            return response;
+          })
+          .catch(error => {
+            console.error('SW fetch failed:', error);
+            
+            // For document requests, serve index.html as fallback
+            if (event.request.destination === 'document') {
+              return caches.match('./index.html');
+            }
+          });
+      })
   );
 });
 
