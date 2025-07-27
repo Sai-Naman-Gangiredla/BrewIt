@@ -1249,93 +1249,128 @@ if ('serviceWorker' in navigator) {
 
 // Function to generate structured data for recipes
 function generateRecipeStructuredData(recipe, recipeId) {
-  const baseUrl = 'https://sai-naman-gangiredla.github.io/BrewIt';
-  
-  // Convert ingredients array to proper format
-  const recipeIngredients = recipe.ingredients.map(ingredient => {
-    // Add quantities if not present
-    if (!ingredient.includes('g') && !ingredient.includes('ml') && !ingredient.includes('cup')) {
-      return `1 ${ingredient}`;
+  try {
+    const baseUrl = 'https://sai-naman-gangiredla.github.io/BrewIt';
+    
+    // Convert ingredients array to proper format with null check
+    const recipeIngredients = recipe.ingredients && Array.isArray(recipe.ingredients) 
+      ? recipe.ingredients.map(ingredient => {
+          // Add quantities if not present
+          if (!ingredient.includes('g') && !ingredient.includes('ml') && !ingredient.includes('cup')) {
+            return `1 ${ingredient}`;
+          }
+          return ingredient;
+        })
+      : [];
+
+    // Generate instructions array with proper null checks
+    let instructions = [];
+    if (recipe.process_easy && Array.isArray(recipe.process_easy)) {
+      instructions = recipe.process_easy;
+    } else if (recipe.process_jargon && Array.isArray(recipe.process_jargon)) {
+      instructions = recipe.process_jargon;
+    } else if (recipe.process) {
+      instructions = [recipe.process];
+    } else {
+      instructions = ['Follow the recipe instructions carefully.'];
     }
-    return ingredient;
-  });
+    
+    const recipeInstructions = instructions.map((step, index) => ({
+      "@type": "HowToStep",
+      "position": index + 1,
+      "text": step
+    }));
 
-  // Generate instructions array
-  const instructions = recipe.process_easy || [recipe.process_jargon || recipe.process];
-  const recipeInstructions = instructions.map((step, index) => ({
-    "@type": "HowToStep",
-    "position": index + 1,
-    "text": step
-  }));
+    // Calculate cooking time based on recipe type
+    const getCookTime = (recipeType) => {
+      switch(recipeType) {
+        case 'hot': return 'PT5M';
+        case 'iced': return 'PT3M';
+        default: return 'PT4M';
+      }
+    };
 
-  // Calculate cooking time based on recipe type
-  const getCookTime = (recipeType) => {
-    switch(recipeType) {
-      case 'hot': return 'PT5M';
-      case 'iced': return 'PT3M';
-      default: return 'PT4M';
-    }
-  };
+    // Generate aggregate rating (simulated for now)
+    const aggregateRating = {
+      "@type": "AggregateRating",
+      "ratingValue": "4.5",
+      "reviewCount": Math.floor(Math.random() * 50) + 10
+    };
 
-  // Generate aggregate rating (simulated for now)
-  const aggregateRating = {
-    "@type": "AggregateRating",
-    "ratingValue": "4.5",
-    "reviewCount": Math.floor(Math.random() * 50) + 10
-  };
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "Recipe",
-    "name": recipe.title,
-    "description": `${recipe.title} - A delicious coffee recipe with detailed instructions and nutrition information`,
-    "image": `${baseUrl}/${recipe.img}`,
-    "recipeCategory": "Coffee",
-    "recipeCuisine": "International",
-    "prepTime": "PT2M",
-    "cookTime": getCookTime(recipe.type),
-    "totalTime": "PT7M",
-    "recipeYield": "1 serving",
-    "recipeIngredient": recipeIngredients,
-    "recipeInstructions": recipeInstructions,
-    "author": {
-      "@type": "Person",
-      "name": "Sai Naman Gangiredla",
-      "email": "sainamangangiredla@gmail.com"
-    },
-    "aggregateRating": aggregateRating,
-    "nutrition": {
+    // Add null checks for nutrition data
+    const nutrition = recipe.baseNutrition ? {
       "@type": "NutritionInformation",
-      "calories": `${recipe.baseNutrition.calories} calories`,
-      "carbohydrateContent": `${recipe.baseNutrition.carbs}g`,
-      "proteinContent": `${recipe.baseNutrition.protein}g`
-    },
-    "suitableForDiet": "VegetarianDiet",
-    "recipeCuisine": "Coffee",
-    "keywords": `${recipe.title}, coffee, recipe, ${recipe.type}`,
-    "datePublished": "2024-01-01",
-    "dateModified": "2024-12-01"
-  };
+      "calories": `${recipe.baseNutrition.calories || 0} calories`,
+      "carbohydrateContent": `${recipe.baseNutrition.carbs || 0}g`,
+      "proteinContent": `${recipe.baseNutrition.protein || 0}g`
+    } : {
+      "@type": "NutritionInformation",
+      "calories": "0 calories",
+      "carbohydrateContent": "0g",
+      "proteinContent": "0g"
+    };
+
+    return {
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": recipe.title,
+      "description": `${recipe.title} - A delicious coffee recipe with detailed instructions and nutrition information`,
+      "image": `${baseUrl}/${recipe.img}`,
+      "recipeCategory": "Coffee",
+      "recipeCuisine": "International",
+      "prepTime": "PT2M",
+      "cookTime": getCookTime(recipe.type),
+      "totalTime": "PT7M",
+      "recipeYield": "1 serving",
+      "recipeIngredient": recipeIngredients,
+      "recipeInstructions": recipeInstructions,
+      "author": {
+        "@type": "Person",
+        "name": "Sai Naman Gangiredla",
+        "email": "sainamangangiredla@gmail.com"
+      },
+      "aggregateRating": aggregateRating,
+      "nutrition": nutrition,
+      "suitableForDiet": "VegetarianDiet",
+      "recipeCuisine": "Coffee",
+      "keywords": `${recipe.title}, coffee, recipe, ${recipe.type || 'hot'}`,
+      "datePublished": "2024-01-01",
+      "dateModified": "2024-12-01"
+    };
+  } catch (error) {
+    console.error('Error generating structured data for recipe:', recipeId, error);
+    return null;
+  }
 }
 
 // Function to add structured data to the page
 function addRecipeStructuredData() {
-  // Remove existing recipe structured data
-  const existingStructuredData = document.querySelectorAll('script[type="application/ld+json"]');
-  existingStructuredData.forEach(script => {
-    if (script.textContent.includes('"@type": "Recipe"')) {
-      script.remove();
-    }
-  });
+  try {
+    // Remove existing recipe structured data
+    const existingStructuredData = document.querySelectorAll('script[type="application/ld+json"]');
+    existingStructuredData.forEach(script => {
+      if (script.textContent.includes('"@type": "Recipe"')) {
+        script.remove();
+      }
+    });
 
-  // Generate structured data for all recipes
-  Object.keys(recipes).forEach(recipeId => {
-    const recipe = recipes[recipeId];
-    const structuredData = generateRecipeStructuredData(recipe, recipeId);
-    
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.textContent = JSON.stringify(structuredData);
-    document.head.appendChild(script);
-  });
+    // Generate structured data for all recipes
+    Object.keys(recipes).forEach(recipeId => {
+      const recipe = recipes[recipeId];
+      if (!recipe) {
+        console.warn('Recipe not found for ID:', recipeId);
+        return;
+      }
+      
+      const structuredData = generateRecipeStructuredData(recipe, recipeId);
+      if (structuredData) {
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.textContent = JSON.stringify(structuredData);
+        document.head.appendChild(script);
+      }
+    });
+  } catch (error) {
+    console.error('Error adding structured data:', error);
+  }
 }

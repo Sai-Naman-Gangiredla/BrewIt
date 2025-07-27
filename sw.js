@@ -24,6 +24,13 @@ self.addEventListener('install', event => {
 
 // Fetch event - serve from cache when offline
 self.addEventListener('fetch', event => {
+  // Skip chrome-extension and other unsupported schemes
+  if (event.request.url.startsWith('chrome-extension://') || 
+      event.request.url.startsWith('moz-extension://') ||
+      event.request.url.startsWith('ms-browser-extension://')) {
+    return;
+  }
+  
   event.respondWith(
     caches.match(event.request)
       .then(response => {
@@ -33,7 +40,7 @@ self.addEventListener('fetch', event => {
         }
         
         return fetch(event.request).then(response => {
-          // Don't cache if not a valid response
+          // Don't cache if not a valid response or unsupported scheme
           if (!response || response.status !== 200 || response.type !== 'basic') {
             return response;
           }
@@ -44,6 +51,9 @@ self.addEventListener('fetch', event => {
           caches.open(CACHE_NAME)
             .then(cache => {
               cache.put(event.request, responseToCache);
+            })
+            .catch(error => {
+              console.log('Cache put failed:', error);
             });
           
           return response;
