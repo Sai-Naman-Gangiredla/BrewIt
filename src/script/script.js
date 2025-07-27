@@ -1,9 +1,44 @@
+// Global error handler
+window.addEventListener('error', (event) => {
+  console.error('Global error:', event.error);
+  showToast('Something went wrong. Please refresh the page.');
+});
+
+// Unhandled promise rejection handler
+window.addEventListener('unhandledrejection', (event) => {
+  console.error('Unhandled promise rejection:', event.reason);
+  showToast('Network error. Please check your connection.');
+});
+
 // --- DATA ---
 // --- Load recipes from JSON file ---
 let recipes = {};
 
+// Show loading spinner
+function showLoading() {
+  const spinner = document.getElementById('loadingSpinner');
+  const container = document.getElementById('cardContainer');
+  if (spinner) spinner.style.display = 'flex';
+  if (container) container.style.display = 'none';
+}
+
+// Hide loading spinner
+function hideLoading() {
+  const spinner = document.getElementById('loadingSpinner');
+  const container = document.getElementById('cardContainer');
+  if (spinner) spinner.style.display = 'none';
+  if (container) container.style.display = 'grid';
+}
+
+showLoading();
+
 fetch('./src/data/recipes.json')
-  .then(response => response.json())
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
   .then(data => {
     // Normalize all recipes to have process_jargon and process_easy
     Object.keys(data).forEach(key => {
@@ -19,17 +54,21 @@ fetch('./src/data/recipes.json')
     recipes = data;
     console.log('Loaded recipes:', Object.keys(recipes).length);
     window.selectedCategory = 'all'; // Always show all recipes by default
+    hideLoading();
     renderCards(); // Call your function to render the recipe cards after loading
     // Place any other code that depends on recipes here
     initUI(); // Ensure UI is initialized after cards are rendered
   })
   .catch(error => {
     console.error('Error loading recipes:', error);
+    hideLoading();
     const errMsg = document.createElement('div');
-    errMsg.style.color = 'red';
-    errMsg.style.textAlign = 'center';
-    errMsg.style.margin = '20px';
-    errMsg.textContent = 'Error loading recipes. Please check your server and recipes.json.';
+    errMsg.style.cssText = 'color: #ff6b6b; text-align: center; margin: 20px; padding: 20px; background: rgba(255,107,107,0.1); border-radius: 8px; border: 1px solid #ff6b6b;';
+    errMsg.innerHTML = `
+      <h3>⚠️ Error Loading Recipes</h3>
+      <p>Unable to load recipes. Please check your internet connection and try refreshing the page.</p>
+      <button onclick="location.reload()" style="background: #d2691e; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 10px;">Retry</button>
+    `;
     document.body.prepend(errMsg);
   });
 
@@ -177,16 +216,20 @@ function renderCards() {
     const card = document.createElement('div');
     card.className = 'card recipe-card';
     card.setAttribute('data-type', recipe.type);
-        card.innerHTML = `
-      <img src="${recipe.img}" alt="${recipe.title}" onerror="this.style.display='none'">
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', `View ${recipe.title} recipe`);
+    
+    card.innerHTML = `
+      <img src="${recipe.img}" alt="${recipe.title}" loading="lazy" onerror="this.style.display='none'">
       <div class="card-body">
         <h3 class="card-title recipe-title">${recipe.title}</h3>
         <p class="card-cont">${
           (recipe.process || recipe.process_easy || recipe.process_jargon || '').toString().slice(0, 40)
         }...</p>
-        <button class="bi bi-heart"></button>
-          </div>
-        `;
+        <button class="bi bi-heart" aria-label="Add to favorites"></button>
+      </div>
+    `;
     const heartBtn = card.querySelector('.bi-heart');
     heartBtn.addEventListener('click', (event) => {
       event.stopPropagation();
@@ -931,3 +974,16 @@ window.filterRecipes = filterRecipes;
 window.applyCombinedFilter = applyCombinedFilter;
 window.openModal = openModal;
 window.showToast = showToast;
+
+// Register Service Worker for PWA functionality
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(registration => {
+        console.log('SW registered: ', registration);
+      })
+      .catch(registrationError => {
+        console.log('SW registration failed: ', registrationError);
+      });
+  });
+}

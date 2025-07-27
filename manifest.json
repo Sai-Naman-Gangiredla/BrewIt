@@ -1,0 +1,27 @@
+{
+  "name": "BrewIt - Coffee Recipe Hub",
+  "short_name": "BrewIt",
+  "description": "170+ coffee recipes with detailed instructions, nutrition info, and customization options",
+  "start_url": "/BrewIt/",
+  "display": "standalone",
+  "background_color": "#2d2217",
+  "theme_color": "#2d2217",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./public/images/letter-b.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./public/images/letter-b.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["food", "lifestyle", "education"],
+  "lang": "en",
+  "dir": "ltr"
+} 
