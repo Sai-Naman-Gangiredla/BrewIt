@@ -323,7 +323,7 @@ function renderCards() {
     card.setAttribute('role', 'button');
     card.setAttribute('aria-label', `View ${recipe.title} recipe`);
 
-    card.innerHTML = `
+        card.innerHTML = `
       <img src="${recipe.img}" alt="${recipe.title}" loading="lazy" onerror="this.style.display='none'">
       <div class="card-body">
         <h3 class="card-title recipe-title">${recipe.title}</h3>
@@ -331,8 +331,8 @@ function renderCards() {
           (recipe.process || recipe.process_easy || recipe.process_jargon || '').toString().slice(0, 40)
         }...</p>
         <button class="bi bi-heart" aria-label="Add to favorites"></button>
-      </div>
-    `;
+          </div>
+        `;
     
     const heartBtn = card.querySelector('.bi-heart');
     if (heartBtn) {
@@ -434,6 +434,7 @@ function openModal(recipeKey) {
           ingredientsList.appendChild(li);
         });
         console.log('Ingredients populated:', recipe.ingredients.length, 'items');
+        console.log('Ingredients list HTML:', ingredientsList.innerHTML);
       } else {
         console.warn('No ingredients found for recipe');
       }
@@ -466,6 +467,7 @@ function openModal(recipeKey) {
         processElem.innerHTML = '<p>Process instructions not available.</p>';
         console.warn('No process instructions found');
       }
+      console.log('Process element HTML:', processElem.innerHTML);
     }
     
     // Initialize with easy instructions by default
@@ -732,6 +734,33 @@ function openModal(recipeKey) {
         console.log('Modal visibility:', modal.offsetHeight, 'x', modal.offsetWidth);
         console.log('Modal content height:', modal.querySelector('.modal-content')?.offsetHeight);
         console.log('Modal right content:', modal.querySelector('.modal-right')?.innerHTML.substring(0, 200) + '...');
+        
+        // Force modal content to be visible
+        const modalRight = modal.querySelector('.modal-right');
+        if (modalRight) {
+          modalRight.style.display = 'block';
+          modalRight.style.visibility = 'visible';
+          modalRight.style.opacity = '1';
+          console.log('Forced modal-right visibility');
+        }
+        
+        // Check if content is actually there
+        const title = modal.querySelector('#modalTitle');
+        const ingredients = modal.querySelector('#modalIngredients');
+        const process = modal.querySelector('#modalProcess');
+        
+        console.log('Title element:', title?.textContent);
+        console.log('Ingredients element:', ingredients?.innerHTML);
+        console.log('Process element:', process?.innerHTML);
+        
+        // Force all text to be visible
+        const allText = modal.querySelectorAll('h2, h4, p, li, span');
+        allText.forEach(el => {
+          el.style.color = '#f2ddc9';
+          el.style.visibility = 'visible';
+          el.style.opacity = '1';
+        });
+        console.log('Forced visibility on', allText.length, 'text elements');
       }, 100);
     }
     

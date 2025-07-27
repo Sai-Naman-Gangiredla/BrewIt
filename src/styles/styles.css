@@ -481,6 +481,8 @@ footer {
     -webkit-overflow-scrolling: touch;
     display: flex;
     flex-direction: column;
+    background: #232323 !important;
+    z-index: 10000 !important;
   }
   
   .modal-left {
@@ -498,16 +500,22 @@ footer {
     padding: 15px;
     -webkit-overflow-scrolling: touch;
     min-height: 0;
+    background: #232323 !important;
+    color: #f2ddc9 !important;
   }
   
   /* Ensure modal content is visible */
   .modal-right h2,
   .modal-right h4,
   .modal-right ul,
-  .modal-right p {
+  .modal-right p,
+  .modal-right li,
+  .modal-right span,
+  .modal-right label {
     color: #f2ddc9 !important;
     visibility: visible !important;
     opacity: 1 !important;
+    display: block !important;
   }
   
   /* Ensure ingredients list is visible */
@@ -515,6 +523,13 @@ footer {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
+    color: #f2ddc9 !important;
+  }
+  
+  #modalIngredients li {
+    display: list-item !important;
+    color: #f2ddc9 !important;
+    margin: 5px 0 !important;
   }
   
   /* Ensure process content is visible */
@@ -522,6 +537,18 @@ footer {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
+    color: #f2ddc9 !important;
+  }
+  
+  #modalProcess ul {
+    display: block !important;
+    margin: 10px 0 !important;
+  }
+  
+  #modalProcess li {
+    display: list-item !important;
+    color: #f2ddc9 !important;
+    margin: 5px 0 !important;
   }
   
   /* Ensure nutrition section is visible */
@@ -529,6 +556,33 @@ footer {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
+    background: #2d2217 !important;
+    color: #f2ddc9 !important;
+    padding: 10px !important;
+    margin: 10px 0 !important;
+    border-radius: 8px !important;
+  }
+  
+  /* Ensure modal title is visible */
+  #modalTitle {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #f2ddc9 !important;
+    font-size: 1.5em !important;
+    font-weight: bold !important;
+    margin-bottom: 15px !important;
+  }
+  
+  /* Ensure all form elements are visible */
+  .modal-right select,
+  .modal-right input,
+  .modal-right button {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #333 !important;
+    background: white !important;
   }
   
   /* Better touch targets for mobile */
