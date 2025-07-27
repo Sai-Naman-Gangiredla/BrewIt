@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
   
   <!-- SEO Meta Tags -->
   <title>BrewIt - Coffee Recipe Hub | 170+ Coffee Recipes & Brewing Guide</title>
@@ -10,6 +10,14 @@
   <meta name="keywords" content="coffee recipes, brewing guide, espresso, cappuccino, latte, coffee drinks, coffee making, barista guide, coffee customization, coffee nutrition">
   <meta name="author" content="Sai Naman Gangiredla, Nallam Sruja">
   <meta name="robots" content="index, follow">
+  
+  <!-- Mobile-specific meta tags -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BrewIt">
+  <meta name="msapplication-TileColor" content="#2d2217">
+  <meta name="msapplication-tap-highlight" content="no">
   
   <!-- Open Graph Meta Tags (for social media) -->
   <meta property="og:title" content="BrewIt - Coffee Recipe Hub">
@@ -67,6 +75,19 @@
         console.warn('Slow page load detected');
       }
     });
+    
+    // Service Worker Registration for better mobile performance
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(registration => {
+            console.log('SW registered: ', registration);
+          })
+          .catch(registrationError => {
+            console.log('SW registration failed: ', registrationError);
+          });
+      });
+    }
   </script>
 
   <!-- WebApplication Structured Data -->
