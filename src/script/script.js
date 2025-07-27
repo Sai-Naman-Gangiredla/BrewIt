@@ -405,13 +405,21 @@ function openModal(recipeKey) {
       document.body.style.width = '100%';
     }
     
-    // Set modal title and image
+    // Set modal title and image with null checks
     const modalTitle = document.getElementById("modalTitle");
     const modalImage = document.getElementById("modalImage");
-    if (modalTitle) modalTitle.textContent = recipe.title;
-    if (modalImage) modalImage.src = recipe.img;
+    if (modalTitle) {
+      modalTitle.textContent = recipe.title;
+    } else {
+      console.warn('Modal title element not found');
+    }
+    if (modalImage) {
+      modalImage.src = recipe.img;
+    } else {
+      console.warn('Modal image element not found');
+    }
 
-    // Ingredients
+    // Ingredients with null check
     const ingredientsList = document.getElementById("modalIngredients");
     if (ingredientsList) {
       ingredientsList.innerHTML = "";
@@ -422,15 +430,20 @@ function openModal(recipeKey) {
           ingredientsList.appendChild(li);
         });
       }
+    } else {
+      console.warn('Modal ingredients list not found');
     }
 
-    // Segmented button toggle logic
+    // Segmented button toggle logic with null checks
     const processElem = document.getElementById("modalProcess");
     const easyBtn = document.getElementById("jargonEasyBtn");
     const jargonBtn = document.getElementById("jargonJargonBtn");
     
     function renderProcess(showJargon) {
-      if (!processElem) return;
+      if (!processElem) {
+        console.warn('Process element not found');
+        return;
+      }
       
       if (showJargon && recipe.process_jargon) {
         processElem.innerHTML = Array.isArray(recipe.process_jargon)
@@ -472,10 +485,12 @@ function openModal(recipeKey) {
         easyBtn.setAttribute('aria-pressed', 'false');
         renderProcess(true);
       };
+    } else {
+      console.warn('Jargon toggle buttons not found');
     }
     renderProcess(showJargon);
 
-    // Nutrition values
+    // Nutrition values with null checks
     if (recipe.baseNutrition) {
       const caloriesElem = document.getElementById("calories");
       const carbsElem = document.getElementById("carbs");
@@ -486,15 +501,17 @@ function openModal(recipeKey) {
       if (proteinElem) proteinElem.textContent = recipe.baseNutrition.protein;
     }
 
-    // Radar chart
+    // Radar chart with null check
     if (recipe.flavorProfile) {
       const chartContainer = document.getElementById("flavorRadarChart");
       if (chartContainer) {
         renderFlavorRadarChart(recipe.flavorProfile);
+      } else {
+        console.warn('Flavor radar chart container not found');
       }
     }
 
-    // Brew strength & caffeine estimate
+    // Brew strength & caffeine estimate with null checks
     if (typeof recipe.caffeine !== 'undefined') {
       const brewStrength = document.getElementById('brewStrength');
       const brewStrengthValue = document.getElementById('brewStrengthValue');
@@ -517,7 +534,7 @@ function openModal(recipeKey) {
       updateCaffeine();
     }
 
-    // --- Customization logic ---
+    // --- Customization logic with null checks ---
     const addMilk = document.getElementById('addMilk');
     const addSugar = document.getElementById('addSugar');
     const milkQty = document.getElementById('milkQty');
@@ -618,6 +635,7 @@ function openModal(recipeKey) {
       }
     }
     
+    // Only add event listeners if elements exist
     if (addMilk) addMilk.onchange = function() { toggleInput(addMilk, milkQty); updateNutritionCustom(); };
     if (addSugar) addSugar.onchange = function() { toggleInput(addSugar, sugarQty); updateNutritionCustom(); };
     if (addIce) addIce.onchange = function() { toggleInput(addIce, iceQty); updateNutritionCustom(); };
@@ -664,7 +682,7 @@ function openModal(recipeKey) {
       };
     }
     
-    // Initialize input visibility
+    // Initialize input visibility with null checks
     if (addMilk && milkQty) toggleInput(addMilk, milkQty);
     if (addSugar && sugarQty) toggleInput(addSugar, sugarQty);
     if (addIce && iceQty) toggleInput(addIce, iceQty);
