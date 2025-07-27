@@ -502,9 +502,18 @@ footer {
     min-height: 0;
     background: #232323 !important;
     color: #f2ddc9 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
   
-  /* Ensure modal content is visible */
+  /* CRITICAL: Force all modal content to be visible */
+  .modal-right * {
+    color: #f2ddc9 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
   .modal-right h2,
   .modal-right h4,
   .modal-right ul,
@@ -530,6 +539,8 @@ footer {
     display: list-item !important;
     color: #f2ddc9 !important;
     margin: 5px 0 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
   
   /* Ensure process content is visible */
@@ -549,6 +560,8 @@ footer {
     display: list-item !important;
     color: #f2ddc9 !important;
     margin: 5px 0 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
   
   /* Ensure nutrition section is visible */
@@ -583,6 +596,24 @@ footer {
     opacity: 1 !important;
     color: #333 !important;
     background: white !important;
+  }
+  
+  /* CRITICAL: Override any inherited styles */
+  .modal-right .selectors,
+  .modal-right .selectors * {
+    color: #f2ddc9 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  /* Force text content to be visible */
+  .modal-right .card-body,
+  .modal-right .card-title,
+  .modal-right .card-text {
+    color: #f2ddc9 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: block !important;
   }
   
   /* Better touch targets for mobile */

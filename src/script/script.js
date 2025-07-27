@@ -728,40 +728,79 @@ function openModal(recipeKey) {
         e.stopPropagation();
       }, { passive: true });
       
-      // Ensure modal is visible and scrollable
-      setTimeout(() => {
-        console.log('Modal display style:', modal.style.display);
-        console.log('Modal visibility:', modal.offsetHeight, 'x', modal.offsetWidth);
-        console.log('Modal content height:', modal.querySelector('.modal-content')?.offsetHeight);
-        console.log('Modal right content:', modal.querySelector('.modal-right')?.innerHTML.substring(0, 200) + '...');
-        
-        // Force modal content to be visible
-        const modalRight = modal.querySelector('.modal-right');
-        if (modalRight) {
-          modalRight.style.display = 'block';
-          modalRight.style.visibility = 'visible';
-          modalRight.style.opacity = '1';
-          console.log('Forced modal-right visibility');
-        }
-        
-        // Check if content is actually there
-        const title = modal.querySelector('#modalTitle');
-        const ingredients = modal.querySelector('#modalIngredients');
-        const process = modal.querySelector('#modalProcess');
-        
-        console.log('Title element:', title?.textContent);
-        console.log('Ingredients element:', ingredients?.innerHTML);
-        console.log('Process element:', process?.innerHTML);
-        
-        // Force all text to be visible
-        const allText = modal.querySelectorAll('h2, h4, p, li, span');
-        allText.forEach(el => {
-          el.style.color = '#f2ddc9';
-          el.style.visibility = 'visible';
-          el.style.opacity = '1';
-        });
-        console.log('Forced visibility on', allText.length, 'text elements');
-      }, 100);
+      // IMMEDIATE DEBUGGING AND FIX
+      console.log('=== MOBILE MODAL DEBUGGING ===');
+      console.log('Modal display style:', modal.style.display);
+      console.log('Modal visibility:', modal.offsetHeight, 'x', modal.offsetWidth);
+      console.log('Modal content height:', modal.querySelector('.modal-content')?.offsetHeight);
+      
+      // Force modal content to be visible IMMEDIATELY
+      const modalRight = modal.querySelector('.modal-right');
+      if (modalRight) {
+        modalRight.style.display = 'block';
+        modalRight.style.visibility = 'visible';
+        modalRight.style.opacity = '1';
+        modalRight.style.color = '#f2ddc9';
+        modalRight.style.background = '#232323';
+        console.log('Forced modal-right visibility');
+      }
+      
+      // Check if content is actually there
+      const title = modal.querySelector('#modalTitle');
+      const ingredients = modal.querySelector('#modalIngredients');
+      const process = modal.querySelector('#modalProcess');
+      
+      console.log('Title element:', title?.textContent);
+      console.log('Ingredients element:', ingredients?.innerHTML);
+      console.log('Process element:', process?.innerHTML);
+      
+      // Force all text to be visible IMMEDIATELY
+      const allText = modal.querySelectorAll('h2, h4, p, li, span, label');
+      allText.forEach(el => {
+        el.style.color = '#f2ddc9';
+        el.style.visibility = 'visible';
+        el.style.opacity = '1';
+        el.style.display = 'block';
+      });
+      console.log('Forced visibility on', allText.length, 'text elements');
+      
+      // Force specific elements
+      if (title) {
+        title.style.color = '#f2ddc9';
+        title.style.visibility = 'visible';
+        title.style.opacity = '1';
+        title.style.display = 'block';
+        console.log('Forced title visibility');
+      }
+      
+      if (ingredients) {
+        ingredients.style.color = '#f2ddc9';
+        ingredients.style.visibility = 'visible';
+        ingredients.style.opacity = '1';
+        ingredients.style.display = 'block';
+        console.log('Forced ingredients visibility');
+      }
+      
+      if (process) {
+        process.style.color = '#f2ddc9';
+        process.style.visibility = 'visible';
+        process.style.opacity = '1';
+        process.style.display = 'block';
+        console.log('Forced process visibility');
+      }
+      
+      // Force nutrition section
+      const nutrition = modal.querySelector('.nutrition');
+      if (nutrition) {
+        nutrition.style.display = 'block';
+        nutrition.style.visibility = 'visible';
+        nutrition.style.opacity = '1';
+        nutrition.style.background = '#2d2217';
+        nutrition.style.color = '#f2ddc9';
+        console.log('Forced nutrition visibility');
+      }
+      
+      console.log('=== END MOBILE DEBUGGING ===');
     }
     
     console.log('Modal opened successfully');
