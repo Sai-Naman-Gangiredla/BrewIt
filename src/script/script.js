@@ -222,8 +222,8 @@ function renderCards() {
     card.setAttribute('tabindex', '0');
     card.setAttribute('role', 'button');
     card.setAttribute('aria-label', `View ${recipe.title} recipe`);
-    
-    card.innerHTML = `
+
+        card.innerHTML = `
       <img src="${recipe.img}" alt="${recipe.title}" loading="lazy" onerror="this.style.display='none'">
       <div class="card-body">
         <h3 class="card-title recipe-title">${recipe.title}</h3>
