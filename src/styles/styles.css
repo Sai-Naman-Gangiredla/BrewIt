@@ -479,6 +479,8 @@ footer {
     border-radius: 0;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
   }
   
   .modal-left {
@@ -487,13 +489,46 @@ footer {
     background: #222;
     z-index: 10;
     padding: 10px;
+    flex-shrink: 0;
   }
   
   .modal-right {
     flex: 1;
     overflow-y: auto;
-      padding: 15px;
+    padding: 15px;
     -webkit-overflow-scrolling: touch;
+    min-height: 0;
+  }
+  
+  /* Ensure modal content is visible */
+  .modal-right h2,
+  .modal-right h4,
+  .modal-right ul,
+  .modal-right p {
+    color: #f2ddc9 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  /* Ensure ingredients list is visible */
+  #modalIngredients {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  /* Ensure process content is visible */
+  #modalProcess {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  /* Ensure nutrition section is visible */
+  .nutrition {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
   
   /* Better touch targets for mobile */

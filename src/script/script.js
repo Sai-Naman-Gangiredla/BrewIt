@@ -388,6 +388,8 @@ function openModal(recipeKey) {
     }
     
     console.log('Recipe found:', recipe.title);
+    console.log('Recipe ingredients:', recipe.ingredients);
+    console.log('Recipe process:', recipe.process_easy || recipe.process_jargon);
     
     const modal = document.getElementById("recipeModal");
     if (!modal) {
@@ -410,11 +412,13 @@ function openModal(recipeKey) {
     const modalImage = document.getElementById("modalImage");
     if (modalTitle) {
       modalTitle.textContent = recipe.title;
+      console.log('Modal title set to:', recipe.title);
     } else {
       console.warn('Modal title element not found');
     }
     if (modalImage) {
       modalImage.src = recipe.img;
+      console.log('Modal image set to:', recipe.img);
     } else {
       console.warn('Modal image element not found');
     }
@@ -429,6 +433,9 @@ function openModal(recipeKey) {
           li.textContent = ing;
           ingredientsList.appendChild(li);
         });
+        console.log('Ingredients populated:', recipe.ingredients.length, 'items');
+      } else {
+        console.warn('No ingredients found for recipe');
       }
     } else {
       console.warn('Modal ingredients list not found');
@@ -449,63 +456,65 @@ function openModal(recipeKey) {
         processElem.innerHTML = Array.isArray(recipe.process_jargon)
           ? '<ul>' + recipe.process_jargon.map(step => `<li>${step}</li>`).join('') + '</ul>'
           : `<ul><li>${recipe.process_jargon}</li></ul>`;
+        console.log('Process jargon rendered');
       } else if (recipe.process_easy) {
         processElem.innerHTML = Array.isArray(recipe.process_easy)
           ? '<ul>' + recipe.process_easy.map(step => `<li>${step}</li>`).join('') + '</ul>'
           : `<ul><li>${recipe.process_easy}</li></ul>`;
-      } else if (recipe.process_jargon) {
-        processElem.innerHTML = Array.isArray(recipe.process_jargon)
-          ? '<ul>' + recipe.process_jargon.map(step => `<li>${step}</li>`).join('') + '</ul>'
-          : `<ul><li>${recipe.process_jargon}</li></ul>`;
+        console.log('Process easy rendered');
       } else {
-        processElem.innerHTML = '';
+        processElem.innerHTML = '<p>Process instructions not available.</p>';
+        console.warn('No process instructions found');
       }
     }
     
-    // Default: show easy if available, else jargon
-    let showJargon = false;
-    if (easyBtn && jargonBtn) {
-      easyBtn.classList.add('seg-btn-active');
-      easyBtn.setAttribute('aria-pressed', 'true');
-      jargonBtn.classList.remove('seg-btn-active');
-      jargonBtn.setAttribute('aria-pressed', 'false');
-      easyBtn.onclick = () => {
-        showJargon = false;
+    // Initialize with easy instructions by default
+    renderProcess(false);
+    
+    // Add event listeners for toggle buttons
+    if (easyBtn) {
+      easyBtn.onclick = function() {
         easyBtn.classList.add('seg-btn-active');
-        easyBtn.setAttribute('aria-pressed', 'true');
         jargonBtn.classList.remove('seg-btn-active');
+        easyBtn.setAttribute('aria-pressed', 'true');
         jargonBtn.setAttribute('aria-pressed', 'false');
         renderProcess(false);
       };
-      jargonBtn.onclick = () => {
-        showJargon = true;
+    }
+    
+    if (jargonBtn) {
+      jargonBtn.onclick = function() {
         jargonBtn.classList.add('seg-btn-active');
-        jargonBtn.setAttribute('aria-pressed', 'true');
         easyBtn.classList.remove('seg-btn-active');
+        jargonBtn.setAttribute('aria-pressed', 'true');
         easyBtn.setAttribute('aria-pressed', 'false');
         renderProcess(true);
       };
-    } else {
-      console.warn('Jargon toggle buttons not found');
     }
-    renderProcess(showJargon);
 
-    // Nutrition values with null checks
+    // Nutrition calculation with null checks
+    const caloriesElem = document.getElementById("calories");
+    const carbsElem = document.getElementById("carbs");
+    const proteinElem = document.getElementById("protein");
+    
     if (recipe.baseNutrition) {
-      const caloriesElem = document.getElementById("calories");
-      const carbsElem = document.getElementById("carbs");
-      const proteinElem = document.getElementById("protein");
-      
-      if (caloriesElem) caloriesElem.textContent = recipe.baseNutrition.calories;
-      if (carbsElem) carbsElem.textContent = recipe.baseNutrition.carbs;
-      if (proteinElem) proteinElem.textContent = recipe.baseNutrition.protein;
+      if (caloriesElem) caloriesElem.textContent = recipe.baseNutrition.calories || 0;
+      if (carbsElem) carbsElem.textContent = recipe.baseNutrition.carbs || 0;
+      if (proteinElem) proteinElem.textContent = recipe.baseNutrition.protein || 0;
+      console.log('Nutrition populated:', recipe.baseNutrition);
+    } else {
+      if (caloriesElem) caloriesElem.textContent = 0;
+      if (carbsElem) carbsElem.textContent = 0;
+      if (proteinElem) proteinElem.textContent = 0;
+      console.warn('No nutrition data found');
     }
 
-    // Radar chart with null check
+    // Flavor radar chart with null check
     if (recipe.flavorProfile) {
-      const chartContainer = document.getElementById("flavorRadarChart");
+      const chartContainer = document.getElementById('flavorRadarChart');
       if (chartContainer) {
         renderFlavorRadarChart(recipe.flavorProfile);
+        console.log('Flavor chart rendered');
       } else {
         console.warn('Flavor radar chart container not found');
       }
@@ -532,6 +541,7 @@ function openModal(recipeKey) {
         brewStrength.oninput = updateCaffeine;
       }
       updateCaffeine();
+      console.log('Caffeine estimate populated');
     }
 
     // --- Customization logic with null checks ---
@@ -540,8 +550,8 @@ function openModal(recipeKey) {
     const milkQty = document.getElementById('milkQty');
     const sugarQty = document.getElementById('sugarQty');
     const addIce = document.getElementById('addIce');
-    const iceQty = document.getElementById('iceQty');
     const addFoam = document.getElementById('addFoam');
+    const iceQty = document.getElementById('iceQty');
     const foamQty = document.getElementById('foamQty');
     const toppingType = document.getElementById('toppingType');
     const toppingQty = document.getElementById('toppingQty');
@@ -715,6 +725,14 @@ function openModal(recipeKey) {
       modal.addEventListener('touchstart', function(e) {
         e.stopPropagation();
       }, { passive: true });
+      
+      // Ensure modal is visible and scrollable
+      setTimeout(() => {
+        console.log('Modal display style:', modal.style.display);
+        console.log('Modal visibility:', modal.offsetHeight, 'x', modal.offsetWidth);
+        console.log('Modal content height:', modal.querySelector('.modal-content')?.offsetHeight);
+        console.log('Modal right content:', modal.querySelector('.modal-right')?.innerHTML.substring(0, 200) + '...');
+      }, 100);
     }
     
     console.log('Modal opened successfully');
