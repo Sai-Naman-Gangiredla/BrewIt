@@ -19,15 +19,29 @@ self.addEventListener('install', event => {
         console.log('Opened cache');
         return cache.addAll(urlsToCache);
       })
+      .catch(error => {
+        console.log('Cache installation failed:', error);
+      })
   );
 });
 
 // Fetch event - serve from cache when offline
 self.addEventListener('fetch', event => {
-  // Skip chrome-extension and other unsupported schemes
-  if (event.request.url.startsWith('chrome-extension://') || 
+  // Skip unsupported schemes and non-GET requests
+  if (event.request.method !== 'GET' || 
+      event.request.url.startsWith('chrome-extension://') || 
       event.request.url.startsWith('moz-extension://') ||
-      event.request.url.startsWith('ms-browser-extension://')) {
+      event.request.url.startsWith('ms-browser-extension://') ||
+      event.request.url.startsWith('safari-extension://') ||
+      event.request.url.startsWith('opera-extension://') ||
+      event.request.url.startsWith('edge-extension://')) {
+    return;
+  }
+  
+  // Skip data URLs and blob URLs
+  if (event.request.url.startsWith('data:') || 
+      event.request.url.startsWith('blob:') ||
+      event.request.url.startsWith('file:')) {
     return;
   }
   
@@ -40,7 +54,7 @@ self.addEventListener('fetch', event => {
         }
         
         return fetch(event.request).then(response => {
-          // Don't cache if not a valid response or unsupported scheme
+          // Don't cache if not a valid response
           if (!response || response.status !== 200 || response.type !== 'basic') {
             return response;
           }
@@ -48,15 +62,32 @@ self.addEventListener('fetch', event => {
           // Clone the response
           const responseToCache = response.clone();
           
-          caches.open(CACHE_NAME)
-            .then(cache => {
-              cache.put(event.request, responseToCache);
-            })
-            .catch(error => {
-              console.log('Cache put failed:', error);
-            });
+          // Only cache same-origin requests or specific external resources
+          const url = new URL(event.request.url);
+          const isSameOrigin = url.origin === self.location.origin;
+          const isAllowedExternal = [
+            'cdn.jsdelivr.net',
+            'fonts.googleapis.com',
+            'fonts.gstatic.com'
+          ].some(domain => url.hostname.includes(domain));
+          
+          if (isSameOrigin || isAllowedExternal) {
+            caches.open(CACHE_NAME)
+              .then(cache => {
+                return cache.put(event.request, responseToCache);
+              })
+              .catch(error => {
+                console.log('Cache put failed for:', event.request.url, error);
+              });
+          }
           
           return response;
+        }).catch(error => {
+          console.log('Fetch failed for:', event.request.url, error);
+          // If both cache and network fail, show offline page
+          if (event.request.destination === 'document') {
+            return caches.match('./index.html');
+          }
         });
       })
       .catch(() => {
