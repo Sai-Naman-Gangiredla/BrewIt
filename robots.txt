@@ -3,6 +3,6 @@ Allow: /
 
 # Sitemap
 Sitemap: https://sai-naman-gangiredla.github.io/BrewIt/sitemap.xml
-
+ 
 # Crawl delay (optional)
 Crawl-delay: 1 

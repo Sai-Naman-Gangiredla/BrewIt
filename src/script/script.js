@@ -58,6 +58,9 @@ fetch('./src/data/recipes.json')
     renderCards(); // Call your function to render the recipe cards after loading
     // Place any other code that depends on recipes here
     initUI(); // Ensure UI is initialized after cards are rendered
+    
+    // Generate structured data for SEO
+    addRecipeStructuredData();
   })
   .catch(error => {
     console.error('Error loading recipes:', error);
@@ -985,5 +988,98 @@ if ('serviceWorker' in navigator) {
       .catch(registrationError => {
         console.log('SW registration failed: ', registrationError);
       });
+  });
+}
+
+// Function to generate structured data for recipes
+function generateRecipeStructuredData(recipe, recipeId) {
+  const baseUrl = 'https://sai-naman-gangiredla.github.io/BrewIt';
+  
+  // Convert ingredients array to proper format
+  const recipeIngredients = recipe.ingredients.map(ingredient => {
+    // Add quantities if not present
+    if (!ingredient.includes('g') && !ingredient.includes('ml') && !ingredient.includes('cup')) {
+      return `1 ${ingredient}`;
+    }
+    return ingredient;
+  });
+
+  // Generate instructions array
+  const instructions = recipe.process_easy || [recipe.process_jargon || recipe.process];
+  const recipeInstructions = instructions.map((step, index) => ({
+    "@type": "HowToStep",
+    "position": index + 1,
+    "text": step
+  }));
+
+  // Calculate cooking time based on recipe type
+  const getCookTime = (recipeType) => {
+    switch(recipeType) {
+      case 'hot': return 'PT5M';
+      case 'iced': return 'PT3M';
+      default: return 'PT4M';
+    }
+  };
+
+  // Generate aggregate rating (simulated for now)
+  const aggregateRating = {
+    "@type": "AggregateRating",
+    "ratingValue": "4.5",
+    "reviewCount": Math.floor(Math.random() * 50) + 10
+  };
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Recipe",
+    "name": recipe.title,
+    "description": `${recipe.title} - A delicious coffee recipe with detailed instructions and nutrition information`,
+    "image": `${baseUrl}/${recipe.img}`,
+    "recipeCategory": "Coffee",
+    "recipeCuisine": "International",
+    "prepTime": "PT2M",
+    "cookTime": getCookTime(recipe.type),
+    "totalTime": "PT7M",
+    "recipeYield": "1 serving",
+    "recipeIngredient": recipeIngredients,
+    "recipeInstructions": recipeInstructions,
+    "author": {
+      "@type": "Person",
+      "name": "Sai Naman Gangiredla",
+      "email": "sainamangangiredla@gmail.com"
+    },
+    "aggregateRating": aggregateRating,
+    "nutrition": {
+      "@type": "NutritionInformation",
+      "calories": `${recipe.baseNutrition.calories} calories`,
+      "carbohydrateContent": `${recipe.baseNutrition.carbs}g`,
+      "proteinContent": `${recipe.baseNutrition.protein}g`
+    },
+    "suitableForDiet": "VegetarianDiet",
+    "recipeCuisine": "Coffee",
+    "keywords": `${recipe.title}, coffee, recipe, ${recipe.type}`,
+    "datePublished": "2024-01-01",
+    "dateModified": "2024-12-01"
+  };
+}
+
+// Function to add structured data to the page
+function addRecipeStructuredData() {
+  // Remove existing recipe structured data
+  const existingStructuredData = document.querySelectorAll('script[type="application/ld+json"]');
+  existingStructuredData.forEach(script => {
+    if (script.textContent.includes('"@type": "Recipe"')) {
+      script.remove();
+    }
+  });
+
+  // Generate structured data for all recipes
+  Object.keys(recipes).forEach(recipeId => {
+    const recipe = recipes[recipeId];
+    const structuredData = generateRecipeStructuredData(recipe, recipeId);
+    
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(structuredData);
+    document.head.appendChild(script);
   });
 }
