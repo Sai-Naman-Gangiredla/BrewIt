@@ -14,20 +14,21 @@ window.addEventListener('unhandledrejection', (event) => {
 // --- Load recipes from JSON file ---
 let recipes = {};
 
+// Global cardContainer reference
+let cardContainer;
+
 // Show loading spinner
 function showLoading() {
   const spinner = document.getElementById('loadingSpinner');
-  const container = document.getElementById('cardContainer');
+  if (cardContainer) cardContainer.style.display = 'none';
   if (spinner) spinner.style.display = 'flex';
-  if (container) container.style.display = 'none';
 }
 
 // Hide loading spinner
 function hideLoading() {
   const spinner = document.getElementById('loadingSpinner');
-  const container = document.getElementById('cardContainer');
+  if (cardContainer) cardContainer.style.display = 'grid';
   if (spinner) spinner.style.display = 'none';
-  if (container) container.style.display = 'grid';
 }
 
 // Enhanced error display for mobile
@@ -74,6 +75,13 @@ function showMobileError() {
 
 // Load recipes function
 function loadRecipes() {
+  // Initialize cardContainer
+  cardContainer = document.getElementById("cardContainer");
+  if (!cardContainer) {
+    console.error('Card container not found');
+    return;
+  }
+  
   showLoading();
 
   // Try multiple fetch strategies
@@ -160,8 +168,6 @@ const additions = {
   sugar: { calories: 30, carbs: 8, protein: 0 },
   "milk+sugar": { calories: 80, carbs: 13, protein: 2 }
 };
-
-const cardContainer = document.getElementById("cardContainer");
 
 // --- Persistent Favorites ---
 function getFavorites() {
@@ -292,9 +298,24 @@ function getSortedRecipeKeys() {
 }
 
 function renderCards() {
+  console.log('renderCards called, recipes count:', Object.keys(recipes).length);
+  
+  if (!cardContainer) {
+    console.error('cardContainer is not initialized');
+    return;
+  }
+  
   cardContainer.innerHTML = '';
-  getSortedRecipeKeys().forEach(key => {
+  const sortedKeys = getSortedRecipeKeys();
+  console.log('Sorted recipe keys:', sortedKeys.length);
+  
+  sortedKeys.forEach(key => {
     const recipe = recipes[key];
+    if (!recipe) {
+      console.error('Recipe not found for key:', key);
+      return;
+    }
+    
     const card = document.createElement('div');
     card.className = 'card recipe-card';
     card.setAttribute('data-type', recipe.type);
@@ -302,7 +323,7 @@ function renderCards() {
     card.setAttribute('role', 'button');
     card.setAttribute('aria-label', `View ${recipe.title} recipe`);
 
-        card.innerHTML = `
+    card.innerHTML = `
       <img src="${recipe.img}" alt="${recipe.title}" loading="lazy" onerror="this.style.display='none'">
       <div class="card-body">
         <h3 class="card-title recipe-title">${recipe.title}</h3>
@@ -312,29 +333,52 @@ function renderCards() {
         <button class="bi bi-heart" aria-label="Add to favorites"></button>
       </div>
     `;
+    
     const heartBtn = card.querySelector('.bi-heart');
-    heartBtn.addEventListener('click', (event) => {
+    if (heartBtn) {
+      heartBtn.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const title = card.querySelector('.card-title').textContent;
+        favorites = getFavorites(); // Always reload before update
+        if (favorites[title]) {
+          delete favorites[title];
+        } else {
+          favorites[title] = true;
+        }
+        setFavorites(favorites);
+        favorites = getFavorites(); // Always reload after update
+        updateFavoriteUI();
+        showToast(favorites[title] ? `Added to favorites!` : `Removed from favorites!`);
+        applyCombinedFilter();
+      });
+    }
+    
+    // Add click event for modal
+    card.addEventListener('click', (event) => {
+      console.log('Card clicked for recipe:', key);
+      event.preventDefault();
       event.stopPropagation();
-      const title = card.querySelector('.card-title').textContent;
-      favorites = getFavorites(); // Always reload before update
-      if (favorites[title]) {
-        delete favorites[title];
-      } else {
-        favorites[title] = true;
-      }
-      setFavorites(favorites);
-      favorites = getFavorites(); // Always reload after update
-      updateFavoriteUI();
-      showToast(favorites[title] ? `Added to favorites!` : `Removed from favorites!`);
-      applyCombinedFilter();
+      openModal(key);
     });
-    card.addEventListener('click', () => openModal(key));
+    
+    // Add keyboard support
+    card.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openModal(key);
+      }
+    });
+    
     cardContainer.appendChild(card);
   });
+  
+  console.log('Cards rendered successfully');
 }
 
 // --- MODAL LOGIC ---
 function openModal(recipeKey) {
+  console.log('openModal called with key:', recipeKey);
+  
   try {
     const recipe = recipes[recipeKey];
     if (!recipe) {
@@ -343,12 +387,16 @@ function openModal(recipeKey) {
       return;
     }
     
+    console.log('Recipe found:', recipe.title);
+    
     const modal = document.getElementById("recipeModal");
     if (!modal) {
       console.error('Modal element not found');
       showToast('Modal not found. Please refresh the page.');
       return;
     }
+    
+    console.log('Modal element found, opening...');
     
     // Prevent body scroll on mobile
     if (window.innerWidth <= 768) {
@@ -650,6 +698,8 @@ function openModal(recipeKey) {
         e.stopPropagation();
       }, { passive: true });
     }
+    
+    console.log('Modal opened successfully');
     
   } catch (error) {
     console.error('Error opening modal:', error);
