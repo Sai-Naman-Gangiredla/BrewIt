@@ -33,7 +33,7 @@
   <!-- 1. Chart.js CDN in <head> -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
-  <!-- Structured Data for SEO -->
+  <!-- WebApplication Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -65,79 +65,137 @@
       "Dark Mode Toggle",
       "Favorites System",
       "Responsive Design"
+    ]
+  }
+  </script>
+
+  <!-- Recipe Structured Data - Espresso -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Recipe",
+    "name": "Espresso",
+    "description": "Classic Italian espresso recipe with rich flavor and perfect crema",
+    "image": "https://sai-naman-gangiredla.github.io/BrewIt/public/images/espresso.jpeg",
+    "recipeCategory": "Coffee",
+    "recipeCuisine": "Italian",
+    "prepTime": "PT5M",
+    "cookTime": "PT2M",
+    "totalTime": "PT7M",
+    "recipeYield": "1 serving",
+    "recipeIngredient": [
+      "18g finely ground coffee beans",
+      "30ml hot water (90-96°C)"
     ],
-    "mainEntity": {
-      "@type": "ItemList",
-      "name": "Coffee Recipes Collection",
-      "description": "170+ coffee recipes from classic espresso to specialty drinks",
-      "numberOfItems": 170,
-      "itemListElement": [
-        {
-          "@type": "Recipe",
-          "name": "Espresso",
-          "description": "Classic Italian espresso recipe",
-          "recipeCategory": "Coffee",
-          "recipeCuisine": "Italian",
-          "prepTime": "PT5M",
-          "cookTime": "PT2M",
-          "totalTime": "PT7M",
-          "recipeYield": "1 serving",
-          "recipeIngredient": [
-            "18g finely ground coffee beans",
-            "30ml hot water (90-96°C)"
-          ],
-          "recipeInstructions": [
-            "Grind coffee beans to fine consistency",
-            "Tamp grounds evenly in portafilter",
-            "Extract for 25-30 seconds",
-            "Serve immediately"
-          ]
-        },
-        {
-          "@type": "Recipe", 
-          "name": "Cappuccino",
-          "description": "Traditional cappuccino with perfect foam",
-          "recipeCategory": "Coffee",
-          "recipeCuisine": "Italian",
-          "prepTime": "PT5M",
-          "cookTime": "PT3M",
-          "totalTime": "PT8M",
-          "recipeYield": "1 serving",
-          "recipeIngredient": [
-            "1 shot espresso",
-            "60ml steamed milk",
-            "60ml milk foam"
-          ],
-          "recipeInstructions": [
-            "Prepare a single shot of espresso",
-            "Steam milk to 65°C with microfoam",
-            "Pour steamed milk over espresso",
-            "Top with milk foam in 1:1:1 ratio"
-          ]
-        },
-        {
-          "@type": "Recipe",
-          "name": "Latte",
-          "description": "Smooth latte with steamed milk",
-          "recipeCategory": "Coffee", 
-          "recipeCuisine": "Italian",
-          "prepTime": "PT5M",
-          "cookTime": "PT3M",
-          "totalTime": "PT8M",
-          "recipeYield": "1 serving",
-          "recipeIngredient": [
-            "1 shot espresso",
-            "180ml steamed milk",
-            "Small amount of milk foam"
-          ],
-          "recipeInstructions": [
-            "Prepare a single shot of espresso",
-            "Steam milk to 65°C with minimal foam",
-            "Pour steamed milk over espresso",
-            "Add small amount of foam on top"
-          ]
-        }
-      ]
+    "recipeInstructions": [
+      {
+        "@type": "HowToStep",
+        "text": "Grind coffee beans to fine consistency"
+      },
+      {
+        "@type": "HowToStep", 
+        "text": "Tamp grounds evenly in portafilter"
+      },
+      {
+        "@type": "HowToStep",
+        "text": "Extract for 25-30 seconds"
+      },
+      {
+        "@type": "HowToStep",
+        "text": "Serve immediately"
+      }
+    ],
+    "author": {
+      "@type": "Person",
+      "name": "Sai Naman Gangiredla"
+    }
+  }
+  </script>
+
+  <!-- Recipe Structured Data - Cappuccino -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Recipe",
+    "name": "Cappuccino",
+    "description": "Traditional cappuccino with perfect foam and balanced flavor",
+    "image": "https://sai-naman-gangiredla.github.io/BrewIt/public/images/cappuccino.jpeg",
+    "recipeCategory": "Coffee",
+    "recipeCuisine": "Italian",
+    "prepTime": "PT5M",
+    "cookTime": "PT3M",
+    "totalTime": "PT8M",
+    "recipeYield": "1 serving",
+    "recipeIngredient": [
+      "1 shot espresso",
+      "60ml steamed milk",
+      "60ml milk foam"
+    ],
+    "recipeInstructions": [
+      {
+        "@type": "HowToStep",
+        "text": "Prepare a single shot of espresso"
+      },
+      {
+        "@type": "HowToStep",
+        "text": "Steam milk to 65°C with microfoam"
+      },
+      {
+        "@type": "HowToStep",
+        "text": "Pour steamed milk over espresso"
+      },
+      {
+        "@type": "HowToStep",
+        "text": "Top with milk foam in 1:1:1 ratio"
+      }
+    ],
+    "author": {
+      "@type": "Person",
+      "name": "Sai Naman Gangiredla"
+    }
+  }
+  </script>
+
+  <!-- Recipe Structured Data - Latte -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Recipe",
+    "name": "Latte",
+    "description": "Smooth latte with steamed milk and minimal foam",
+    "image": "https://sai-naman-gangiredla.github.io/BrewIt/public/images/latte.jpg",
+    "recipeCategory": "Coffee",
+    "recipeCuisine": "Italian",
+    "prepTime": "PT5M",
+    "cookTime": "PT3M",
+    "totalTime": "PT8M",
+    "recipeYield": "1 serving",
+    "recipeIngredient": [
+      "1 shot espresso",
+      "180ml steamed milk",
+      "Small amount of milk foam"
+    ],
+    "recipeInstructions": [
+      {
+        "@type": "HowToStep",
+        "text": "Prepare a single shot of espresso"
+      },
+      {
+        "@type": "HowToStep",
+        "text": "Steam milk to 65°C with minimal foam"
+      },
+      {
+        "@type": "HowToStep",
+        "text": "Pour steamed milk over espresso"
+      },
+      {
+        "@type": "HowToStep",
+        "text": "Add small amount of foam on top"
+      }
+    ],
+    "author": {
+      "@type": "Person",
+      "name": "Sai Naman Gangiredla"
     }
   }
   </script>
