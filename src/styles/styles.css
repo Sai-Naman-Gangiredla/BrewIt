@@ -793,167 +793,187 @@ footer {
     margin: 0;
   }
   
-  /* MOBILE NAVIGATION REDESIGN */
+  /* CRITICAL: MOBILE NAVIGATION REDESIGN - Force override */
   .nav {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 8px 12px;
-    background-color: #2d2217;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    padding: 8px 12px !important;
+    background-color: #2d2217 !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
+    align-items: stretch !important;
   }
   
-  /* Horizontal scrollable filter buttons */
+  /* Horizontal scrollable filter buttons - Force override */
   .nav .filter-buttons {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding: 4px 0;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
+    display: flex !important;
+    gap: 8px !important;
+    overflow-x: auto !important;
+    padding: 4px 0 !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important; /* Firefox */
+    -ms-overflow-style: none !important; /* IE and Edge */
+    flex-wrap: nowrap !important;
+    align-items: center !important;
   }
   
   .nav .filter-buttons::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
+    display: none !important; /* Chrome, Safari, Opera */
   }
   
   .nav .filter-buttons button {
-    flex-shrink: 0;
-    white-space: nowrap;
-    min-width: auto;
-    padding: 8px 16px;
-    font-size: 14px;
-    border-radius: 20px;
-    border: 1px solid #5a4633;
-    background: #3a2c1a;
-    color: #f2ddc9;
-    transition: all 0.2s;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    min-width: auto !important;
+    padding: 8px 16px !important;
+    font-size: 14px !important;
+    border-radius: 20px !important;
+    border: 1px solid #5a4633 !important;
+    background: #3a2c1a !important;
+    color: #f2ddc9 !important;
+    transition: all 0.2s !important;
+    display: inline-block !important;
+    margin: 0 !important;
   }
   
   .nav .filter-buttons button.active {
-    background-color: #d2691e;
-    color: white;
-    font-weight: bold;
-    border: 1px solid #a0522d;
+    background-color: #d2691e !important;
+    color: white !important;
+    font-weight: bold !important;
+    border: 1px solid #a0522d !important;
   }
   
-  /* Search and sort row */
+  /* Search and sort row - Force override */
   .nav .search-sort-row {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    margin-top: 4px;
+    display: flex !important;
+    gap: 8px !important;
+    align-items: center !important;
+    margin-top: 4px !important;
+    flex-wrap: wrap !important;
   }
   
   .nav .search-sort-row input,
   .nav .search-sort-row select {
-    flex: 1;
-    padding: 8px 12px;
-    border-radius: 8px;
-    border: 1px solid #5a4633;
-    background: #3a2c1a;
-    color: #f2ddc9;
-    font-size: 14px;
+    flex: 1 !important;
+    padding: 8px 12px !important;
+    border-radius: 8px !important;
+    border: 1px solid #5a4633 !important;
+    background: #3a2c1a !important;
+    color: #f2ddc9 !important;
+    font-size: 14px !important;
+    min-height: 44px !important;
   }
   
   .nav .search-sort-row select {
-    flex: 0 0 auto;
-    min-width: 100px;
+    flex: 0 0 auto !important;
+    min-width: 100px !important;
   }
   
-  /* Dark mode toggle */
+  /* Dark mode toggle - Force override */
   .nav #darkModeToggle {
-    flex-shrink: 0;
-    padding: 8px;
-    border-radius: 50%;
-    border: 1px solid #5a4633;
-    background: #3a2c1a;
-    color: #f2ddc9;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-shrink: 0 !important;
+    padding: 8px !important;
+    border-radius: 50% !important;
+    border: 1px solid #5a4633 !important;
+    background: #3a2c1a !important;
+    color: #f2ddc9 !important;
+    width: 40px !important;
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
   
-  /* Compact header */
+  /* Compact header - Force override */
   .header {
-    padding: 8px 12px;
-    height: auto;
-    min-height: 60px;
+    padding: 8px 12px !important;
+    height: auto !important;
+    min-height: 60px !important;
   }
   
   .header .title {
-    font-size: 24px;
+    font-size: 24px !important;
   }
   
   .header .center-header {
-    font-size: 16px;
-    margin: 4px 0;
+    font-size: 16px !important;
+    margin: 4px 0 !important;
   }
   
-  /* More space for cards */
+  /* More space for cards - Force override */
   .card-container {
-    padding: 12px;
-    gap: 16px;
+    padding: 12px !important;
+    gap: 16px !important;
   }
   
-  /* Better touch targets */
+  /* Better touch targets - Force override */
   .nav button, .nav input, .close-btn {
-    min-height: 44px;
-    touch-action: manipulation;
+    min-height: 44px !important;
+    touch-action: manipulation !important;
   }
   
-  /* Improved card layout for mobile */
+  /* Improved card layout for mobile - Force override */
   .card.recipe-card {
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent !important;
   }
   
   .card.recipe-card:active {
-    transform: scale(0.98);
+    transform: scale(0.98) !important;
   }
   
-  /* Compact card design for mobile */
+  /* Compact card design for mobile - Force override */
   .card.recipe-card .card-body {
-    padding: 12px;
+    padding: 12px !important;
   }
   
   .card.recipe-card .card-title {
-    font-size: 16px;
-    margin-bottom: 8px;
+    font-size: 16px !important;
+    margin-bottom: 8px !important;
   }
   
   .card.recipe-card img {
-    height: 140px;
+    height: 140px !important;
   }
   
-  /* Better spacing for mobile */
+  /* Better spacing for mobile - Force override */
   .header {
-    margin-bottom: 0;
+    margin-bottom: 0 !important;
   }
   
   .nav {
-    margin-bottom: 8px;
+    margin-bottom: 8px !important;
   }
   
-  /* Ensure proper scrolling */
+  /* Ensure proper scrolling - Force override */
   .filter-buttons {
-    scroll-behavior: smooth;
+    scroll-behavior: smooth !important;
   }
   
-  /* Active state improvements */
-  .filter-buttons button.active {
-    box-shadow: 0 2px 8px rgba(210, 105, 30, 0.3);
+  /* Active state improvements - Force override */
+  .nav .filter-buttons button.active {
+    box-shadow: 0 2px 8px rgba(210, 105, 30, 0.3) !important;
   }
   
-  /* Hover effects for better feedback */
-  .filter-buttons button:hover {
-    background: #4a3c2a;
-    transform: translateY(-1px);
+  /* Hover effects for better feedback - Force override */
+  .nav .filter-buttons button:hover {
+    background: #4a3c2a !important;
+    transform: translateY(-1px) !important;
+  }
+  
+  /* CRITICAL: Override any existing nav styles */
+  .nav > button {
+    display: none !important;
+  }
+  
+  .nav > input {
+    display: none !important;
+  }
+  
+  .nav > select {
+    display: none !important;
   }
 }
 
