@@ -378,6 +378,7 @@ function renderCards() {
 // --- MODAL LOGIC ---
 function openModal(recipeKey) {
   console.log('openModal called with key:', recipeKey);
+  console.log('=== TESTING IF DEBUGGING CODE IS RUNNING ===');
   
   try {
     const recipe = recipes[recipeKey];
@@ -715,7 +716,7 @@ function openModal(recipeKey) {
       closeBtn.focus();
     }
     
-    // IMMEDIATE MOBILE FIX - Run for all devices to be safe
+    // CRITICAL: Force modal content to be visible IMMEDIATELY
     console.log('=== FORCING MODAL CONTENT VISIBILITY ===');
     console.log('Window width:', window.innerWidth);
     console.log('Is mobile:', window.innerWidth <= 768);
