@@ -3,8 +3,9 @@
 [![Live Site](https://img.shields.io/badge/Live%20Site-View%20Demo-blue?style=for-the-badge&logo=github)](https://sai-naman-gangiredla.github.io/BrewIt)
 [![PWA](https://img.shields.io/badge/PWA-Installable-green?style=for-the-badge&logo=pwa)](https://sai-naman-gangiredla.github.io/BrewIt)
 [![Offline](https://img.shields.io/badge/Offline-Supported-orange?style=for-the-badge&logo=wifi)](https://sai-naman-gangiredla.github.io/BrewIt)
+[![Mobile Optimized](https://img.shields.io/badge/Mobile-Optimized-purple?style=for-the-badge&logo=mobile)](https://sai-naman-gangiredla.github.io/BrewIt)
 
-A comprehensive, interactive **Progressive Web App (PWA)** featuring 170+ coffee recipes with detailed instructions, nutrition information, and customization options. Installable on any device with offline functionality.
+A comprehensive, interactive **Progressive Web App (PWA)** featuring 170+ coffee recipes with detailed instructions, nutrition information, and customization options. Installable on any device with offline functionality and **optimized mobile navigation**.
 
 ## 🌟 Features
 
@@ -15,12 +16,21 @@ A comprehensive, interactive **Progressive Web App (PWA)** featuring 170+ coffee
 - **Service Worker** - Intelligent caching for fast loading
 - **Manifest File** - Proper app metadata and icons
 
+### **📱 Mobile-First Design**
+- **Horizontal Scrollable Navigation** - Compact toolbar for mobile devices
+- **Touch-Optimized Interface** - 44px minimum touch targets
+- **Responsive Layout** - Adapts seamlessly to all screen sizes
+- **Mobile Navigation Redesign** - Horizontal scrollable filter buttons
+- **Cache-Busting Strategy** - Ensures fresh styles load on mobile
+- **Aggressive CSS Overrides** - Force new mobile layout with !important rules
+
 ### **⚡ Performance & Optimization**
 - **Lazy Loading** - Images load only when needed
 - **Resource Preloading** - Critical resources loaded first
 - **Loading States** - Professional loading spinners
 - **Error Handling** - Graceful error recovery with retry options
 - **Performance Monitoring** - Real-time performance tracking
+- **Cache-Busting** - JavaScript-based CSS refresh for mobile
 
 ### **♿ Accessibility & UX**
 - **ARIA Labels** - Screen reader compatibility
@@ -28,6 +38,7 @@ A comprehensive, interactive **Progressive Web App (PWA)** featuring 170+ coffee
 - **Focus Management** - Proper focus indicators
 - **High Contrast** - Better visibility for all users
 - **Error Boundaries** - Robust error handling
+- **Touch-Friendly Design** - Optimized for mobile interaction
 
 ### **Interactive Recipe Management**
 - **170+ Coffee Recipes** - From classic espresso to specialty drinks
@@ -59,6 +70,10 @@ A comprehensive, interactive **Progressive Web App (PWA)** featuring 170+ coffee
 ### **Main Interface - Dark Mode**
 ![Main Interface](https://raw.githubusercontent.com/Sai-Naman-Gangiredla/BrewIt/main/public/images/screenshots/main-interface-dark.png)
 *The main interface showcasing the dark mode theme with recipe cards and navigation*
+
+### **Mobile Navigation - Horizontal Scrollable Toolbar**
+![Mobile Navigation](https://raw.githubusercontent.com/Sai-Naman-Gangiredla/BrewIt/main/public/images/screenshots/mobile-navigation.png)
+*New horizontal scrollable navigation optimized for mobile devices*
 
 ### **Recipe Details Modal**
 ![Recipe Details](https://raw.githubusercontent.com/Sai-Naman-Gangiredla/BrewIt/main/public/images/screenshots/recipe-modal.png)
@@ -103,6 +118,7 @@ A comprehensive, interactive **Progressive Web App (PWA)** featuring 170+ coffee
 - **Performance**: Lazy loading, resource preloading
 - **Analytics**: Google Analytics integration
 - **SEO**: Structured data, robots.txt, sitemap.xml
+- **Mobile Optimization**: Aggressive CSS overrides, cache-busting
 
 ## 📁 Project Structure
 
@@ -155,6 +171,7 @@ BrewIt/
 - **Customize**: Modify recipes with additional ingredients
 - **Save Favorites**: Click the heart icon to save recipes
 - **Offline Mode**: Use the app without internet connection
+- **Mobile Navigation**: Horizontal scrollable toolbar on mobile devices
 
 ## 📊 Recipe Database
 
@@ -190,6 +207,13 @@ Each recipe includes:
 
 ## 🔧 Development
 
+### **Recent Updates (Latest)**
+- **Mobile Navigation Redesign**: Horizontal scrollable toolbar for better mobile UX
+- **Cache-Busting Strategy**: JavaScript-based CSS refresh for mobile devices
+- **Aggressive CSS Overrides**: Force new mobile layout with !important rules
+- **Service Worker Updates**: Network-first strategy for CSS files
+- **Inline Critical CSS**: Ensures mobile navigation loads immediately
+
 ### **Adding New Recipes**
 1. Add recipe data to `src/data/recipes.json`
 2. Include corresponding image in `public/images/`
@@ -199,6 +223,7 @@ Each recipe includes:
 - Main styles: `src/styles/styles.css`
 - Responsive design included
 - Dark mode support built-in
+- Mobile-first approach with aggressive overrides
 
 ### **JavaScript Features**
 - Modular function structure
@@ -207,6 +232,7 @@ Each recipe includes:
 - Chart.js integration for visualizations
 - Service worker for offline functionality
 - Error handling and performance monitoring
+- Cache-busting for mobile CSS
 
 ### **PWA Development**
 - **Manifest**: `manifest.json` for app metadata
@@ -235,12 +261,14 @@ Each recipe includes:
 - **Lazy Loading**: Images load only when visible
 - **Service Worker Caching**: Intelligent caching strategy
 - **Compression**: Optimized assets for faster loading
+- **Cache-Busting**: JavaScript-based CSS refresh
 
 ### **User Experience**
 - **Loading Spinners**: Professional loading states
 - **Error Recovery**: Graceful error handling with retry options
 - **Offline Support**: Full functionality without internet
 - **Performance Monitoring**: Real-time performance tracking
+- **Mobile Navigation**: Horizontal scrollable toolbar
 
 ## 🤝 Contributing
 
@@ -255,6 +283,7 @@ Each recipe includes:
 - Test PWA functionality
 - Ensure accessibility compliance
 - Optimize for performance
+- Test mobile navigation thoroughly
 
 ## 📄 License
 
@@ -280,4 +309,6 @@ Live Demo: [https://sai-naman-gangiredla.github.io/BrewIt](https://sai-naman-gan
 
 ⭐ **Star this repository if you found it helpful!**
 
-🔧 **Install as PWA for the best experience!** 
+🔧 **Install as PWA for the best experience!**
+
+📱 **Optimized for mobile with horizontal navigation!** 
