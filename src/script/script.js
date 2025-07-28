@@ -456,9 +456,6 @@ function openModal(recipeKey) {
   // Prevent body scroll on mobile
   document.body.style.overflow = 'hidden';
 
-  // Initialize modal functionality
-  initializeModalFunctionality(recipe);
-
   console.log('Modal opened successfully for:', recipeKey);
 }
 
