@@ -80,6 +80,7 @@ body {
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
+  border: 1px solid #4a3a2a;
 }
 
 .card:hover {
@@ -101,6 +102,14 @@ body {
   margin: 0 0 10px 0;
   font-size: 1.2em;
   color: #ffe6b3;
+  font-weight: bold;
+}
+
+.card-cont {
+  color: #d2b48c;
+  font-size: 0.9em;
+  line-height: 1.4;
+  margin-bottom: 10px;
 }
 
 .bi-heart {
@@ -110,6 +119,8 @@ body {
   font-size: 1.2em;
   cursor: pointer;
   transition: color 0.2s;
+  float: right;
+  margin-top: -10px;
 }
 
 .bi-heart.active {
