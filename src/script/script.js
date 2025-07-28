@@ -159,6 +159,7 @@ function loadRecipes() {
 // Wait for DOM to be ready before loading recipes
 document.addEventListener('DOMContentLoaded', function() {
   console.log('DOM loaded, starting recipe load...');
+  initUI(); // Initialize UI and navigation buttons
   loadRecipes();
 });
 
@@ -1291,11 +1292,11 @@ function initUI() {
       localStorage.setItem('darkMode', 'false');
     }
   }
-  // Initialize dark mode with light as default
+  // Initialize dark mode with dark as default
   const saved = localStorage.getItem('darkMode');
   if (saved === null) {
-    // Default to light mode (matching screenshots)
-    setDarkMode(false);
+    // Default to dark mode
+    setDarkMode(true);
   } else {
     setDarkMode(saved === 'true');
   }
