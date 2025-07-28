@@ -169,6 +169,32 @@ function loadRecipes() {
 // Wait for DOM to be ready before loading recipes
 document.addEventListener('DOMContentLoaded', function() {
   console.log('DOM loaded, starting recipe load...');
+  
+  // Ensure modal starts closed
+  const modal = document.getElementById("recipeModal");
+  if (modal) {
+    modal.style.display = "none";
+    modal.classList.add("hidden");
+    console.log('Modal initialized in closed state');
+  }
+  
+  // Check for URL parameters that might trigger modal and clear them
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('recipe') || urlParams.has('modal') || urlParams.has('open')) {
+    console.log('URL parameters detected that might trigger modal, clearing...');
+    // Clear URL parameters without page reload
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+  
+  // Check for localStorage values that might trigger modal and clear them
+  const modalTriggers = ['lastRecipe', 'openModal', 'modalRecipe', 'selectedRecipe'];
+  modalTriggers.forEach(key => {
+    if (localStorage.getItem(key)) {
+      console.log(`Clearing localStorage key that might trigger modal: ${key}`);
+      localStorage.removeItem(key);
+    }
+  });
+  
   loadRecipes();
 });
 
@@ -440,11 +466,17 @@ function renderCards() {
 function openModal(recipeKey) {
   console.log('=== OPEN MODAL DEBUG START ===');
   console.log('openModal called with key:', recipeKey);
-  
+
   // Safety check: prevent opening with invalid keys
   if (!recipeKey || recipeKey === 'undefined' || recipeKey === 'null' || recipeKey === '') {
     console.error('Invalid recipe key provided:', recipeKey);
     showToast('Invalid recipe selected. Please try again.');
+    return;
+  }
+  
+  // Additional safety check: prevent automatic opening
+  if (recipeKey === 'auto' || recipeKey === 'default' || recipeKey === 'initial') {
+    console.error('Automatic modal opening prevented');
     return;
   }
   

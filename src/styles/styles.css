@@ -387,7 +387,7 @@ footer {
     padding: 10px;
   }
   .modal-left img {
-    width: 100%;
+      width: 100%;
     max-width: 320px;
     height: auto;
     margin: 0 auto 10px auto;
@@ -597,7 +597,7 @@ footer {
   .modal-right {
     flex: 1;
     overflow-y: auto;
-    padding: 15px;
+      padding: 15px;
     -webkit-overflow-scrolling: touch;
     min-height: 0;
     background: #232323 !important;
@@ -1489,4 +1489,4 @@ input:checked + .slider:before {
     color: #f2ddc9 !important;
     margin: 10px 0 !important;
   }
-}
+    }
