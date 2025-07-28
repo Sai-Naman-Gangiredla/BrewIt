@@ -10,6 +10,16 @@ window.addEventListener('unhandledrejection', (event) => {
   showToast('Network error. Please check your connection.');
 });
 
+// Ensure modal starts closed
+document.addEventListener('DOMContentLoaded', function() {
+  const modal = document.getElementById("recipeModal");
+  if (modal) {
+    modal.style.display = "none";
+    modal.classList.add("hidden");
+    console.log('Modal initialized in closed state');
+  }
+});
+
 // --- DATA ---
 // --- Load recipes from JSON file ---
 let recipes = {};
@@ -475,6 +485,22 @@ function openModal(recipeKey) {
           ? '<ul>' + recipe.process_easy.map(step => `<li>${step}</li>`).join('') + '</ul>'
           : `<ul><li>${recipe.process_easy}</li></ul>`;
         console.log('Process easy rendered');
+      } else if (recipe.process) {
+        // Handle the process field - it might already contain numbered steps
+        const processText = recipe.process;
+        if (processText.includes('1.') || processText.includes('1 ')) {
+          // Process already has numbering, split by numbered steps
+          const steps = processText.split(/(?=\d+\.)/).filter(step => step.trim());
+          if (steps.length > 1) {
+            processElem.innerHTML = '<ul>' + steps.map(step => `<li>${step.trim()}</li>`).join('') + '</ul>';
+          } else {
+            processElem.innerHTML = `<ul><li>${processText}</li></ul>`;
+          }
+        } else {
+          // Process doesn't have numbering, treat as single step
+          processElem.innerHTML = `<ul><li>${processText}</li></ul>`;
+        }
+        console.log('Process rendered');
       } else {
         processElem.innerHTML = '<p>Process instructions not available.</p>';
         console.warn('No process instructions found');
