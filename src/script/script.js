@@ -1078,9 +1078,14 @@ function showDailyFact() {
 
 // 4. Navigation and display logic for Remix and Quiz sections
 function showSection(sectionId) {
+  console.log('showSection called with:', sectionId);
+  
   // Ensure .main-content exists
   const mainContent = document.querySelector('.main-content');
-  if (!mainContent) return;
+  if (!mainContent) {
+    console.error('main-content not found');
+    return;
+  }
   
   // Remove any existing dynamic section
   const existingRemix = document.getElementById('remixSection');
@@ -1088,8 +1093,16 @@ function showSection(sectionId) {
   const existingQuiz = document.getElementById('quizSection');
   if (existingQuiz) existingQuiz.remove();
   
-  // Hide cardContainer by default
-  cardContainer.classList.add('section-hidden');
+  // Handle cardContainer visibility
+  if (cardContainer) {
+    if (sectionId === 'cardContainer') {
+      cardContainer.classList.remove('section-hidden');
+      console.log('Showing cardContainer');
+    } else {
+      cardContainer.classList.add('section-hidden');
+      console.log('Hiding cardContainer');
+    }
+  }
   
   if (sectionId === 'remixSection') {
     // --- Remix Generator UI ---
@@ -1135,6 +1148,8 @@ function showSection(sectionId) {
     `;
     remixSection.style.minHeight = '300px';
     mainContent.appendChild(remixSection);
+    console.log('Remix section created');
+    
     // Remix logic: find a real recipe that matches user preferences
     document.getElementById('remixBtn').onclick = function() {
       const base = document.getElementById('remixBase').value;
@@ -1326,7 +1341,7 @@ function showSection(sectionId) {
     };
   } else {
     // Show home/recipes
-    cardContainer.classList.remove('section-hidden');
+    // cardContainer.classList.remove('section-hidden'); // This line is now handled by the showSection function
     // Remove any dynamic section if present
     const existingRemix = document.getElementById('remixSection');
     if (existingRemix) existingRemix.remove();
@@ -1357,19 +1372,27 @@ function transitionSection(showId) {
 
 // --- Update setActiveNav to set aria-current ---
 function setActiveNav(btnId) {
+  console.log('setActiveNav called with:', btnId);
+  
   const navBtns = ['allBtn','hotBtn','icedBtn','favBtn','remixNavBtn','quizNavBtn'];
   navBtns.forEach(id => {
     const btn = document.getElementById(id);
     if (btn) {
       btn.classList.remove('active');
       btn.removeAttribute('aria-current');
+    } else {
+      console.warn('Navigation button not found:', id);
     }
   });
+  
   if (btnId) {
     const btn = document.getElementById(btnId);
     if (btn) {
       btn.classList.add('active');
       btn.setAttribute('aria-current', 'page');
+      console.log('Set active button:', btnId);
+    } else {
+      console.error('Active button not found:', btnId);
     }
   }
 }
@@ -1396,39 +1419,70 @@ function initUI() {
     homeLogo.setAttribute('role', 'button');
     homeLogo.setAttribute('aria-label', 'Go to all recipes');
   }
-  // Nav button listeners
-  document.getElementById('remixNavBtn').onclick = () => { 
-    showSection('remixSection'); 
-    setActiveNav('remixNavBtn'); 
-  };
-  document.getElementById('quizNavBtn').onclick = () => { 
-    showSection('quizSection'); 
-    setActiveNav('quizNavBtn'); 
-  };
-  document.getElementById('allBtn').onclick = () => { 
-    filterRecipes('all'); 
-    setActiveNav('allBtn'); 
-    showSection('cardContainer'); 
-    clearSearchAndApplyFilter();
-  };
-  document.getElementById('hotBtn').onclick = () => { 
-    filterRecipes('hot'); 
-    setActiveNav('hotBtn'); 
-    showSection('cardContainer'); 
-    clearSearchAndApplyFilter();
-  };
-  document.getElementById('icedBtn').onclick = () => { 
-    filterRecipes('iced'); 
-    setActiveNav('icedBtn'); 
-    showSection('cardContainer'); 
-    clearSearchAndApplyFilter();
-  };
-  document.getElementById('favBtn').onclick = () => { 
-    filterRecipes('favourites'); 
-    setActiveNav('favBtn'); 
-    showSection('cardContainer'); 
-    clearSearchAndApplyFilter();
-  };
+  
+  // Nav button listeners with error handling
+  const remixNavBtn = document.getElementById('remixNavBtn');
+  if (remixNavBtn) {
+    remixNavBtn.onclick = () => { 
+      console.log('Remix button clicked');
+      showSection('remixSection'); 
+      setActiveNav('remixNavBtn'); 
+    };
+  }
+  
+  const quizNavBtn = document.getElementById('quizNavBtn');
+  if (quizNavBtn) {
+    quizNavBtn.onclick = () => { 
+      console.log('Quiz button clicked');
+      showSection('quizSection'); 
+      setActiveNav('quizNavBtn'); 
+    };
+  }
+  
+  const allBtn = document.getElementById('allBtn');
+  if (allBtn) {
+    allBtn.onclick = () => { 
+      console.log('All button clicked');
+      filterRecipes('all'); 
+      setActiveNav('allBtn'); 
+      showSection('cardContainer'); 
+      clearSearchAndApplyFilter();
+    };
+  }
+  
+  const hotBtn = document.getElementById('hotBtn');
+  if (hotBtn) {
+    hotBtn.onclick = () => { 
+      console.log('Hot button clicked');
+      filterRecipes('hot'); 
+      setActiveNav('hotBtn'); 
+      showSection('cardContainer'); 
+      clearSearchAndApplyFilter();
+    };
+  }
+  
+  const icedBtn = document.getElementById('icedBtn');
+  if (icedBtn) {
+    icedBtn.onclick = () => { 
+      console.log('Iced button clicked');
+      filterRecipes('iced'); 
+      setActiveNav('icedBtn'); 
+      showSection('cardContainer'); 
+      clearSearchAndApplyFilter();
+    };
+  }
+  
+  const favBtn = document.getElementById('favBtn');
+  if (favBtn) {
+    favBtn.onclick = () => { 
+      console.log('Favorites button clicked');
+      filterRecipes('favourites'); 
+      setActiveNav('favBtn'); 
+      showSection('cardContainer'); 
+      clearSearchAndApplyFilter();
+    };
+  }
+  
   // Back to Top button
   let backToTopBtn = document.getElementById('backToTopBtn');
   if (!backToTopBtn) {
@@ -1447,6 +1501,7 @@ function initUI() {
   backToTopBtn.onclick = function() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+  
   // Dark mode toggle (ensure only one event listener)
   const darkModeToggle = document.getElementById('darkModeToggle');
   const body = document.body;
@@ -1470,10 +1525,14 @@ function initUI() {
   newToggle.addEventListener('click', () => {
     setDarkMode(body.classList.contains('light-mode'));
   });
+  
   // Search
-  document.getElementById('searchInput').addEventListener('input', function() {
-    searchRecipes();
-  });
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      searchRecipes();
+    });
+  }
   
   // Reset settings button
   const resetSettingsBtn = document.getElementById('resetSettingsBtn');
@@ -1482,6 +1541,10 @@ function initUI() {
       overrideLocalStorage();
     });
   }
+  
+  // Initialize default state
+  window.selectedCategory = 'all';
+  console.log('Navigation buttons initialized');
 }
 
 // --- Keyboard navigation and shortcuts ---
