@@ -649,33 +649,37 @@ function initializeCustomizationControls() {
   // Initialize checkboxes and their associated input fields
   const addMilk = document.getElementById('addMilk');
   const milkQty = document.getElementById('milkQty');
-  if (addMilk && milkQty) {
+  const milkInputSpan = document.getElementById('milkInputSpan');
+  if (addMilk && milkQty && milkInputSpan) {
     addMilk.checked = false;
-    milkQty.style.display = 'none';
+    milkInputSpan.style.display = 'none';
     milkQty.value = '0';
   }
 
   const addSugar = document.getElementById('addSugar');
   const sugarQty = document.getElementById('sugarQty');
-  if (addSugar && sugarQty) {
+  const sugarInputSpan = document.getElementById('sugarInputSpan');
+  if (addSugar && sugarQty && sugarInputSpan) {
     addSugar.checked = false;
-    sugarQty.style.display = 'none';
+    sugarInputSpan.style.display = 'none';
     sugarQty.value = '0';
   }
 
   const addIce = document.getElementById('addIce');
   const iceQty = document.getElementById('iceQty');
-  if (addIce && iceQty) {
+  const iceInputSpan = document.getElementById('iceInputSpan');
+  if (addIce && iceQty && iceInputSpan) {
     addIce.checked = false;
-    iceQty.style.display = 'none';
+    iceInputSpan.style.display = 'none';
     iceQty.value = '0';
   }
 
   const addFoam = document.getElementById('addFoam');
   const foamQty = document.getElementById('foamQty');
-  if (addFoam && foamQty) {
+  const foamInputSpan = document.getElementById('foamInputSpan');
+  if (addFoam && foamQty && foamInputSpan) {
     addFoam.checked = false;
-    foamQty.style.display = 'none';
+    foamInputSpan.style.display = 'none';
     foamQty.value = '0';
   }
 
@@ -689,9 +693,9 @@ function initializeCustomizationControls() {
   }
 
   // Add event listeners for checkboxes
-  if (addMilk && milkQty) {
+  if (addMilk && milkQty && milkInputSpan) {
     addMilk.addEventListener('change', function() {
-      milkQty.style.display = this.checked ? 'inline' : 'none';
+      milkInputSpan.style.display = this.checked ? 'inline' : 'none';
       if (!this.checked) milkQty.value = '0';
       updateNutritionDisplay(window.currentRecipe);
     });
@@ -700,9 +704,9 @@ function initializeCustomizationControls() {
     });
   }
 
-  if (addSugar && sugarQty) {
+  if (addSugar && sugarQty && sugarInputSpan) {
     addSugar.addEventListener('change', function() {
-      sugarQty.style.display = this.checked ? 'inline' : 'none';
+      sugarInputSpan.style.display = this.checked ? 'inline' : 'none';
       if (!this.checked) sugarQty.value = '0';
       updateNutritionDisplay(window.currentRecipe);
     });
@@ -711,9 +715,9 @@ function initializeCustomizationControls() {
     });
   }
 
-  if (addIce && iceQty) {
+  if (addIce && iceQty && iceInputSpan) {
     addIce.addEventListener('change', function() {
-      iceQty.style.display = this.checked ? 'inline' : 'none';
+      iceInputSpan.style.display = this.checked ? 'inline' : 'none';
       if (!this.checked) iceQty.value = '0';
       updateNutritionDisplay(window.currentRecipe);
     });
@@ -722,9 +726,9 @@ function initializeCustomizationControls() {
     });
   }
 
-  if (addFoam && foamQty) {
+  if (addFoam && foamQty && foamInputSpan) {
     addFoam.addEventListener('change', function() {
-      foamQty.style.display = this.checked ? 'inline' : 'none';
+      foamInputSpan.style.display = this.checked ? 'inline' : 'none';
       if (!this.checked) foamQty.value = '0';
       updateNutritionDisplay(window.currentRecipe);
     });
@@ -755,13 +759,17 @@ function initializeCustomizationControls() {
   if (resetCustomize) {
     resetCustomize.addEventListener('click', function() {
       if (addMilk) addMilk.checked = false;
-      if (milkQty) { milkQty.style.display = 'none'; milkQty.value = '0'; }
+      if (milkInputSpan) milkInputSpan.style.display = 'none';
+      if (milkQty) milkQty.value = '0';
       if (addSugar) addSugar.checked = false;
-      if (sugarQty) { sugarQty.style.display = 'none'; sugarQty.value = '0'; }
+      if (sugarInputSpan) sugarInputSpan.style.display = 'none';
+      if (sugarQty) sugarQty.value = '0';
       if (addIce) addIce.checked = false;
-      if (iceQty) { iceQty.style.display = 'none'; iceQty.value = '0'; }
+      if (iceInputSpan) iceInputSpan.style.display = 'none';
+      if (iceQty) iceQty.value = '0';
       if (addFoam) addFoam.checked = false;
-      if (foamQty) { foamQty.style.display = 'none'; foamQty.value = '0'; }
+      if (foamInputSpan) foamInputSpan.style.display = 'none';
+      if (foamQty) foamQty.value = '0';
       if (toppingType) toppingType.value = '';
       if (toppingQty) { toppingQty.style.display = 'none'; toppingQty.value = '0'; }
     });
