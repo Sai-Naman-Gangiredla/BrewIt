@@ -188,6 +188,57 @@ function setFavorites(favs) {
 }
 let favorites = getFavorites();
 
+// --- localStorage Override Functions ---
+function clearLocalStorageExceptPreserved() {
+  // Get current favorites and theme settings
+  const currentFavorites = getFavorites();
+  const currentDarkMode = localStorage.getItem('darkMode');
+  
+  // Clear all localStorage
+  localStorage.clear();
+  
+  // Restore favorites and theme
+  setFavorites(currentFavorites);
+  if (currentDarkMode !== null) {
+    localStorage.setItem('darkMode', currentDarkMode);
+  }
+  
+  console.log('localStorage cleared except favorites and theme');
+  showToast('Settings reset while preserving favorites and theme');
+}
+
+function overrideLocalStorage() {
+  // Clear all localStorage except favorites and theme
+  clearLocalStorageExceptPreserved();
+  
+  // Reset UI state
+  window.selectedCategory = 'all';
+  favorites = getFavorites();
+  
+  // Reset search input
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) {
+    searchInput.value = '';
+  }
+  
+  // Reset sort selection
+  const sortSelect = document.getElementById('sortSelect');
+  if (sortSelect) {
+    sortSelect.value = 'name';
+  }
+  
+  // Re-render cards and update UI
+  renderCards();
+  updateFavoriteUI();
+  applyCombinedFilter();
+  
+  console.log('localStorage override completed');
+}
+
+// Make override function globally accessible
+window.overrideLocalStorage = overrideLocalStorage;
+window.clearLocalStorageExceptPreserved = clearLocalStorageExceptPreserved;
+
 function updateFavoriteUI() {
   favorites = getFavorites(); // Always sync with localStorage
   document.querySelectorAll('.recipe-card').forEach(card => {
@@ -1273,6 +1324,14 @@ function initUI() {
   document.getElementById('searchInput').addEventListener('input', function() {
     searchRecipes();
   });
+  
+  // Reset settings button
+  const resetSettingsBtn = document.getElementById('resetSettingsBtn');
+  if (resetSettingsBtn) {
+    resetSettingsBtn.addEventListener('click', function() {
+      overrideLocalStorage();
+    });
+  }
 }
 
 // --- Keyboard navigation and shortcuts ---
@@ -1296,6 +1355,14 @@ document.addEventListener('DOMContentLoaded', function() {
   favorites = getFavorites();
   updateFavoriteUI();
   applyCombinedFilter();
+  
+  // Add keyboard shortcut for localStorage override (Ctrl+Shift+R)
+  document.addEventListener('keydown', function(event) {
+    if (event.ctrlKey && event.shiftKey && event.key === 'R') {
+      event.preventDefault();
+      overrideLocalStorage();
+    }
+  });
 });
 
 // --- Toast notification function ---
