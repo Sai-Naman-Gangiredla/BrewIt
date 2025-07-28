@@ -481,10 +481,35 @@ function renderCards() {
     
     // Add click event for modal
     card.addEventListener('click', (event) => {
+      console.log('=== CARD CLICK DEBUG ===');
       console.log('Card clicked for recipe:', key);
+      console.log('Event target:', event.target);
+      console.log('Event currentTarget:', event.currentTarget);
+      console.log('Recipe key:', key);
+      console.log('Recipes object:', recipes);
+      console.log('Recipe exists:', recipes[key]);
+      
       event.preventDefault();
       event.stopPropagation();
-      openModal(key);
+      
+      // Test if openModal function exists
+      if (typeof openModal === 'function') {
+        console.log('openModal function exists, calling it...');
+        openModal(key);
+      } else {
+        console.error('openModal function not found!');
+        // Fallback: try to show modal directly
+        const modal = document.getElementById("recipeModal");
+        if (modal) {
+          console.log('Trying fallback modal opening...');
+          modal.style.display = "flex";
+          modal.style.visibility = "visible";
+          modal.style.opacity = "1";
+          alert('Modal opened with fallback method');
+        } else {
+          alert('Modal element not found!');
+        }
+      }
     });
     
     // Add keyboard support
@@ -1893,4 +1918,47 @@ function addTestButton() {
 // Add test button to page
 setTimeout(() => {
   addTestButton();
+  
+  // Test recipes loading
+  console.log('=== RECIPES LOADING TEST ===');
+  console.log('Recipes object:', recipes);
+  console.log('Recipes keys:', Object.keys(recipes));
+  console.log('Recipes count:', Object.keys(recipes).length);
+  
+  // Test modal element
+  const modal = document.getElementById("recipeModal");
+  console.log('Modal element:', modal);
+  console.log('Modal exists:', !!modal);
+  
+  // Test openModal function
+  console.log('openModal function exists:', typeof openModal === 'function');
+  
+  // Test first recipe
+  const firstKey = Object.keys(recipes)[0];
+  if (firstKey) {
+    console.log('First recipe key:', firstKey);
+    console.log('First recipe:', recipes[firstKey]);
+    
+    // Test if we can open the first recipe
+    if (typeof openModal === 'function') {
+      console.log('Testing modal with first recipe...');
+      // Don't actually open it, just test the function
+      console.log('openModal function is callable');
+    }
+  }
+  
+  // Test card container
+  const cardContainer = document.getElementById("cardContainer");
+  console.log('Card container:', cardContainer);
+  console.log('Card container exists:', !!cardContainer);
+  
+  // Test if cards are rendered
+  const cards = document.querySelectorAll('.recipe-card');
+  console.log('Recipe cards found:', cards.length);
+  
+  // Test first card click
+  if (cards.length > 0) {
+    console.log('First card:', cards[0]);
+    console.log('First card clickable:', cards[0].onclick !== null);
+  }
 }, 2000);
