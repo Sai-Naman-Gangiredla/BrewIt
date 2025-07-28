@@ -58,8 +58,8 @@ body {
   border: 1px solid #5a4633;
   font-size: 14px;
   background: #3a2c1a;
-  color: #f2ddc9;
-}
+      color: #f2ddc9;
+    }
 
 .nav button.active {
   background-color: #d2691e;
@@ -134,7 +134,7 @@ footer {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.8);
   align-items: center;
-  justify-content: center;
+      justify-content: center;
 }
 
 .modal[style*="display: flex"] {
@@ -153,7 +153,7 @@ footer {
   max-width: 900px;
   max-height: 90vh;
   overflow: hidden;
-  display: flex;
+      display: flex;
   flex-direction: row;
   box-shadow: 0 4px 24px rgba(0,0,0,0.18);
 }
@@ -162,7 +162,7 @@ footer {
   flex: 0 0 260px;
   display: flex;
   align-items: center;
-  justify-content: center;
+      justify-content: center;
   background: #222;
   min-height: 100%;
   min-width: 200px;
@@ -181,7 +181,7 @@ footer {
   border-radius: 10px;
   margin: 0 auto;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  background: #fff;
+      background: #fff;
 }
 
 .modal-right {
@@ -235,7 +235,7 @@ footer {
   margin-top: 20px;
   background: #2d2217;
   color: #f2ddc9;
-  padding: 15px;
+      padding: 15px;
   border-radius: 8px;
 }
 
@@ -289,7 +289,7 @@ footer {
 .light-mode .nav button.active {
   background-color: #d2691e;
   color: white;
-  font-weight: bold;
+      font-weight: bold;
   border: 1px solid #a0522d;
 }
 
@@ -471,7 +471,7 @@ footer {
     flex-direction: column;
     height: auto;
     padding: 15px;
-    text-align: center;
+      text-align: center;
     gap: 15px;
   }
   .title {
@@ -630,11 +630,11 @@ footer {
   
   /* Enhanced mobile modal optimization */
   .modal-content {
-    position: fixed;
+      position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
+      bottom: 0;
     width: 100vw;
     height: 100vh;
     max-width: none;
