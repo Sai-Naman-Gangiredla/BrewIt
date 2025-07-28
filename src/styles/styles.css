@@ -118,7 +118,7 @@ body {
 
 footer {
   text-align: center;
-  padding: 10px;
+      padding: 10px;
   background: #2d2217;
   color: #f2ddc9;
 }
@@ -145,7 +145,7 @@ footer {
 
 .modal-content {
   background-color: #232323;
-  color: #f2ddc9;
+      color: #f2ddc9;
   margin: 0;
   padding: 0;
   border-radius: 10px 0 0 10px;
@@ -172,7 +172,7 @@ footer {
   flex: 0 0 260px;
   display: flex;
   align-items: center;
-  justify-content: center;
+      justify-content: center;
   background: #222;
   min-height: 100%;
   min-width: 200px;
@@ -186,7 +186,7 @@ footer {
   max-width: 220px;
   max-height: 90%;
   width: auto;
-  height: auto;
+      height: auto;
   object-fit: contain;
   border-radius: 10px;
   margin: 0 auto;
@@ -194,6 +194,7 @@ footer {
   background: #fff;
 }
 
+/* Modal content order - ensure proper sequence */
 .modal-right {
   flex: 1 1 0;
   min-width: 0;
@@ -202,15 +203,204 @@ footer {
   max-height: 100%;
   background-color: #232323;
   color: #f2ddc9;
-  display: flex;
-  flex-direction: column;
-  visibility: visible;
-  opacity: 1;
+  display: flex !important;
+  flex-direction: column !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 /* Force proper content order with flexbox */
 .modal-right > * {
-  order: 999; /* Default order for all elements */
+  order: 999 !important; /* Default order for all elements */
+}
+
+/* Specific modal content elements with proper order */
+.modal-right h2#modalTitle {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #f2ddc9 !important;
+  font-size: 1.5em !important;
+  font-weight: bold !important;
+  margin-bottom: 15px !important;
+  order: 1 !important;
+}
+
+.modal-right h4:first-of-type {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #f2ddc9 !important;
+  margin: 15px 0 8px 0 !important;
+  font-size: 1.1em !important;
+  font-weight: bold !important;
+  order: 2 !important;
+}
+
+.modal-right ul#modalIngredients {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #f2ddc9 !important;
+  margin: 10px 0 !important;
+  padding-left: 20px !important;
+  order: 3 !important;
+}
+
+.modal-right ul#modalIngredients li {
+  display: list-item !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #f2ddc9 !important;
+  margin: 5px 0 !important;
+}
+
+.modal-right #jargonToggleGroup {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin: 10px 0 18px 0 !important;
+  align-items: center !important;
+  gap: 10px !important;
+  order: 4 !important;
+}
+
+.modal-right h4:nth-of-type(2) {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #f2ddc9 !important;
+  font-size: 1.18em !important;
+  font-weight: bold !important;
+  margin-bottom: 8px !important;
+  order: 5 !important;
+}
+
+.modal-right p#modalProcess {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #f2ddc9 !important;
+  margin: 5px 0 !important;
+  line-height: 1.4 !important;
+  order: 6 !important;
+}
+
+/* Customization section */
+.modal-right .selectors {
+  order: 7 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin-top: 20px !important;
+}
+
+.modal-right .selectors h4 {
+  color: #f2ddc9 !important;
+  margin: 15px 0 8px 0 !important;
+  font-size: 1.1em !important;
+  font-weight: bold !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.modal-right .selectors ul {
+  margin: 10px 0 !important;
+  padding-left: 20px !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.modal-right .selectors li {
+  color: #f2ddc9 !important;
+  margin: 5px 0 !important;
+  display: list-item !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Nutrition section - move to bottom */
+.modal-right .nutrition {
+  margin-top: 20px !important;
+  background: #2d2217 !important;
+  color: #f2ddc9 !important;
+  padding: 15px !important;
+  border-radius: 8px !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  order: 8 !important;
+}
+
+.modal-right .nutrition p {
+  margin: 5px 0 !important;
+  color: #f2ddc9 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Flavor radar chart */
+.modal-right #flavorRadarChart {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin: 18px auto 0 auto !important;
+  background: #232323 !important;
+  order: 9 !important;
+}
+
+/* Brew strength controls */
+.modal-right label[for="brewStrength"] {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #f2ddc9 !important;
+  order: 10 !important;
+}
+
+.modal-right #brewStrength {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 120px !important;
+  order: 10 !important;
+}
+
+.modal-right #brewStrengthValue {
+  display: inline !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #f2ddc9 !important;
+  order: 10 !important;
+}
+
+.modal-right #caffeineEstimate {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #a0522d !important;
+  margin-top: 8px !important;
+  font-size: 1em !important;
+  order: 11 !important;
+}
+
+/* Close button */
+.modal-right .close-btn {
+  margin-top: 20px !important;
+  padding: 8px 12px !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  background: #d2691e !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 5px !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  order: 12 !important;
 }
 
 /* Specific modal content elements with proper order */
@@ -273,7 +463,7 @@ footer {
   margin-top: 20px;
   background: #2d2217;
   color: #f2ddc9;
-  padding: 15px;
+      padding: 15px;
   border-radius: 8px;
   display: block;
   visibility: visible;
@@ -334,7 +524,7 @@ footer {
   cursor: pointer;
   background: #d2691e;
   color: white;
-  border: none;
+      border: none;
   border-radius: 5px;
   display: block;
   visibility: visible;
@@ -1774,4 +1964,4 @@ input:checked + .slider:before {
     flex: 1;
     padding: 15px;
   }
-}
+    }
