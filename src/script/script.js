@@ -10,14 +10,53 @@ window.addEventListener('unhandledrejection', (event) => {
   showToast('Network error. Please check your connection.');
 });
 
-// Ensure modal starts closed
+// Global flag to prevent automatic modal opening
+window.modalInitialized = false;
+window.userInteracted = false;
+window.modalAllowed = false;
+
+// Override openModal function to prevent automatic opening
+const originalOpenModal = window.openModal;
+window.openModal = function(recipeKey) {
+  if (!window.modalAllowed) {
+    console.log('Modal opening blocked - not allowed yet');
+    return;
+  }
+  if (originalOpenModal) {
+    return originalOpenModal(recipeKey);
+  }
+};
+
+// Ensure modal starts closed - MORE AGGRESSIVE APPROACH
 document.addEventListener('DOMContentLoaded', function() {
   const modal = document.getElementById("recipeModal");
   if (modal) {
     modal.style.display = "none";
     modal.classList.add("hidden");
-    console.log('Modal initialized in closed state');
+    modal.style.visibility = "hidden";
+    modal.style.opacity = "0";
+    modal.style.pointerEvents = "none";
+    console.log('Modal initialized in closed state with aggressive prevention');
   }
+  
+  // Mark modal as initialized
+  window.modalInitialized = true;
+  
+  // Add user interaction detection
+  document.addEventListener('click', function() {
+    window.userInteracted = true;
+    // Enable modal opening after user interaction
+    window.modalAllowed = true;
+    console.log('User interaction detected, modal opening enabled');
+  }, { once: true });
+  
+  // Enable modal opening after page load completion
+  window.addEventListener('load', function() {
+    setTimeout(() => {
+      window.modalAllowed = true;
+      console.log('Page load completed, modal opening enabled');
+    }, 1000);
+  });
 });
 
 // --- DATA ---
@@ -466,6 +505,8 @@ function renderCards() {
 function openModal(recipeKey) {
   console.log('=== OPEN MODAL DEBUG START ===');
   console.log('openModal called with key:', recipeKey);
+  console.log('User interacted:', window.userInteracted);
+  console.log('Modal initialized:', window.modalInitialized);
 
   // Safety check: prevent opening with invalid keys
   if (!recipeKey || recipeKey === 'undefined' || recipeKey === 'null' || recipeKey === '') {
@@ -477,6 +518,18 @@ function openModal(recipeKey) {
   // Additional safety check: prevent automatic opening
   if (recipeKey === 'auto' || recipeKey === 'default' || recipeKey === 'initial') {
     console.error('Automatic modal opening prevented');
+    return;
+  }
+  
+  // Prevent opening if modal not initialized or no user interaction
+  if (!window.modalInitialized) {
+    console.error('Modal not initialized yet, preventing opening');
+    return;
+  }
+  
+  // Only allow opening if user has interacted or it's a valid recipe click
+  if (!window.userInteracted && !recipeKey.match(/^[a-zA-Z0-9_-]+$/)) {
+    console.error('No user interaction detected and invalid recipe key format');
     return;
   }
   
@@ -501,9 +554,13 @@ function openModal(recipeKey) {
     
     console.log('Modal element found, opening...');
     
-    // Show modal immediately
-    modal.style.display = "flex";
+    // Show modal with new CSS approach
     modal.classList.remove("hidden");
+    modal.classList.add("show");
+    modal.style.display = "flex";
+    modal.style.visibility = "visible";
+    modal.style.opacity = "1";
+    modal.style.pointerEvents = "auto";
     
     // Prevent body scroll on mobile
     if (window.innerWidth <= 768) {
@@ -869,9 +926,24 @@ function openModal(recipeKey) {
 }
 
 function closeModal() {
+  console.log('=== CLOSE MODAL DEBUG START ===');
+  
   const modal = document.getElementById("recipeModal");
-  modal.style.display = "none";
-  modal.classList.add("hidden");
+  if (modal) {
+    console.log('Closing modal...');
+    
+    // Hide modal with new CSS approach
+    modal.classList.remove("show");
+    modal.classList.add("hidden");
+    modal.style.display = "none";
+    modal.style.visibility = "hidden";
+    modal.style.opacity = "0";
+    modal.style.pointerEvents = "none";
+    
+    console.log('Modal closed successfully');
+  } else {
+    console.error('Modal element not found for closing');
+  }
   
   // Restore body scroll on mobile
   if (window.innerWidth <= 768) {
@@ -880,23 +952,7 @@ function closeModal() {
     document.body.style.width = '';
   }
   
-  // Remove blur from main content
-  const mainContent = document.getElementById("mainContent");
-  if (mainContent) {
-    mainContent.classList.remove("blurred");
-  }
-  
-  // Clear any mobile error messages
-  const mobileError = document.querySelector('.mobile-error');
-  if (mobileError) {
-    mobileError.remove();
-  }
-  
-  // Reset focus to a safe element
-  const firstCard = document.querySelector('.recipe-card');
-  if (firstCard) {
-    firstCard.focus();
-  }
+  console.log('=== CLOSE MODAL DEBUG END ===');
 }
 
 // Replace initial card rendering with renderCards()

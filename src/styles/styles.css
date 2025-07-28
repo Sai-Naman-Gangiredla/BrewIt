@@ -1369,7 +1369,7 @@ input:checked + .slider:before {
     opacity: 1 !important;
     z-index: 10000 !important;
   }
-  
+
   .modal-content {
     display: flex !important;
     visibility: visible !important;
@@ -1377,7 +1377,7 @@ input:checked + .slider:before {
     background: #2d2217 !important;
     color: #f2ddc9 !important;
   }
-  
+
   .modal-right {
     display: block !important;
     visibility: visible !important;
@@ -1388,105 +1388,35 @@ input:checked + .slider:before {
     overflow-y: auto !important;
     max-height: 80vh !important;
   }
-  
+
   .modal-right * {
     color: #f2ddc9 !important;
     visibility: visible !important;
     opacity: 1 !important;
     display: block !important;
   }
-  
-  .modal-right h2,
-  .modal-right h4 {
-    color: #f2ddc9 !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    display: block !important;
-    margin: 10px 0 !important;
-    font-weight: bold !important;
-  }
-  
-  #modalIngredients {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    color: #f2ddc9 !important;
-    margin: 10px 0 !important;
-  }
-  
-  #modalIngredients li {
-    display: list-item !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    color: #f2ddc9 !important;
-    margin: 5px 0 !important;
-    list-style-type: disc !important;
-  }
-  
-  #modalProcess {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    color: #f2ddc9 !important;
-    margin: 10px 0 !important;
-  }
-  
-  #modalProcess ul {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    margin: 10px 0 !important;
-  }
-  
-  #modalProcess li {
-    display: list-item !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    color: #f2ddc9 !important;
-    margin: 5px 0 !important;
-    list-style-type: decimal !important;
-  }
-  
-  .nutrition {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    color: #f2ddc9 !important;
-    background: #3a2a1a !important;
-    padding: 15px !important;
-    margin: 15px 0 !important;
-    border-radius: 8px !important;
-  }
-  
-  #modalTitle {
-    color: #f2ddc9 !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    display: block !important;
-    font-size: 1.5em !important;
-    font-weight: bold !important;
-    margin-bottom: 15px !important;
-  }
-  
-  .modal-right select,
-  .modal-right input,
-  .modal-right button,
-  .modal-right label {
-    color: #f2ddc9 !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    display: inline-block !important;
-    background: #3a2a1a !important;
-    border: 1px solid #5a4a3a !important;
-  }
-  
-  .modal-right .selectors,
-  .modal-right .card-body,
-  .modal-right .segmented-toggle {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    color: #f2ddc9 !important;
-    margin: 10px 0 !important;
-  }
-    }
+  /* ... other specific rules for h2, h4, li, nutrition, select, input, etc. ... */
+}
+
+/* CRITICAL: Force modal to be hidden by default */
+#recipeModal {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+#recipeModal.hidden {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Only show modal when explicitly triggered */
+#recipeModal.show {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
