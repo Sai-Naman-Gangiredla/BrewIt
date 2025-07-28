@@ -2194,6 +2194,11 @@ input:checked + .slider:before {
 #iceInputSpan,
 #foamInputSpan {
   display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
 }
 
 /* Customization section styling */

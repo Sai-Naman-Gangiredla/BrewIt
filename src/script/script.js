@@ -640,47 +640,66 @@ function updateNutritionDisplay(recipe) {
 
 // Function to initialize customization controls
 function initializeCustomizationControls() {
+  console.log('Initializing customization controls...');
+  
   // Initialize milk type selector
   const milkType = document.getElementById('milkType');
   if (milkType) {
     milkType.value = 'whole';
+    console.log('Milk type initialized');
   }
 
   // Initialize checkboxes and their associated input fields
   const addMilk = document.getElementById('addMilk');
   const milkQty = document.getElementById('milkQty');
   const milkInputSpan = document.getElementById('milkInputSpan');
+  console.log('Milk elements found:', { addMilk: !!addMilk, milkQty: !!milkQty, milkInputSpan: !!milkInputSpan });
+  
   if (addMilk && milkQty && milkInputSpan) {
     addMilk.checked = false;
     milkInputSpan.style.display = 'none';
+    milkInputSpan.style.visibility = 'hidden';
     milkQty.value = '0';
+    console.log('Milk checkbox unchecked, input hidden');
   }
 
   const addSugar = document.getElementById('addSugar');
   const sugarQty = document.getElementById('sugarQty');
   const sugarInputSpan = document.getElementById('sugarInputSpan');
+  console.log('Sugar elements found:', { addSugar: !!addSugar, sugarQty: !!sugarQty, sugarInputSpan: !!sugarInputSpan });
+  
   if (addSugar && sugarQty && sugarInputSpan) {
     addSugar.checked = false;
     sugarInputSpan.style.display = 'none';
+    sugarInputSpan.style.visibility = 'hidden';
     sugarQty.value = '0';
+    console.log('Sugar checkbox unchecked, input hidden');
   }
 
   const addIce = document.getElementById('addIce');
   const iceQty = document.getElementById('iceQty');
   const iceInputSpan = document.getElementById('iceInputSpan');
+  console.log('Ice elements found:', { addIce: !!addIce, iceQty: !!iceQty, iceInputSpan: !!iceInputSpan });
+  
   if (addIce && iceQty && iceInputSpan) {
     addIce.checked = false;
     iceInputSpan.style.display = 'none';
+    iceInputSpan.style.visibility = 'hidden';
     iceQty.value = '0';
+    console.log('Ice checkbox unchecked, input hidden');
   }
 
   const addFoam = document.getElementById('addFoam');
   const foamQty = document.getElementById('foamQty');
   const foamInputSpan = document.getElementById('foamInputSpan');
+  console.log('Foam elements found:', { addFoam: !!addFoam, foamQty: !!foamQty, foamInputSpan: !!foamInputSpan });
+  
   if (addFoam && foamQty && foamInputSpan) {
     addFoam.checked = false;
     foamInputSpan.style.display = 'none';
+    foamInputSpan.style.visibility = 'hidden';
     foamQty.value = '0';
+    console.log('Foam checkbox unchecked, input hidden');
   }
 
   // Initialize topping selector
