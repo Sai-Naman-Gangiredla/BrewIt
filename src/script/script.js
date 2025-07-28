@@ -387,6 +387,9 @@ function openModal(recipeKey) {
     return;
   }
 
+  // Store current recipe globally for nutrition calculations
+  window.currentRecipe = recipe;
+
   console.log('Recipe data:', recipe);
 
   const modal = document.getElementById('recipeModal');
@@ -541,13 +544,97 @@ function updateNutritionDisplay(recipe) {
   
   if (caloriesElement && carbsElement && proteinElement) {
     // Default nutrition values (can be customized based on recipe)
-    const baseCalories = recipe.calories || 5;
-    const baseCarbs = recipe.carbs || 1;
-    const baseProtein = recipe.protein || 1;
+    let totalCalories = recipe.calories || 5;
+    let totalCarbs = recipe.carbs || 1;
+    let totalProtein = recipe.protein || 1;
     
-    caloriesElement.textContent = baseCalories;
-    carbsElement.textContent = baseCarbs;
-    proteinElement.textContent = baseProtein;
+    // Get customization values
+    const addMilk = document.getElementById('addMilk');
+    const milkQty = document.getElementById('milkQty');
+    const milkType = document.getElementById('milkType');
+    
+    const addSugar = document.getElementById('addSugar');
+    const sugarQty = document.getElementById('sugarQty');
+    
+    const addIce = document.getElementById('addIce');
+    const iceQty = document.getElementById('iceQty');
+    
+    const addFoam = document.getElementById('addFoam');
+    const foamQty = document.getElementById('foamQty');
+    
+    const toppingType = document.getElementById('toppingType');
+    const toppingQty = document.getElementById('toppingQty');
+    
+    // Calculate additional nutrition from customizations
+    if (addMilk && addMilk.checked && milkQty && milkQty.value > 0) {
+      const milkAmount = parseInt(milkQty.value);
+      const selectedMilkType = milkType ? milkType.value : 'whole';
+      
+      // Nutrition values per 100ml for different milk types
+      const milkNutrition = {
+        'whole': { calories: 61, carbs: 4.8, protein: 3.2 },
+        'skim': { calories: 42, carbs: 5.0, protein: 3.4 },
+        'oat': { calories: 48, carbs: 7.0, protein: 1.0 },
+        'almond': { calories: 17, carbs: 0.6, protein: 0.6 },
+        'soy': { calories: 33, carbs: 1.8, protein: 3.3 },
+        'coconut': { calories: 19, carbs: 0.6, protein: 0.5 }
+      };
+      
+      const milkValues = milkNutrition[selectedMilkType] || milkNutrition['whole'];
+      const milkRatio = milkAmount / 100;
+      
+      totalCalories += Math.round(milkValues.calories * milkRatio);
+      totalCarbs += Math.round(milkValues.carbs * milkRatio * 10) / 10;
+      totalProtein += Math.round(milkValues.protein * milkRatio * 10) / 10;
+    }
+    
+    if (addSugar && addSugar.checked && sugarQty && sugarQty.value > 0) {
+      const sugarAmount = parseInt(sugarQty.value);
+      // Sugar: 4 calories per gram, 100% carbs
+      totalCalories += sugarAmount * 4;
+      totalCarbs += sugarAmount;
+    }
+    
+    if (addIce && addIce.checked && iceQty && iceQty.value > 0) {
+      // Ice doesn't add nutrition, but we can track it
+      // For now, no nutrition addition
+    }
+    
+    if (addFoam && addFoam.checked && foamQty && foamQty.value > 0) {
+      const foamAmount = parseInt(foamQty.value);
+      // Foam is mostly air, minimal nutrition
+      // Small amount of milk protein
+      totalProtein += Math.round(foamAmount * 0.01 * 10) / 10;
+    }
+    
+    if (toppingType && toppingType.value && toppingQty && toppingQty.value > 0) {
+      const toppingAmount = parseInt(toppingQty.value);
+      const selectedTopping = toppingType.value;
+      
+      // Nutrition values for different toppings
+      const toppingNutrition = {
+        'whipped': { calories: 257, carbs: 2.2, protein: 2.1 },
+        'chocolate': { calories: 545, carbs: 61, protein: 4.9 },
+        'cinnamon': { calories: 247, carbs: 80, protein: 4.0 },
+        'caramel': { calories: 382, carbs: 88, protein: 0.0 },
+        'hazelnut': { calories: 628, carbs: 17, protein: 15.0 },
+        'honey': { calories: 304, carbs: 82, protein: 0.3 },
+        'maple': { calories: 260, carbs: 67, protein: 0.0 }
+      };
+      
+      const toppingValues = toppingNutrition[selectedTopping];
+      if (toppingValues) {
+        const toppingRatio = toppingAmount / 100;
+        totalCalories += Math.round(toppingValues.calories * toppingRatio);
+        totalCarbs += Math.round(toppingValues.carbs * toppingRatio * 10) / 10;
+        totalProtein += Math.round(toppingValues.protein * toppingRatio * 10) / 10;
+      }
+    }
+    
+    // Update the display
+    caloriesElement.textContent = totalCalories;
+    carbsElement.textContent = totalCarbs.toFixed(1);
+    proteinElement.textContent = totalProtein.toFixed(1);
   }
 }
 
@@ -605,30 +692,61 @@ function initializeCustomizationControls() {
   if (addMilk && milkQty) {
     addMilk.addEventListener('change', function() {
       milkQty.style.display = this.checked ? 'inline' : 'none';
+      if (!this.checked) milkQty.value = '0';
+      updateNutritionDisplay(window.currentRecipe);
+    });
+    milkQty.addEventListener('input', function() {
+      updateNutritionDisplay(window.currentRecipe);
     });
   }
 
   if (addSugar && sugarQty) {
     addSugar.addEventListener('change', function() {
       sugarQty.style.display = this.checked ? 'inline' : 'none';
+      if (!this.checked) sugarQty.value = '0';
+      updateNutritionDisplay(window.currentRecipe);
+    });
+    sugarQty.addEventListener('input', function() {
+      updateNutritionDisplay(window.currentRecipe);
     });
   }
 
   if (addIce && iceQty) {
     addIce.addEventListener('change', function() {
       iceQty.style.display = this.checked ? 'inline' : 'none';
+      if (!this.checked) iceQty.value = '0';
+      updateNutritionDisplay(window.currentRecipe);
+    });
+    iceQty.addEventListener('input', function() {
+      updateNutritionDisplay(window.currentRecipe);
     });
   }
 
   if (addFoam && foamQty) {
     addFoam.addEventListener('change', function() {
       foamQty.style.display = this.checked ? 'inline' : 'none';
+      if (!this.checked) foamQty.value = '0';
+      updateNutritionDisplay(window.currentRecipe);
+    });
+    foamQty.addEventListener('input', function() {
+      updateNutritionDisplay(window.currentRecipe);
     });
   }
 
   if (toppingType && toppingQty) {
     toppingType.addEventListener('change', function() {
       toppingQty.style.display = this.value ? 'inline' : 'none';
+      if (!this.value) toppingQty.value = '0';
+      updateNutritionDisplay(window.currentRecipe);
+    });
+    toppingQty.addEventListener('input', function() {
+      updateNutritionDisplay(window.currentRecipe);
+    });
+  }
+
+  if (milkType) {
+    milkType.addEventListener('change', function() {
+      updateNutritionDisplay(window.currentRecipe);
     });
   }
 
