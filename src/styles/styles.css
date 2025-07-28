@@ -208,80 +208,77 @@ footer {
   opacity: 1;
 }
 
-/* Modal content order - ensure proper sequence */
-.modal-right h2 {
-  margin-top: 0;
-  color: #f2ddc9;
-  font-size: 1.5em;
-  font-weight: bold;
-  margin-bottom: 15px;
-  display: block;
-  visibility: visible;
-  opacity: 1;
-  order: 1;
+/* Force proper content order with flexbox */
+.modal-right > * {
+  order: 999; /* Default order for all elements */
 }
 
-.modal-right h4 {
-  color: #f2ddc9;
-  margin: 15px 0 8px 0;
-  font-size: 1.1em;
-  font-weight: bold;
-  display: block;
-  visibility: visible;
-  opacity: 1;
+/* Specific modal content elements with proper order */
+#modalTitle {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #f2ddc9 !important;
+  font-size: 1.5em !important;
+  font-weight: bold !important;
+  margin-bottom: 15px !important;
+  order: 1 !important;
 }
 
-.modal-right ul {
-  margin: 10px 0;
-  padding-left: 20px;
-  display: block;
-  visibility: visible;
-  opacity: 1;
+#modalIngredients {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #f2ddc9 !important;
+  margin: 10px 0 !important;
+  order: 2 !important;
 }
 
-.modal-right li {
-  color: #f2ddc9;
-  margin: 5px 0;
-  display: list-item;
-  visibility: visible;
-  opacity: 1;
+#modalIngredients li {
+  display: list-item !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #f2ddc9 !important;
+  margin: 5px 0 !important;
 }
 
-.modal-right p {
-  color: #f2ddc9;
-  margin: 5px 0;
-  line-height: 1.4;
-  display: block;
-  visibility: visible;
-  opacity: 1;
+#modalProcess {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #f2ddc9 !important;
+  margin: 10px 0 !important;
+  order: 3 !important;
 }
 
+#modalProcess p {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #f2ddc9 !important;
+  margin: 5px 0 !important;
+}
+
+/* Customization section */
 .selectors {
-  display: block;
-  visibility: visible;
-  opacity: 1;
-  margin-top: 20px;
+  order: 4 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin-top: 20px !important;
 }
 
-.selectors label {
-  margin-right: 15px;
-  font-size: 14px;
-  color: #f2ddc9;
-  display: inline;
-  visibility: visible;
-  opacity: 1;
-}
-
+/* Nutrition section - move to bottom */
 .nutrition {
   margin-top: 20px;
   background: #2d2217;
   color: #f2ddc9;
-      padding: 15px;
+  padding: 15px;
   border-radius: 8px;
   display: block;
   visibility: visible;
   opacity: 1;
-  order: 5;
+  order: 5 !important;
 }
 
 .nutrition p {
@@ -292,6 +289,44 @@ footer {
   opacity: 1;
 }
 
+/* Flavor radar chart */
+#flavorRadarChart {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin: 18px auto 0 auto !important;
+  background: #232323 !important;
+  order: 6 !important;
+}
+
+/* Brew strength controls */
+#brewStrength {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 120px !important;
+  order: 7 !important;
+}
+
+#brewStrengthValue {
+  display: inline !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #f2ddc9 !important;
+  order: 7 !important;
+}
+
+#caffeineEstimate {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #a0522d !important;
+  margin-top: 8px !important;
+  font-size: 1em !important;
+  order: 8 !important;
+}
+
+/* Close button */
 .close-btn {
   margin-top: 20px;
   padding: 8px 12px;
@@ -299,12 +334,12 @@ footer {
   cursor: pointer;
   background: #d2691e;
   color: white;
-      border: none;
+  border: none;
   border-radius: 5px;
   display: block;
   visibility: visible;
   opacity: 1;
-  order: 6;
+  order: 9 !important;
 }
 
 /* Specific modal content elements with proper order */
