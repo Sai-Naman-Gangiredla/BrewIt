@@ -49,14 +49,14 @@
   
   <link rel="canonical" href="https://sai-naman-gangiredla.github.io/BrewIt/">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="./src/styles/styles.css?v=1.2.0&t=1703123456789">
+  <link rel="stylesheet" href="./src/styles/styles.css?v=1.2.1&t=1703123456789">
   
   <!-- Force cache refresh for CSS -->
   <script>
     // Force cache refresh for CSS
     const cssLink = document.querySelector('link[href*="styles.css"]');
     if (cssLink) {
-      cssLink.href = './src/styles/styles.css?v=1.2.0&t=' + Date.now();
+      cssLink.href = './src/styles/styles.css?v=1.2.1&t=' + Date.now();
     }
   </script>
   <!-- 1. Chart.js CDN in <head> -->
@@ -475,27 +475,15 @@
             </li>
             <li>
               <input type="checkbox" id="addMilk"> Milk
-              <span id="milkInputSpan" style="display: none !important; visibility: hidden !important; opacity: 0 !important; width: 0 !important; height: 0 !important; overflow: hidden !important; position: absolute !important; left: -9999px !important; top: -9999px !important;">
-                <input type="number" id="milkQty" min="0" max="200" value="0" style="width:60px;" aria-label="Milk quantity (ml)"> ml
-              </span>
             </li>
             <li>
               <input type="checkbox" id="addSugar"> Sugar
-              <span id="sugarInputSpan" style="display: none !important; visibility: hidden !important; opacity: 0 !important; width: 0 !important; height: 0 !important; overflow: hidden !important; position: absolute !important; left: -9999px !important; top: -9999px !important;">
-                <input type="number" id="sugarQty" min="0" max="20" value="0" style="width:60px;" aria-label="Sugar quantity (g)"> g
-              </span>
             </li>
             <li>
               <input type="checkbox" id="addIce"> Ice
-              <span id="iceInputSpan" style="display: none !important; visibility: hidden !important; opacity: 0 !important; width: 0 !important; height: 0 !important; overflow: hidden !important; position: absolute !important; left: -9999px !important; top: -9999px !important;">
-                <input type="number" id="iceQty" min="0" max="200" value="0" style="width:60px;" aria-label="Ice quantity (g)"> g
-              </span>
             </li>
             <li>
               <input type="checkbox" id="addFoam"> Foam
-              <span id="foamInputSpan" style="display: none !important; visibility: hidden !important; opacity: 0 !important; width: 0 !important; height: 0 !important; overflow: hidden !important; position: absolute !important; left: -9999px !important; top: -9999px !important;">
-                <input type="number" id="foamQty" min="0" max="100" value="0" style="width:60px;" aria-label="Foam quantity (ml)"> ml
-              </span>
             </li>
             <li>
               <label>Topping:
@@ -537,7 +525,7 @@
       </div>
     </div>
   </div>
-<script src="./src/script/script.js?v=1.2.0"></script>
+<script src="./src/script/script.js?v=1.2.1"></script>
   <div id="toast" style="position:fixed;left:50%;bottom:40px;transform:translateX(-50%);background:#333;color:#fff;padding:12px 28px;border-radius:24px;font-size:16px;opacity:0;pointer-events:none;z-index:99999;transition:opacity 0.3s, bottom 0.3s;"></div>
   <!-- Toast notification for section changes -->
   <div id="sectionToast"></div>
