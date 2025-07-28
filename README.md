@@ -71,9 +71,6 @@ A comprehensive, interactive **Progressive Web App (PWA)** featuring 170+ coffee
 ![Main Interface](https://raw.githubusercontent.com/Sai-Naman-Gangiredla/BrewIt/main/public/images/screenshots/main-interface-dark.png)
 *The main interface showcasing the dark mode theme with recipe cards and navigation*
 
-### **Mobile Navigation - Horizontal Scrollable Toolbar**
-![Mobile Navigation](https://raw.githubusercontent.com/Sai-Naman-Gangiredla/BrewIt/main/public/images/screenshots/mobile-navigation.png)
-*New horizontal scrollable navigation optimized for mobile devices*
 
 ### **Recipe Details Modal**
 ![Recipe Details](https://raw.githubusercontent.com/Sai-Naman-Gangiredla/BrewIt/main/public/images/screenshots/recipe-modal.png)
