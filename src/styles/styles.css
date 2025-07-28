@@ -124,100 +124,123 @@ footer {
   color: #f2ddc9;
 }
 
+/* SIMPLE MODAL CSS - No complex state management */
 .modal {
   display: none;
   position: fixed;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #232323;
-  color: #f2ddc9;
-  z-index: 9999;
-  max-height: 80%;
-  overflow-y: auto;
-  border-radius: 10px;
-  padding: 20px;
-  justify-content: center;
-  align-items: center;
-    }
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+}
 
 .modal-content {
-  background: #232323;
+  display: flex;
+  background: #2d2217;
   color: #f2ddc9;
   width: 90%;
-  max-width: 900px;
-  min-height: 260px;
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  padding: 0;
-  border-radius: 10px;
-  gap: 0;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  max-width: 800px;
+  margin: 20px auto;
+  border-radius: 12px;
   overflow: hidden;
-  height: 70vh;
-  max-height: 600px;
+  max-height: 90vh;
 }
+
 .modal-left {
-  flex: 0 0 260px;
-      display: flex;
-  align-items: center;
-      justify-content: center;
-  background: #222;
-  min-height: 100%;
-  min-width: 200px;
-  max-width: 260px;
-  height: 100%;
-  position: relative;
+  flex: 0 0 300px;
+  background: #3a2a1a;
 }
+
 .modal-left img {
-  display: block;
-  max-width: 220px;
-  max-height: 90%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  border-radius: 10px;
-  margin: 0 auto;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  background: #fff;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
+
 .modal-right {
-  flex: 1 1 0;
-  min-width: 0;
-  padding: 28px 32px 28px 32px;
+  flex: 1;
+  padding: 20px;
   overflow-y: auto;
-  max-height: 100%;
+  max-height: 80vh;
 }
 
 .modal-right h2 {
-  margin-top: 0;
+  color: #f2ddc9;
+  margin-bottom: 15px;
+  font-size: 1.5em;
+  font-weight: bold;
 }
 
-.selectors label {
-  margin-right: 15px;
-  font-size: 14px;
+.modal-right h4 {
+  color: #f2ddc9;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+#modalIngredients {
+  color: #f2ddc9;
+  margin: 10px 0;
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+#modalIngredients li {
+  color: #f2ddc9;
+  margin: 5px 0;
+}
+
+#modalProcess {
+  color: #f2ddc9;
+  margin: 10px 0;
+}
+
+#modalProcess ol {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+#modalProcess li {
+  color: #f2ddc9;
+  margin: 5px 0;
 }
 
 .nutrition {
-  margin-top: 20px;
-  background: #2d2217;
   color: #f2ddc9;
-      padding: 10px;
+  background: #3a2a1a;
+  padding: 15px;
+  margin: 15px 0;
   border-radius: 8px;
 }
 
 .close-btn {
-  margin-top: 20px;
-  padding: 8px 12px;
-  font-size: 14px;
+  background: #ffe6b3;
+  color: #6b3e26;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
   cursor: pointer;
+  font-weight: bold;
+  margin-top: 15px;
 }
 
-.blurred {
-  filter: blur(6px);
-  pointer-events: none;
-  user-select: none;
+.close-btn:hover {
+  background: #ffe0a3;
+}
+
+/* Ensure recipe cards are always visible */
+.recipe-card {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+}
+
+.card-container,
+#cardContainer {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: grid !important;
 }
 
 /* Dark mode styles (add/adjust as needed for upgrades) */

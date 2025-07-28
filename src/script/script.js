@@ -45,25 +45,17 @@ document.addEventListener('DOMContentLoaded', function() {
   // Add user interaction detection
   document.addEventListener('click', function() {
     window.userInteracted = true;
-    // Enable modal opening after user interaction
-    window.modalAllowed = true;
-    console.log('User interaction detected, modal opening enabled');
+    console.log('User interaction detected');
   }, { once: true });
   
-  // Enable modal opening after page load completion
+  // Enable modal opening after page load
   window.addEventListener('load', function() {
-    setTimeout(() => {
-      window.modalAllowed = true;
-      window.modalInitialized = true;
-      console.log('Page load completed, modal opening enabled');
-    }, 1000);
+    console.log('Page load completed, modal system ready');
   });
   
-  // Also enable modal after a shorter delay for better UX
+  // Also enable modal after a short delay
   setTimeout(() => {
-    window.modalAllowed = true;
-    window.modalInitialized = true;
-    console.log('Modal enabled after timeout');
+    console.log('Modal system enabled after timeout');
   }, 500);
 });
 
@@ -513,8 +505,6 @@ function renderCards() {
 function openModal(recipeKey) {
   console.log('=== OPEN MODAL DEBUG START ===');
   console.log('openModal called with key:', recipeKey);
-  console.log('User interacted:', window.userInteracted);
-  console.log('Modal initialized:', window.modalInitialized);
 
   // Safety check: prevent opening with invalid keys
   if (!recipeKey || recipeKey === 'undefined' || recipeKey === 'null' || recipeKey === '') {
@@ -527,17 +517,6 @@ function openModal(recipeKey) {
   if (recipeKey === 'auto' || recipeKey === 'default' || recipeKey === 'initial') {
     console.error('Automatic modal opening prevented');
     return;
-  }
-  
-  // Prevent opening if modal not initialized
-  if (!window.modalInitialized) {
-    console.error('Modal not initialized yet, preventing opening');
-    return;
-  }
-  
-  // Allow modal opening for valid recipe keys (most recipe keys are valid)
-  if (recipeKey && typeof recipeKey === 'string' && recipeKey.length > 0) {
-    console.log('Valid recipe key detected, allowing modal opening');
   }
   
   try {
@@ -561,36 +540,56 @@ function openModal(recipeKey) {
     
     console.log('Modal element found, opening...');
     
-    // Force modal to be visible with all content
-    modal.classList.remove("hidden");
-    modal.classList.add("show");
-    modal.style.display = "flex";
-    modal.style.visibility = "visible";
-    modal.style.opacity = "1";
-    modal.style.pointerEvents = "auto";
-    modal.style.zIndex = "10000";
+    // SIMPLE APPROACH: Force modal to be visible
+    modal.style.cssText = `
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      z-index: 10000 !important;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      background: rgba(0, 0, 0, 0.8) !important;
+    `;
     
-    // Force all modal content to be visible
+    // Force modal content to be visible
     const modalContent = modal.querySelector('.modal-content');
     if (modalContent) {
-      modalContent.style.display = "flex";
-      modalContent.style.visibility = "visible";
-      modalContent.style.opacity = "1";
-      modalContent.style.background = "#2d2217";
-      modalContent.style.color = "#f2ddc9";
+      modalContent.style.cssText = `
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        background: #2d2217 !important;
+        color: #f2ddc9 !important;
+        z-index: 10001 !important;
+        position: relative !important;
+        width: 90% !important;
+        max-width: 800px !important;
+        margin: 20px auto !important;
+        border-radius: 12px !important;
+        overflow: hidden !important;
+      `;
     }
     
     // Force modal right content to be visible
     const modalRight = modal.querySelector('.modal-right');
     if (modalRight) {
-      modalRight.style.display = "block";
-      modalRight.style.visibility = "visible";
-      modalRight.style.opacity = "1";
-      modalRight.style.color = "#f2ddc9";
-      modalRight.style.background = "#2d2217";
-      modalRight.style.padding = "20px";
-      modalRight.style.overflowY = "auto";
-      modalRight.style.maxHeight = "80vh";
+      modalRight.style.cssText = `
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        color: #f2ddc9 !important;
+        background: #2d2217 !important;
+        padding: 20px !important;
+        overflow-y: auto !important;
+        max-height: 80vh !important;
+        z-index: 10002 !important;
+        position: relative !important;
+        flex: 1 !important;
+      `;
     }
     
     // Prevent body scroll on mobile
@@ -600,53 +599,69 @@ function openModal(recipeKey) {
       document.body.style.width = '100%';
     }
     
-    // Set modal title and image with null checks
+    // Set modal title and image with forced visibility
     const modalTitle = document.getElementById("modalTitle");
     const modalImage = document.getElementById("modalImage");
     if (modalTitle) {
       modalTitle.textContent = recipe.title;
-      modalTitle.style.color = "#f2ddc9";
-      modalTitle.style.visibility = "visible";
-      modalTitle.style.opacity = "1";
-      modalTitle.style.display = "block";
+      modalTitle.style.cssText = `
+        color: #f2ddc9 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        display: block !important;
+        font-size: 1.5em !important;
+        font-weight: bold !important;
+        margin-bottom: 15px !important;
+      `;
       console.log('Modal title set to:', recipe.title);
     } else {
       console.warn('Modal title element not found');
     }
     if (modalImage) {
       modalImage.src = recipe.img;
-      modalImage.style.visibility = "visible";
-      modalImage.style.opacity = "1";
-      modalImage.style.display = "block";
+      modalImage.style.cssText = `
+        visibility: visible !important;
+        opacity: 1 !important;
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+        max-height: 300px !important;
+        object-fit: cover !important;
+      `;
       console.log('Modal image set to:', recipe.img);
     } else {
       console.warn('Modal image element not found');
     }
 
-    // Ingredients with null check and forced visibility
+    // Ingredients with forced visibility
     const ingredientsList = document.getElementById("modalIngredients");
     if (ingredientsList) {
       ingredientsList.innerHTML = "";
-      ingredientsList.style.display = "block";
-      ingredientsList.style.visibility = "visible";
-      ingredientsList.style.opacity = "1";
-      ingredientsList.style.color = "#f2ddc9";
-      ingredientsList.style.margin = "10px 0";
+      ingredientsList.style.cssText = `
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        color: #f2ddc9 !important;
+        margin: 10px 0 !important;
+        list-style-type: disc !important;
+        padding-left: 20px !important;
+      `;
       
       if (recipe.ingredients && Array.isArray(recipe.ingredients)) {
         recipe.ingredients.forEach(ing => {
           const li = document.createElement("li");
           li.textContent = ing;
-          li.style.color = "#f2ddc9";
-          li.style.visibility = "visible";
-          li.style.opacity = "1";
-          li.style.display = "list-item";
-          li.style.margin = "5px 0";
-          li.style.listStyleType = "disc";
+          li.style.cssText = `
+            color: #f2ddc9 !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            display: list-item !important;
+            margin: 5px 0 !important;
+            list-style-type: disc !important;
+          `;
           ingredientsList.appendChild(li);
         });
         console.log('Ingredients populated:', recipe.ingredients.length, 'items');
-        console.log('Ingredients list HTML:', ingredientsList.innerHTML);
       } else {
         console.warn('No ingredients found for recipe');
       }
@@ -654,7 +669,7 @@ function openModal(recipeKey) {
       console.warn('Modal ingredients list not found');
     }
 
-    // Segmented button toggle logic with null checks and forced visibility
+    // Process with forced visibility
     const processElem = document.getElementById("modalProcess");
     const easyBtn = document.getElementById("jargonEasyBtn");
     const jargonBtn = document.getElementById("jargonJargonBtn");
@@ -665,31 +680,26 @@ function openModal(recipeKey) {
         return;
       }
       
-      processElem.style.display = "block";
-      processElem.style.visibility = "visible";
-      processElem.style.opacity = "1";
-      processElem.style.color = "#f2ddc9";
-      processElem.style.margin = "10px 0";
+      processElem.style.cssText = `
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        color: #f2ddc9 !important;
+        margin: 10px 0 !important;
+      `;
       
       if (showJargon && recipe.process_jargon) {
-        processElem.innerHTML = Array.isArray(recipe.process_jargon)
-          ? recipe.process_jargon.map((step, index) => `<li style="color: #f2ddc9; visibility: visible; opacity: 1; display: list-item; margin: 5px 0; list-style-type: decimal;">${step}</li>`).join('')
-          : `<li style="color: #f2ddc9; visibility: visible; opacity: 1; display: list-item; margin: 5px 0; list-style-type: decimal;">${recipe.process_jargon}</li>`;
+        const processSteps = Array.isArray(recipe.process_jargon) ? recipe.process_jargon : [recipe.process_jargon];
+        processElem.innerHTML = '<ol style="margin: 10px 0; padding-left: 20px;">' + 
+          processSteps.map(step => `<li style="color: #f2ddc9; visibility: visible; opacity: 1; display: list-item; margin: 5px 0;">${step}</li>`).join('') + 
+          '</ol>';
       } else if (recipe.process_easy) {
-        processElem.innerHTML = Array.isArray(recipe.process_easy)
-          ? recipe.process_easy.map((step, index) => `<li style="color: #f2ddc9; visibility: visible; opacity: 1; display: list-item; margin: 5px 0; list-style-type: decimal;">${step}</li>`).join('')
-          : `<li style="color: #f2ddc9; visibility: visible; opacity: 1; display: list-item; margin: 5px 0; list-style-type: decimal;">${recipe.process_easy}</li>`;
+        const processSteps = Array.isArray(recipe.process_easy) ? recipe.process_easy : [recipe.process_easy];
+        processElem.innerHTML = '<ol style="margin: 10px 0; padding-left: 20px;">' + 
+          processSteps.map(step => `<li style="color: #f2ddc9; visibility: visible; opacity: 1; display: list-item; margin: 5px 0;">${step}</li>`).join('') + 
+          '</ol>';
       } else {
-        processElem.innerHTML = '<li style="color: #f2ddc9; visibility: visible; opacity: 1; display: list-item; margin: 5px 0; list-style-type: decimal;">Process not available</li>';
-      }
-      
-      // Force process list to be visible
-      const processList = processElem.querySelector('ul');
-      if (processList) {
-        processList.style.display = "block";
-        processList.style.visibility = "visible";
-        processList.style.opacity = "1";
-        processList.style.margin = "10px 0";
+        processElem.innerHTML = '<p style="color: #f2ddc9; visibility: visible; opacity: 1;">Process not available</p>';
       }
       
       console.log('Process rendered with jargon:', showJargon);
@@ -990,37 +1000,30 @@ function closeModal() {
     document.body.style.width = '';
   }
   
-  // Hide modal with proper state reset
-  modal.classList.remove("show");
-  modal.classList.add("hidden");
-  modal.style.display = "none";
-  modal.style.visibility = "hidden";
-  modal.style.opacity = "0";
-  modal.style.pointerEvents = "none";
-  modal.style.zIndex = "1000";
+  // SIMPLE APPROACH: Force modal to be hidden
+  modal.style.cssText = `
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    z-index: 1000 !important;
+  `;
   
-  // Reset all modal content visibility
+  // Reset all modal content
   const modalContent = modal.querySelector('.modal-content');
   if (modalContent) {
-    modalContent.style.display = "none";
-    modalContent.style.visibility = "hidden";
-    modalContent.style.opacity = "0";
+    modalContent.style.cssText = '';
   }
   
   const modalRight = modal.querySelector('.modal-right');
   if (modalRight) {
-    modalRight.style.display = "none";
-    modalRight.style.visibility = "hidden";
-    modalRight.style.opacity = "0";
+    modalRight.style.cssText = '';
   }
   
   // Reset all text elements
   const textElements = modal.querySelectorAll('h2, h4, p, li, span, div');
   textElements.forEach(element => {
-    element.style.color = "";
-    element.style.visibility = "";
-    element.style.opacity = "";
-    element.style.display = "";
+    element.style.cssText = '';
   });
   
   console.log('Modal closed successfully');
