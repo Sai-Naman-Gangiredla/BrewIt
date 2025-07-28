@@ -2188,17 +2188,28 @@ input:checked + .slider:before {
   font-synthesis-character-variant-100: auto !important;
     }
 
-/* Customization input fields - force hide by default */
-#milkInputSpan,
-#sugarInputSpan,
-#iceInputSpan,
-#foamInputSpan {
+/* Customization input fields - force hide by default with maximum specificity */
+.modal .selectors ul li #milkInputSpan,
+.modal .selectors ul li #sugarInputSpan,
+.modal .selectors ul li #iceInputSpan,
+.modal .selectors ul li #foamInputSpan,
+#recipeModal .selectors ul li #milkInputSpan,
+#recipeModal .selectors ul li #sugarInputSpan,
+#recipeModal .selectors ul li #iceInputSpan,
+#recipeModal .selectors ul li #foamInputSpan,
+.modal-right .selectors ul li #milkInputSpan,
+.modal-right .selectors ul li #sugarInputSpan,
+.modal-right .selectors ul li #iceInputSpan,
+.modal-right .selectors ul li #foamInputSpan {
   display: none !important;
   visibility: hidden !important;
   opacity: 0 !important;
   width: 0 !important;
   height: 0 !important;
   overflow: hidden !important;
+  position: absolute !important;
+  left: -9999px !important;
+  top: -9999px !important;
 }
 
 /* Customization section styling */
