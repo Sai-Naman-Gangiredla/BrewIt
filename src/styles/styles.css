@@ -192,11 +192,13 @@ footer {
   max-height: 100%;
   background-color: #232323;
   color: #f2ddc9;
-  display: block;
+  display: flex;
+  flex-direction: column;
   visibility: visible;
   opacity: 1;
 }
 
+/* Modal content order - ensure proper sequence */
 .modal-right h2 {
   margin-top: 0;
   color: #f2ddc9;
@@ -206,6 +208,7 @@ footer {
   display: block;
   visibility: visible;
   opacity: 1;
+  order: 1;
 }
 
 .modal-right h4 {
@@ -243,6 +246,13 @@ footer {
   opacity: 1;
 }
 
+.selectors {
+  display: block;
+  visibility: visible;
+  opacity: 1;
+  margin-top: 20px;
+}
+
 .selectors label {
   margin-right: 15px;
   font-size: 14px;
@@ -261,6 +271,7 @@ footer {
   display: block;
   visibility: visible;
   opacity: 1;
+  order: 5;
 }
 
 .nutrition p {
@@ -283,9 +294,10 @@ footer {
   display: block;
   visibility: visible;
   opacity: 1;
+  order: 6;
 }
 
-/* Specific modal content elements */
+/* Specific modal content elements with proper order */
 #modalTitle {
   display: block !important;
   visibility: visible !important;
@@ -294,6 +306,7 @@ footer {
   font-size: 1.5em !important;
   font-weight: bold !important;
   margin-bottom: 15px !important;
+  order: 1 !important;
 }
 
 #modalIngredients {
@@ -302,6 +315,7 @@ footer {
   opacity: 1 !important;
   color: #f2ddc9 !important;
   margin: 10px 0 !important;
+  order: 2 !important;
 }
 
 #modalIngredients li {
@@ -318,6 +332,7 @@ footer {
   opacity: 1 !important;
   color: #f2ddc9 !important;
   margin: 10px 0 !important;
+  order: 3 !important;
 }
 
 #modalProcess p {
@@ -328,6 +343,14 @@ footer {
   margin: 5px 0 !important;
 }
 
+/* Customization section */
+.selectors {
+  order: 4 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
 /* Flavor radar chart */
 #flavorRadarChart {
   display: block !important;
@@ -335,6 +358,7 @@ footer {
   opacity: 1 !important;
   margin: 18px auto 0 auto !important;
   background: #232323 !important;
+  order: 5 !important;
 }
 
 /* Brew strength controls */
@@ -343,6 +367,7 @@ footer {
   visibility: visible !important;
   opacity: 1 !important;
   width: 120px !important;
+  order: 6 !important;
 }
 
 #brewStrengthValue {
@@ -350,6 +375,7 @@ footer {
   visibility: visible !important;
   opacity: 1 !important;
   color: #f2ddc9 !important;
+  order: 6 !important;
 }
 
 #caffeineEstimate {
@@ -359,6 +385,7 @@ footer {
   color: #a0522d !important;
   margin-top: 8px !important;
   font-size: 1em !important;
+  order: 7 !important;
 }
 
 .blurred {
