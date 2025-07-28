@@ -380,6 +380,13 @@ function openModal(recipeKey) {
   console.log('=== OPEN MODAL DEBUG START ===');
   console.log('openModal called with key:', recipeKey);
   
+  // Safety check: prevent opening with invalid keys
+  if (!recipeKey || recipeKey === 'undefined' || recipeKey === 'null' || recipeKey === '') {
+    console.error('Invalid recipe key provided:', recipeKey);
+    showToast('Invalid recipe selected. Please try again.');
+    return;
+  }
+  
   try {
     const recipe = recipes[recipeKey];
     if (!recipe) {
@@ -923,8 +930,9 @@ function showSection(sectionId) {
       }
       let resultHtml = '';
       if (match) {
+        const recipeKey = Object.keys(recipes).find(k => recipes[k] === match);
         resultHtml = `
-          <div class='card recipe-card' style='margin:32px auto;max-width:340px;cursor:pointer;' onclick="openModal('${Object.keys(recipes).find(k => recipes[k] === match)}')">
+          <div class='card recipe-card' style='margin:32px auto;max-width:340px;cursor:pointer;' data-recipe-key="${recipeKey || ''}">
             <img src='${match.img}' alt='${match.title}' onerror="this.style.display='none'">
             <div class='card-body'>
               <h3 class='card-title recipe-title'>${match.title}</h3>
@@ -953,6 +961,17 @@ function showSection(sectionId) {
         `;
       }
       document.getElementById('remixResult').innerHTML = resultHtml;
+      
+      // Add event listener for the remix result card
+      const remixCard = document.getElementById('remixResult').querySelector('.recipe-card');
+      if (remixCard && remixCard.dataset.recipeKey) {
+        remixCard.addEventListener('click', () => {
+          const key = remixCard.dataset.recipeKey;
+          if (key && recipes[key]) {
+            openModal(key);
+          }
+        });
+      }
     };
   } else if (sectionId === 'quizSection') {
     // --- Find Your Brew Quiz UI ---
@@ -1051,7 +1070,7 @@ function showSection(sectionId) {
       let resultHtml = '';
       if (matches.length > 0) {
         resultHtml = matches.map(m => `
-          <div class='card recipe-card' style='margin:32px auto;max-width:340px;cursor:pointer;display:inline-block;vertical-align:top;' onclick="openModal('${m.key}')">
+          <div class='card recipe-card' style='margin:32px auto;max-width:340px;cursor:pointer;display:inline-block;vertical-align:top;' data-recipe-key="${m.key || ''}">
             <img src='${m.recipe.img}' alt='${m.recipe.title}' onerror=\"this.style.display='none'\">
             <div class='card-body'>
               <h3 class='card-title recipe-title'>${m.recipe.title}</h3>
@@ -1064,6 +1083,19 @@ function showSection(sectionId) {
         resultHtml = `<div style='margin:32px auto;text-align:center;color:#a0522d;'>No perfect match found, but try exploring our recipes!</div>`;
       }
       document.getElementById('quizResult').innerHTML = resultHtml;
+      
+      // Add event listeners for quiz result cards
+      const quizCards = document.getElementById('quizResult').querySelectorAll('.recipe-card');
+      quizCards.forEach(card => {
+        if (card.dataset.recipeKey) {
+          card.addEventListener('click', () => {
+            const key = card.dataset.recipeKey;
+            if (key && recipes[key]) {
+              openModal(key);
+            }
+          });
+        }
+      });
     };
   } else {
     // Show home/recipes
