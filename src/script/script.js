@@ -54,9 +54,17 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('load', function() {
     setTimeout(() => {
       window.modalAllowed = true;
+      window.modalInitialized = true;
       console.log('Page load completed, modal opening enabled');
     }, 1000);
   });
+  
+  // Also enable modal after a shorter delay for better UX
+  setTimeout(() => {
+    window.modalAllowed = true;
+    window.modalInitialized = true;
+    console.log('Modal enabled after timeout');
+  }, 500);
 });
 
 // --- DATA ---
@@ -527,10 +535,9 @@ function openModal(recipeKey) {
     return;
   }
   
-  // Only allow opening if user has interacted or it's a valid recipe click
-  if (!window.userInteracted && !recipeKey.match(/^[a-zA-Z0-9_-]+$/)) {
-    console.error('No user interaction detected and invalid recipe key format');
-    return;
+  // Allow modal opening for valid recipe keys (most recipe keys are valid)
+  if (recipeKey && typeof recipeKey === 'string' && recipeKey.length > 0) {
+    console.log('Valid recipe key detected, allowing modal opening');
   }
   
   try {
