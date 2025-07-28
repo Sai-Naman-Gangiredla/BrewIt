@@ -1164,7 +1164,7 @@ function showSection(sectionId) {
             <div class='card-body'>
               <h3 class='card-title recipe-title'>${match.title}</h3>
               <p class='card-cont'>${(match.process || match.process_easy || match.process_jargon || '').toString().slice(0, 60)}...</p>
-            </div>
+          </div>
           </div>
           <div style='text-align:center;color:#a0522d;font-size:1em;margin-top:8px;'>This is a real recipe from our collection that matches your preferences!</div>
         `;
