@@ -378,468 +378,134 @@ function renderCards() {
 
 // --- MODAL LOGIC ---
 function openModal(recipeKey) {
-  console.log('openModal called with key:', recipeKey);
   console.log('=== TESTING IF DEBUGGING CODE IS RUNNING ===');
+  console.log('Opening modal for recipe:', recipeKey);
   
-  try {
-    const recipe = recipes[recipeKey];
-    if (!recipe) {
-      console.error('Recipe not found for key:', recipeKey);
-      showToast('Recipe not found. Please try again.');
-      return;
-    }
-    
-    console.log('Recipe found:', recipe.title);
-    console.log('Recipe ingredients:', recipe.ingredients);
-    console.log('Recipe process:', recipe.process_easy || recipe.process_jargon);
-    
-    const modal = document.getElementById("recipeModal");
-    if (!modal) {
-      console.error('Modal element not found');
-      showToast('Modal not found. Please refresh the page.');
-      return;
-    }
-    
-    console.log('Modal element found, opening...');
-    
-    // Prevent body scroll on mobile
-    if (window.innerWidth <= 768) {
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.width = '100%';
-    }
-    
-    // Set modal title and image with null checks
-    const modalTitle = document.getElementById("modalTitle");
-    const modalImage = document.getElementById("modalImage");
-    if (modalTitle) {
-      modalTitle.textContent = recipe.title;
-      console.log('Modal title set to:', recipe.title);
-    } else {
-      console.warn('Modal title element not found');
-    }
-    if (modalImage) {
-      modalImage.src = recipe.img;
-      console.log('Modal image set to:', recipe.img);
-    } else {
-      console.warn('Modal image element not found');
-    }
-
-    // Ingredients with null check
-    const ingredientsList = document.getElementById("modalIngredients");
-    if (ingredientsList) {
-      ingredientsList.innerHTML = "";
-      if (recipe.ingredients && Array.isArray(recipe.ingredients)) {
-        recipe.ingredients.forEach(ing => {
-          const li = document.createElement("li");
-          li.textContent = ing;
-          ingredientsList.appendChild(li);
-        });
-        console.log('Ingredients populated:', recipe.ingredients.length, 'items');
-        console.log('Ingredients list HTML:', ingredientsList.innerHTML);
-      } else {
-        console.warn('No ingredients found for recipe');
-      }
-    } else {
-      console.warn('Modal ingredients list not found');
-    }
-
-    // Segmented button toggle logic with null checks
-    const processElem = document.getElementById("modalProcess");
-    const easyBtn = document.getElementById("jargonEasyBtn");
-    const jargonBtn = document.getElementById("jargonJargonBtn");
-    
-    function renderProcess(showJargon) {
-      if (!processElem) {
-        console.warn('Process element not found');
-        return;
-      }
-      
-      if (showJargon && recipe.process_jargon) {
-        processElem.innerHTML = Array.isArray(recipe.process_jargon)
-          ? '<ul>' + recipe.process_jargon.map(step => `<li>${step}</li>`).join('') + '</ul>'
-          : `<ul><li>${recipe.process_jargon}</li></ul>`;
-        console.log('Process jargon rendered');
-      } else if (recipe.process_easy) {
-        processElem.innerHTML = Array.isArray(recipe.process_easy)
-          ? '<ul>' + recipe.process_easy.map(step => `<li>${step}</li>`).join('') + '</ul>'
-          : `<ul><li>${recipe.process_easy}</li></ul>`;
-        console.log('Process easy rendered');
-      } else {
-        processElem.innerHTML = '<p>Process instructions not available.</p>';
-        console.warn('No process instructions found');
-      }
-      console.log('Process element HTML:', processElem.innerHTML);
-    }
-    
-    // Initialize with easy instructions by default
-    renderProcess(false);
-    
-    // Add event listeners for toggle buttons
-    if (easyBtn) {
-      easyBtn.onclick = function() {
-        easyBtn.classList.add('seg-btn-active');
-        jargonBtn.classList.remove('seg-btn-active');
-        easyBtn.setAttribute('aria-pressed', 'true');
-        jargonBtn.setAttribute('aria-pressed', 'false');
-        renderProcess(false);
-      };
-    }
-    
-    if (jargonBtn) {
-      jargonBtn.onclick = function() {
-        jargonBtn.classList.add('seg-btn-active');
-        easyBtn.classList.remove('seg-btn-active');
-        jargonBtn.setAttribute('aria-pressed', 'true');
-        easyBtn.setAttribute('aria-pressed', 'false');
-        renderProcess(true);
-      };
-    }
-
-    // Nutrition calculation with null checks
-    const caloriesElem = document.getElementById("calories");
-    const carbsElem = document.getElementById("carbs");
-    const proteinElem = document.getElementById("protein");
-    
-    if (recipe.baseNutrition) {
-      if (caloriesElem) caloriesElem.textContent = recipe.baseNutrition.calories || 0;
-      if (carbsElem) carbsElem.textContent = recipe.baseNutrition.carbs || 0;
-      if (proteinElem) proteinElem.textContent = recipe.baseNutrition.protein || 0;
-      console.log('Nutrition populated:', recipe.baseNutrition);
-    } else {
-      if (caloriesElem) caloriesElem.textContent = 0;
-      if (carbsElem) carbsElem.textContent = 0;
-      if (proteinElem) proteinElem.textContent = 0;
-      console.warn('No nutrition data found');
-    }
-
-    // Flavor radar chart with null check
-    if (recipe.flavorProfile) {
-      const chartContainer = document.getElementById('flavorRadarChart');
-      if (chartContainer) {
-        renderFlavorRadarChart(recipe.flavorProfile);
-        console.log('Flavor chart rendered');
-      } else {
-        console.warn('Flavor radar chart container not found');
-      }
-    }
-
-    // Brew strength & caffeine estimate with null checks
-    if (typeof recipe.caffeine !== 'undefined') {
-      const brewStrength = document.getElementById('brewStrength');
-      const brewStrengthValue = document.getElementById('brewStrengthValue');
-      const caffeineEstimate = document.getElementById('caffeineEstimate');
-      
-      if (brewStrength) brewStrength.value = 3;
-      if (brewStrengthValue) brewStrengthValue.textContent = 3;
-      
-      function updateCaffeine() {
-        if (caffeineEstimate) {
-          const strength = brewStrength ? brewStrength.value : 3;
-          const caffeineEstimateValue = updateCaffeineEstimate(recipe, strength);
-          caffeineEstimate.textContent = `Estimated Caffeine: ${caffeineEstimateValue} mg`;
-        }
-      }
-      
-      if (brewStrength) {
-        brewStrength.oninput = updateCaffeine;
-      }
-      updateCaffeine();
-      console.log('Caffeine estimate populated');
-    }
-
-    // --- Customization logic with null checks ---
-    const addMilk = document.getElementById('addMilk');
-    const addSugar = document.getElementById('addSugar');
-    const milkQty = document.getElementById('milkQty');
-    const sugarQty = document.getElementById('sugarQty');
-    const addIce = document.getElementById('addIce');
-    const addFoam = document.getElementById('addFoam');
-    const iceQty = document.getElementById('iceQty');
-    const foamQty = document.getElementById('foamQty');
-    const toppingType = document.getElementById('toppingType');
-    const toppingQty = document.getElementById('toppingQty');
-    const resetBtn = document.getElementById('resetCustomize');
-    const milkType = document.getElementById('milkType');
-    const customToppingFields = document.getElementById('customToppingFields');
-    const customToppingName = document.getElementById('customToppingName');
-    const customToppingCal = document.getElementById('customToppingCal');
-    const customToppingCarb = document.getElementById('customToppingCarb');
-    const customToppingProt = document.getElementById('customToppingProt');
-
-    // Nutrition values per ml/g for milk types
-    const milkNutrition = {
-      whole:   { cal: 0.5, carb: 0.05, prot: 0.03 },
-      skim:    { cal: 0.35, carb: 0.05, prot: 0.035 },
-      oat:     { cal: 0.43, carb: 0.07, prot: 0.01 },
-      almond:  { cal: 0.17, carb: 0.007, prot: 0.006 },
-      soy:     { cal: 0.33, carb: 0.015, prot: 0.03 },
-      coconut: { cal: 0.2, carb: 0.01, prot: 0.002 }
-    };
-    
-    // Nutrition values per g/ml for toppings
-    const toppingNutrition = {
-      whipped:  { cal: 3, carb: 0.2, prot: 0.1 },
-      chocolate:{ cal: 5.5, carb: 0.7, prot: 0.05 },
-      cinnamon: { cal: 2.5, carb: 0.8, prot: 0 },
-      caramel:  { cal: 4.5, carb: 1.1, prot: 0 },
-      hazelnut: { cal: 3.2, carb: 0.8, prot: 0 },
-      honey:    { cal: 3, carb: 0.82, prot: 0 },
-      maple:    { cal: 2.6, carb: 0.67, prot: 0 },
-    };
-
-    function updateNutritionCustom() {
-      let cal = recipe.baseNutrition ? recipe.baseNutrition.calories : 0;
-      let carbs = recipe.baseNutrition ? recipe.baseNutrition.carbs : 0;
-      let protein = recipe.baseNutrition ? recipe.baseNutrition.protein : 0;
-      const milkTypeVal = milkType ? milkType.value : 'whole';
-      const milkNut = milkNutrition[milkTypeVal] || milkNutrition.whole;
-      
-      if (addMilk && addMilk.checked) {
-        const m = parseInt(milkQty ? milkQty.value : 0) || 0;
-        cal += m * milkNut.cal;
-        carbs += m * milkNut.carb;
-        protein += m * milkNut.prot;
-      }
-      if (addSugar && addSugar.checked) {
-        const s = parseInt(sugarQty ? sugarQty.value : 0) || 0;
-        cal += s * 4;
-        carbs += s * 1;
-      }
-      if (addIce && addIce.checked) {
-        // negligible nutrition
-      }
-      if (addFoam && addFoam.checked) {
-        const f = parseInt(foamQty ? foamQty.value : 0) || 0;
-        cal += f * milkNut.cal;
-        carbs += f * milkNut.carb;
-        protein += f * milkNut.prot;
-      }
-      if (toppingType && toppingType.value && parseInt(toppingQty ? toppingQty.value : 0) > 0) {
-        const t = parseInt(toppingQty ? toppingQty.value : 0) || 0;
-        if (toppingType.value === 'custom') {
-          const ccal = parseFloat(customToppingCal ? customToppingCal.value : 0) || 0;
-          const ccarb = parseFloat(customToppingCarb ? customToppingCarb.value : 0) || 0;
-          const cprot = parseFloat(customToppingProt ? customToppingProt.value : 0) || 0;
-          cal += t * ccal;
-          carbs += t * ccarb;
-          protein += t * cprot;
-        } else if (toppingNutrition[toppingType.value]) {
-          const nut = toppingNutrition[toppingType.value];
-          cal += t * nut.cal;
-          carbs += t * nut.carb;
-          protein += t * nut.prot;
-        }
-      }
-      
-      const caloriesElem = document.getElementById("calories");
-      const carbsElem = document.getElementById("carbs");
-      const proteinElem = document.getElementById("protein");
-      
-      if (caloriesElem) caloriesElem.textContent = Math.round(cal * 10) / 10;
-      if (carbsElem) carbsElem.textContent = Math.round(carbs * 10) / 10;
-      if (proteinElem) proteinElem.textContent = Math.round(protein * 10) / 10;
-    }
-
-    // Show/hide input fields based on checkboxes
-    function toggleInput(checkbox, input) {
-      if (checkbox && input) {
-        input.style.display = checkbox.checked ? '' : 'none';
-        if (!checkbox.checked) input.value = 0;
-      }
-    }
-    
-    // Only add event listeners if elements exist
-    if (addMilk) addMilk.onchange = function() { toggleInput(addMilk, milkQty); updateNutritionCustom(); };
-    if (addSugar) addSugar.onchange = function() { toggleInput(addSugar, sugarQty); updateNutritionCustom(); };
-    if (addIce) addIce.onchange = function() { toggleInput(addIce, iceQty); updateNutritionCustom(); };
-    if (addFoam) addFoam.onchange = function() { toggleInput(addFoam, foamQty); updateNutritionCustom(); };
-    
-    if (milkQty) milkQty.oninput = updateNutritionCustom;
-    if (sugarQty) sugarQty.oninput = updateNutritionCustom;
-    if (iceQty) iceQty.oninput = updateNutritionCustom;
-    if (foamQty) foamQty.oninput = updateNutritionCustom;
-    if (milkType) milkType.onchange = updateNutritionCustom;
-    
-    if (toppingType) {
-      toppingType.onchange = function() {
-        if (toppingQty) toppingQty.style.display = toppingType.value ? '' : 'none';
-        if (customToppingFields) customToppingFields.style.display = toppingType.value === 'custom' ? '' : 'none';
-        updateNutritionCustom();
-      };
-    }
-    
-    if (toppingQty) toppingQty.oninput = updateNutritionCustom;
-    if (customToppingCal) customToppingCal.oninput = updateNutritionCustom;
-    if (customToppingCarb) customToppingCarb.oninput = updateNutritionCustom;
-    if (customToppingProt) customToppingProt.oninput = updateNutritionCustom;
-    
-    if (resetBtn) {
-      resetBtn.onclick = function() {
-        if (addMilk) addMilk.checked = false;
-        if (addSugar) addSugar.checked = false;
-        if (addIce) addIce.checked = false;
-        if (addFoam) addFoam.checked = false;
-        if (milkQty) milkQty.value = 0;
-        if (sugarQty) sugarQty.value = 0;
-        if (iceQty) iceQty.value = 0;
-        if (foamQty) foamQty.value = 0;
-        if (toppingType) toppingType.value = '';
-        if (toppingQty) toppingQty.value = 0;
-        if (milkQty) milkQty.style.display = 'none';
-        if (sugarQty) sugarQty.style.display = 'none';
-        if (iceQty) iceQty.style.display = 'none';
-        if (foamQty) foamQty.style.display = 'none';
-        if (toppingQty) toppingQty.style.display = 'none';
-        if (customToppingFields) customToppingFields.style.display = 'none';
-        updateNutritionCustom();
-      };
-    }
-    
-    // Initialize input visibility with null checks
-    if (addMilk && milkQty) toggleInput(addMilk, milkQty);
-    if (addSugar && sugarQty) toggleInput(addSugar, sugarQty);
-    if (addIce && iceQty) toggleInput(addIce, iceQty);
-    if (addFoam && foamQty) toggleInput(addFoam, foamQty);
-    if (toppingType && toppingQty) toppingQty.style.display = toppingType.value ? '' : 'none';
-    if (customToppingFields) customToppingFields.style.display = toppingType.value === 'custom' ? '' : 'none';
-    updateNutritionCustom();
-
-    // Show modal
-    modal.classList.remove('hidden');
-    modal.style.display = 'flex';
-    const mainContent = document.getElementById("mainContent");
-    if (mainContent) mainContent.classList.add("blurred");
-    
-    // Focus management for accessibility
-    const closeBtn = modal.querySelector('.close-btn');
-    if (closeBtn) {
-      closeBtn.focus();
-    }
-    
-    // CRITICAL: Force modal content to be visible IMMEDIATELY
-    console.log('=== FORCING MODAL CONTENT VISIBILITY ===');
-    console.log('Window width:', window.innerWidth);
-    console.log('Is mobile:', window.innerWidth <= 768);
-    
-    // Force modal content to be visible regardless of device
-    const modalRight = modal.querySelector('.modal-right');
-    if (modalRight) {
-      modalRight.style.display = 'block';
-      modalRight.style.visibility = 'visible';
-      modalRight.style.opacity = '1';
-      modalRight.style.color = '#f2ddc9';
-      modalRight.style.background = '#232323';
-      modalRight.style.position = 'relative';
-      modalRight.style.zIndex = '1000';
-      console.log('Forced modal-right visibility');
-    }
-    
-    // Force all text elements to be visible
-    const allTextElements = modal.querySelectorAll('h2, h4, p, li, span, label, div');
-    allTextElements.forEach(el => {
-      el.style.color = '#f2ddc9';
-      el.style.visibility = 'visible';
-      el.style.opacity = '1';
-      el.style.display = 'block';
-      el.style.position = 'relative';
-      el.style.zIndex = '1001';
-    });
-    console.log('Forced visibility on', allTextElements.length, 'text elements');
-    
-    // Force specific elements
-    const title = modal.querySelector('#modalTitle');
-    const ingredients = modal.querySelector('#modalIngredients');
-    const process = modal.querySelector('#modalProcess');
-    const nutrition = modal.querySelector('.nutrition');
-    
-    if (title) {
-      title.style.color = '#f2ddc9';
-      title.style.visibility = 'visible';
-      title.style.opacity = '1';
-      title.style.display = 'block';
-      title.style.fontSize = '1.5em';
-      title.style.fontWeight = 'bold';
-      title.style.marginBottom = '15px';
-      console.log('Forced title visibility:', title.textContent);
-    }
-    
-    if (ingredients) {
-      ingredients.style.color = '#f2ddc9';
-      ingredients.style.visibility = 'visible';
-      ingredients.style.opacity = '1';
-      ingredients.style.display = 'block';
-      ingredients.style.margin = '10px 0';
-      console.log('Forced ingredients visibility. HTML:', ingredients.innerHTML);
-    }
-    
-    if (process) {
-      process.style.color = '#f2ddc9';
-      process.style.visibility = 'visible';
-      process.style.opacity = '1';
-      process.style.display = 'block';
-      process.style.margin = '10px 0';
-      console.log('Forced process visibility. HTML:', process.innerHTML);
-    }
-    
-    if (nutrition) {
-      nutrition.style.display = 'block';
-      nutrition.style.visibility = 'visible';
-      nutrition.style.opacity = '1';
-      nutrition.style.background = '#2d2217';
-      nutrition.style.color = '#f2ddc9';
-      nutrition.style.padding = '10px';
-      nutrition.style.margin = '10px 0';
-      nutrition.style.borderRadius = '8px';
-      console.log('Forced nutrition visibility');
-    }
-    
-    // Force all list items to be visible
-    const allListItems = modal.querySelectorAll('li');
-    allListItems.forEach(li => {
-      li.style.color = '#f2ddc9';
-      li.style.visibility = 'visible';
-      li.style.opacity = '1';
-      li.style.display = 'list-item';
-      li.style.margin = '5px 0';
-    });
-    console.log('Forced visibility on', allListItems.length, 'list items');
-    
-    // Force all headings to be visible
-    const allHeadings = modal.querySelectorAll('h2, h4');
-    allHeadings.forEach(heading => {
-      heading.style.color = '#f2ddc9';
-      heading.style.visibility = 'visible';
-      heading.style.opacity = '1';
-      heading.style.display = 'block';
-      heading.style.margin = '10px 0';
-    });
-    console.log('Forced visibility on', allHeadings.length, 'headings');
-    
-    console.log('=== END FORCING VISIBILITY ===');
-    
-    // Mobile-specific optimizations
-    if (window.innerWidth <= 768) {
-      // Scroll to top of modal content
-      const modalContent = modal.querySelector('.modal-content');
-      if (modalContent) {
-        modalContent.scrollTop = 0;
-      }
-      
-      // Add touch event listeners for better mobile interaction
-      modal.addEventListener('touchstart', function(e) {
-        e.stopPropagation();
-      }, { passive: true });
-      
-      console.log('Mobile optimizations applied');
-    }
-    
-    console.log('Modal opened successfully');
-    
-  } catch (error) {
-    console.error('Error opening modal:', error);
-    showToast('Something went wrong. Please refresh the page.');
+  const recipe = recipes[recipeKey];
+  if (!recipe) {
+    console.error('Recipe not found:', recipeKey);
+    showToast('Recipe not found');
+    return;
   }
+
+  console.log('Recipe data:', recipe);
+
+  const modal = document.getElementById('recipeModal');
+  const modalImage = document.getElementById('modalImage');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalIngredients = document.getElementById('modalIngredients');
+  const modalProcess = document.getElementById('modalProcess');
+
+  console.log('Modal elements found:', {
+    modal: !!modal,
+    modalImage: !!modalImage,
+    modalTitle: !!modalTitle,
+    modalIngredients: !!modalIngredients,
+    modalProcess: !!modalProcess
+  });
+
+  if (!modal || !modalImage || !modalTitle || !modalIngredients || !modalProcess) {
+    console.error('Modal elements not found');
+    showToast('Error opening recipe details');
+    return;
+  }
+
+  // Set modal content
+  modalImage.src = recipe.image || `./public/images/${recipeKey}.jpeg`;
+  modalImage.alt = recipe.name;
+  modalTitle.textContent = recipe.name;
+
+  console.log('Setting modal content:', {
+    image: modalImage.src,
+    title: modalTitle.textContent
+  });
+
+  // Populate ingredients
+  if (recipe.ingredients && Array.isArray(recipe.ingredients)) {
+    modalIngredients.innerHTML = recipe.ingredients.map(ingredient => 
+      `<li>${ingredient}</li>`
+    ).join('');
+    console.log('Ingredients populated:', modalIngredients.innerHTML);
+  } else {
+    modalIngredients.innerHTML = '<li>Ingredients not available</li>';
+    console.log('No ingredients available');
+  }
+
+  // Populate process
+  if (recipe.process_easy && Array.isArray(recipe.process_easy)) {
+    modalProcess.innerHTML = recipe.process_easy.map((step, index) => 
+      `<p>${index + 1}. ${step}</p>`
+    ).join('');
+    console.log('Process populated:', modalProcess.innerHTML);
+  } else if (recipe.process_jargon && Array.isArray(recipe.process_jargon)) {
+    modalProcess.innerHTML = recipe.process_jargon.map((step, index) => 
+      `<p>${index + 1}. ${step}</p>`
+    ).join('');
+    console.log('Process populated (jargon):', modalProcess.innerHTML);
+  } else {
+    modalProcess.innerHTML = '<p>Process not available</p>';
+    console.log('No process available');
+  }
+
+  // Force visibility of modal content
+  const modalRight = modal.querySelector('.modal-right');
+  if (modalRight) {
+    modalRight.style.display = 'block';
+    modalRight.style.visibility = 'visible';
+    modalRight.style.opacity = '1';
+    modalRight.style.position = 'relative';
+    modalRight.style.zIndex = '1001';
+    console.log('Modal right forced visible');
+  }
+
+  // Force visibility of all text elements
+  const allTextElements = modal.querySelectorAll('h2, h4, ul, p, li');
+  allTextElements.forEach(element => {
+    element.style.display = 'block';
+    element.style.visibility = 'visible';
+    element.style.opacity = '1';
+    element.style.position = 'relative';
+    element.style.zIndex = '1001';
+  });
+  console.log('All text elements forced visible');
+
+  // Force specific elements to be visible
+  const title = modal.querySelector('#modalTitle');
+  const ingredients = modal.querySelector('#modalIngredients');
+  const process = modal.querySelector('#modalProcess');
+  const nutrition = modal.querySelector('.nutrition');
+  const listItems = modal.querySelectorAll('li');
+  const headings = modal.querySelectorAll('h2, h4');
+
+  [title, ingredients, process, nutrition, ...listItems, ...headings].forEach(element => {
+    if (element) {
+      element.style.display = 'block';
+      element.style.visibility = 'visible';
+      element.style.opacity = '1';
+      element.style.position = 'relative';
+      element.style.zIndex = '1001';
+      element.style.color = '#f2ddc9';
+      element.style.backgroundColor = 'transparent';
+    }
+  });
+
+  console.log('Specific elements forced visible');
+
+  // Show modal
+  modal.style.display = 'flex';
+  modal.style.visibility = 'visible';
+  modal.style.opacity = '1';
+  modal.style.zIndex = '10000';
+
+  console.log('Modal displayed');
+
+  // Prevent body scroll on mobile
+  document.body.style.overflow = 'hidden';
+
+  // Initialize modal functionality
+  initializeModalFunctionality(recipe);
+
+  console.log('Modal opened successfully for:', recipeKey);
 }
 
 function closeModal() {

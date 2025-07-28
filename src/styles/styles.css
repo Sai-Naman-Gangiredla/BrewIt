@@ -1,7 +1,7 @@
 * { box-sizing: border-box; }
 
 body {
-  margin: 0;
+      margin: 0;
   font-family: Arial, sans-serif;
   background-color: #181818;
   color: #f2ddc9;
@@ -12,7 +12,7 @@ body {
   justify-content: space-between;
   align-items: center;
   background-color: #222;
-  background-size: cover;
+      background-size: cover;
   height: 120px;
   padding: 0 20px;
   color: #f2ddc9;
@@ -34,7 +34,7 @@ body {
 
     .center-header {
   font-size: 24px;
-  color: #f2ddc9;
+      color: #f2ddc9;
   font-weight: 600;
   text-align: center;
   flex: 1;
@@ -111,10 +111,10 @@ body {
 .bi-heart {
   color: crimson;
   background: none;
-  border: none;
+      border: none;
   font-size: 20px;
-  cursor: pointer;
-}
+      cursor: pointer;
+    }
 
 footer {
   text-align: center;
@@ -1381,3 +1381,129 @@ input:checked + .slider:before {
   color: #a0522d;
   outline: none;
     }
+
+/* Force modal content visibility */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal[style*="display: flex"] {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.modal-content {
+  background-color: #232323;
+  color: #f2ddc9;
+  margin: auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  z-index: 10001;
+}
+
+.modal-right {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 1001 !important;
+  background-color: #232323 !important;
+  color: #f2ddc9 !important;
+}
+
+.modal-right * {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 1001 !important;
+  color: #f2ddc9 !important;
+}
+
+#modalTitle {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 1001 !important;
+  color: #f2ddc9 !important;
+  font-size: 1.5em !important;
+  font-weight: bold !important;
+  margin-bottom: 15px !important;
+}
+
+#modalIngredients {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 1001 !important;
+  color: #f2ddc9 !important;
+  margin: 10px 0 !important;
+}
+
+#modalIngredients li {
+  display: list-item !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 1001 !important;
+  color: #f2ddc9 !important;
+  margin: 5px 0 !important;
+}
+
+#modalProcess {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 1001 !important;
+  color: #f2ddc9 !important;
+  margin: 10px 0 !important;
+}
+
+#modalProcess p {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 1001 !important;
+  color: #f2ddc9 !important;
+  margin: 5px 0 !important;
+}
+
+.nutrition {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 1001 !important;
+  background-color: #2d2217 !important;
+  color: #f2ddc9 !important;
+  padding: 15px !important;
+  border-radius: 8px !important;
+  margin: 15px 0 !important;
+}
+
+.nutrition p {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 1001 !important;
+  color: #f2ddc9 !important;
+  margin: 5px 0 !important;
+}
