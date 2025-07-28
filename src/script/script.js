@@ -505,6 +505,8 @@ function renderCards() {
 function openModal(recipeKey) {
   console.log('=== OPEN MODAL DEBUG START ===');
   console.log('openModal called with key:', recipeKey);
+  console.log('Recipes object keys:', Object.keys(recipes));
+  console.log('Recipes object length:', Object.keys(recipes).length);
 
   // Safety check: prevent opening with invalid keys
   if (!recipeKey || recipeKey === 'undefined' || recipeKey === 'null' || recipeKey === '') {
@@ -521,8 +523,10 @@ function openModal(recipeKey) {
   
   try {
     const recipe = recipes[recipeKey];
+    console.log('Recipe lookup result:', recipe);
     if (!recipe) {
       console.error('Recipe not found for key:', recipeKey);
+      console.log('Available recipe keys:', Object.keys(recipes));
       showToast('Recipe not found. Please try again.');
       return;
     }
@@ -539,6 +543,7 @@ function openModal(recipeKey) {
     }
     
     console.log('Modal element found, opening...');
+    console.log('Modal current styles:', modal.style.cssText);
     
     // SIMPLE APPROACH: Force modal to be visible
     modal.style.cssText = `
@@ -554,6 +559,8 @@ function openModal(recipeKey) {
       height: 100% !important;
       background: rgba(0, 0, 0, 0.8) !important;
     `;
+    
+    console.log('Modal styles after setting:', modal.style.cssText);
     
     // Force modal content to be visible
     const modalContent = modal.querySelector('.modal-content');
@@ -572,6 +579,9 @@ function openModal(recipeKey) {
         border-radius: 12px !important;
         overflow: hidden !important;
       `;
+      console.log('Modal content styles set');
+    } else {
+      console.error('Modal content element not found');
     }
     
     // Force modal right content to be visible
@@ -590,6 +600,9 @@ function openModal(recipeKey) {
         position: relative !important;
         flex: 1 !important;
       `;
+      console.log('Modal right styles set');
+    } else {
+      console.error('Modal right element not found');
     }
     
     // Prevent body scroll on mobile
@@ -1735,3 +1748,149 @@ window.addEventListener('load', function() {
     resetPageState();
   }, 100);
 });
+
+// Test function to verify modal is working
+function testModal() {
+  console.log('=== TEST MODAL DEBUG ===');
+  
+  const modal = document.getElementById("recipeModal");
+  if (!modal) {
+    console.error('Modal element not found');
+    return;
+  }
+  
+  console.log('Modal element found, testing visibility...');
+  
+  // Force modal to be visible with test content
+  modal.style.cssText = `
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    z-index: 10000 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+  `;
+  
+  // Force modal content to be visible
+  const modalContent = modal.querySelector('.modal-content');
+  if (modalContent) {
+    modalContent.style.cssText = `
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      background: #2d2217 !important;
+      color: #f2ddc9 !important;
+      z-index: 10001 !important;
+      position: relative !important;
+      width: 90% !important;
+      max-width: 800px !important;
+      margin: 20px auto !important;
+      border-radius: 12px !important;
+      overflow: hidden !important;
+    `;
+  }
+  
+  // Force modal right content to be visible
+  const modalRight = modal.querySelector('.modal-right');
+  if (modalRight) {
+    modalRight.style.cssText = `
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      color: #f2ddc9 !important;
+      background: #2d2217 !important;
+      padding: 20px !important;
+      overflow-y: auto !important;
+      max-height: 80vh !important;
+      z-index: 10002 !important;
+      position: relative !important;
+      flex: 1 !important;
+    `;
+  }
+  
+  // Set test content
+  const modalTitle = document.getElementById("modalTitle");
+  if (modalTitle) {
+    modalTitle.textContent = "TEST MODAL - This should be visible";
+    modalTitle.style.cssText = `
+      color: #f2ddc9 !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      display: block !important;
+      font-size: 1.5em !important;
+      font-weight: bold !important;
+      margin-bottom: 15px !important;
+    `;
+  }
+  
+  // Set test ingredients
+  const ingredientsList = document.getElementById("modalIngredients");
+  if (ingredientsList) {
+    ingredientsList.innerHTML = `
+      <li style="color: #f2ddc9; visibility: visible; opacity: 1; display: list-item; margin: 5px 0;">Test Ingredient 1</li>
+      <li style="color: #f2ddc9; visibility: visible; opacity: 1; display: list-item; margin: 5px 0;">Test Ingredient 2</li>
+      <li style="color: #f2ddc9; visibility: visible; opacity: 1; display: list-item; margin: 5px 0;">Test Ingredient 3</li>
+    `;
+    ingredientsList.style.cssText = `
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      color: #f2ddc9 !important;
+      margin: 10px 0 !important;
+      list-style-type: disc !important;
+      padding-left: 20px !important;
+    `;
+  }
+  
+  // Set test process
+  const processElem = document.getElementById("modalProcess");
+  if (processElem) {
+    processElem.innerHTML = `
+      <ol style="margin: 10px 0; padding-left: 20px;">
+        <li style="color: #f2ddc9; visibility: visible; opacity: 1; display: list-item; margin: 5px 0;">Test Step 1</li>
+        <li style="color: #f2ddc9; visibility: visible; opacity: 1; display: list-item; margin: 5px 0;">Test Step 2</li>
+        <li style="color: #f2ddc9; visibility: visible; opacity: 1; display: list-item; margin: 5px 0;">Test Step 3</li>
+      </ol>
+    `;
+    processElem.style.cssText = `
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      color: #f2ddc9 !important;
+      margin: 10px 0 !important;
+    `;
+  }
+  
+  console.log('Test modal should now be visible');
+}
+
+// Add test button to page
+function addTestButton() {
+  const testBtn = document.createElement('button');
+  testBtn.textContent = 'TEST MODAL';
+  testBtn.style.cssText = `
+    position: fixed !important;
+    top: 10px !important;
+    right: 10px !important;
+    z-index: 99999 !important;
+    background: red !important;
+    color: white !important;
+    padding: 10px !important;
+    border: none !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+  `;
+  testBtn.onclick = testModal;
+  document.body.appendChild(testBtn);
+  console.log('Test button added');
+}
+
+// Add test button to page
+setTimeout(() => {
+  addTestButton();
+}, 2000);
