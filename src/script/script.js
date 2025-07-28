@@ -416,7 +416,16 @@ function openModal(recipeKey) {
 
   console.log('Setting modal content:', {
     image: modalImage.src,
-    title: modalTitle.textContent
+    title: modalTitle.textContent,
+    recipeName: recipe.name
+  });
+
+  // Debug: Check if title is actually set
+  console.log('Title element after setting:', {
+    textContent: modalTitle.textContent,
+    innerHTML: modalTitle.innerHTML,
+    style: modalTitle.style.display,
+    computedStyle: window.getComputedStyle(modalTitle).display
   });
 
   // Populate ingredients
