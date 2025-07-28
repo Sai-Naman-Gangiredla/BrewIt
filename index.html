@@ -49,14 +49,14 @@
   
   <link rel="canonical" href="https://sai-naman-gangiredla.github.io/BrewIt/">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="./src/styles/styles.css?v=1.1.4&t=1703123456789">
+  <link rel="stylesheet" href="./src/styles/styles.css?v=1.1.5&t=1703123456789">
   
   <!-- Force cache refresh for CSS -->
   <script>
     // Force cache refresh for CSS
     const cssLink = document.querySelector('link[href*="styles.css"]');
     if (cssLink) {
-      cssLink.href = './src/styles/styles.css?v=1.1.4&t=' + Date.now();
+      cssLink.href = './src/styles/styles.css?v=1.1.5&t=' + Date.now();
     }
   </script>
   <!-- 1. Chart.js CDN in <head> -->
@@ -473,40 +473,26 @@
                 </select>
               </label>
             </li>
-            <li><label><input type="checkbox" id="addMilk"> Milk</label>
-              <input type="number" id="milkQty" min="0" max="200" value="0" style="width:60px;display:none;" aria-label="Milk quantity (ml)"> ml
+            <li>Milk ml</li>
+            <li>Sugar g</li>
+            <li>Ice g</li>
+            <li>Foam ml</li>
+            <li>
+              <label>Topping:
+                <select id="toppingType" style="width:120px;">
+                  <option value="">None</option>
+                  <option value="whipped">Whipped Cream</option>
+                  <option value="chocolate">Chocolate</option>
+                  <option value="cinnamon">Cinnamon</option>
+                  <option value="caramel">Caramel</option>
+                  <option value="hazelnut">Hazelnut Syrup</option>
+                  <option value="honey">Honey</option>
+                  <option value="maple">Maple Syrup</option>
+                  <option value="custom">Custom Ingredient</option>
+                </select>
+              </label>
             </li>
-            <li><label><input type="checkbox" id="addSugar"> Sugar</label>
-              <input type="number" id="sugarQty" min="0" max="20" value="0" style="width:60px;display:none;" aria-label="Sugar quantity (g)"> g
-            </li>
-            <li><label><input type="checkbox" id="addIce"> Ice</label>
-              <input type="number" id="iceQty" min="0" max="200" value="0" style="width:60px;display:none;" aria-label="Ice quantity (g)"> g
-            </li>
-            <li><label><input type="checkbox" id="addFoam"> Foam</label>
-              <input type="number" id="foamQty" min="0" max="100" value="0" style="width:60px;display:none;" aria-label="Foam quantity (ml)"> ml
-            </li>
-            <li><label>Topping:
-              <select id="toppingType" style="width:120px;">
-                <option value="">None</option>
-                <option value="whipped">Whipped Cream</option>
-                <option value="chocolate">Chocolate</option>
-                <option value="cinnamon">Cinnamon</option>
-                <option value="caramel">Caramel</option>
-                <option value="hazelnut">Hazelnut Syrup</option>
-                <option value="honey">Honey</option>
-                <option value="maple">Maple Syrup</option>
-                <option value="custom">Custom Ingredient</option>
-              </select>
-              <input type="number" id="toppingQty" min="0" max="50" value="0" style="width:60px;display:none;" aria-label="Topping quantity (g/ml)">
-            </label>
-              <div id="customToppingFields" style="display:none;margin-top:4px;">
-                <input type="text" id="customToppingName" placeholder="Name" style="width:90px;">
-                <input type="number" id="customToppingCal" placeholder="kcal/g" style="width:60px;">
-                <input type="number" id="customToppingCarb" placeholder="carb/g" style="width:60px;">
-                <input type="number" id="customToppingProt" placeholder="prot/g" style="width:60px;">
-              </div>
-            </li>
-            <li style="margin-top:8px;"><button type="button" id="resetCustomize">Reset</button></li>
+            <li><button type="button" id="resetCustomize">Reset</button></li>
           </ul>
         </div>
 
