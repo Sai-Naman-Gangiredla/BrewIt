@@ -529,7 +529,7 @@ function openModal(recipeKey) {
     return;
   }
   
-  // Prevent opening if modal not initialized or no user interaction
+  // Prevent opening if modal not initialized
   if (!window.modalInitialized) {
     console.error('Modal not initialized yet, preventing opening');
     return;
@@ -561,13 +561,37 @@ function openModal(recipeKey) {
     
     console.log('Modal element found, opening...');
     
-    // Show modal with new CSS approach
+    // Force modal to be visible with all content
     modal.classList.remove("hidden");
     modal.classList.add("show");
     modal.style.display = "flex";
     modal.style.visibility = "visible";
     modal.style.opacity = "1";
     modal.style.pointerEvents = "auto";
+    modal.style.zIndex = "10000";
+    
+    // Force all modal content to be visible
+    const modalContent = modal.querySelector('.modal-content');
+    if (modalContent) {
+      modalContent.style.display = "flex";
+      modalContent.style.visibility = "visible";
+      modalContent.style.opacity = "1";
+      modalContent.style.background = "#2d2217";
+      modalContent.style.color = "#f2ddc9";
+    }
+    
+    // Force modal right content to be visible
+    const modalRight = modal.querySelector('.modal-right');
+    if (modalRight) {
+      modalRight.style.display = "block";
+      modalRight.style.visibility = "visible";
+      modalRight.style.opacity = "1";
+      modalRight.style.color = "#f2ddc9";
+      modalRight.style.background = "#2d2217";
+      modalRight.style.padding = "20px";
+      modalRight.style.overflowY = "auto";
+      modalRight.style.maxHeight = "80vh";
+    }
     
     // Prevent body scroll on mobile
     if (window.innerWidth <= 768) {
@@ -581,25 +605,44 @@ function openModal(recipeKey) {
     const modalImage = document.getElementById("modalImage");
     if (modalTitle) {
       modalTitle.textContent = recipe.title;
+      modalTitle.style.color = "#f2ddc9";
+      modalTitle.style.visibility = "visible";
+      modalTitle.style.opacity = "1";
+      modalTitle.style.display = "block";
       console.log('Modal title set to:', recipe.title);
     } else {
       console.warn('Modal title element not found');
     }
     if (modalImage) {
       modalImage.src = recipe.img;
+      modalImage.style.visibility = "visible";
+      modalImage.style.opacity = "1";
+      modalImage.style.display = "block";
       console.log('Modal image set to:', recipe.img);
     } else {
       console.warn('Modal image element not found');
     }
 
-    // Ingredients with null check
+    // Ingredients with null check and forced visibility
     const ingredientsList = document.getElementById("modalIngredients");
     if (ingredientsList) {
       ingredientsList.innerHTML = "";
+      ingredientsList.style.display = "block";
+      ingredientsList.style.visibility = "visible";
+      ingredientsList.style.opacity = "1";
+      ingredientsList.style.color = "#f2ddc9";
+      ingredientsList.style.margin = "10px 0";
+      
       if (recipe.ingredients && Array.isArray(recipe.ingredients)) {
         recipe.ingredients.forEach(ing => {
           const li = document.createElement("li");
           li.textContent = ing;
+          li.style.color = "#f2ddc9";
+          li.style.visibility = "visible";
+          li.style.opacity = "1";
+          li.style.display = "list-item";
+          li.style.margin = "5px 0";
+          li.style.listStyleType = "disc";
           ingredientsList.appendChild(li);
         });
         console.log('Ingredients populated:', recipe.ingredients.length, 'items');
@@ -611,7 +654,7 @@ function openModal(recipeKey) {
       console.warn('Modal ingredients list not found');
     }
 
-    // Segmented button toggle logic with null checks
+    // Segmented button toggle logic with null checks and forced visibility
     const processElem = document.getElementById("modalProcess");
     const easyBtn = document.getElementById("jargonEasyBtn");
     const jargonBtn = document.getElementById("jargonJargonBtn");
@@ -622,37 +665,34 @@ function openModal(recipeKey) {
         return;
       }
       
+      processElem.style.display = "block";
+      processElem.style.visibility = "visible";
+      processElem.style.opacity = "1";
+      processElem.style.color = "#f2ddc9";
+      processElem.style.margin = "10px 0";
+      
       if (showJargon && recipe.process_jargon) {
         processElem.innerHTML = Array.isArray(recipe.process_jargon)
-          ? '<ul>' + recipe.process_jargon.map(step => `<li>${step}</li>`).join('') + '</ul>'
-          : `<ul><li>${recipe.process_jargon}</li></ul>`;
-        console.log('Process jargon rendered');
+          ? recipe.process_jargon.map((step, index) => `<li style="color: #f2ddc9; visibility: visible; opacity: 1; display: list-item; margin: 5px 0; list-style-type: decimal;">${step}</li>`).join('')
+          : `<li style="color: #f2ddc9; visibility: visible; opacity: 1; display: list-item; margin: 5px 0; list-style-type: decimal;">${recipe.process_jargon}</li>`;
       } else if (recipe.process_easy) {
         processElem.innerHTML = Array.isArray(recipe.process_easy)
-          ? '<ul>' + recipe.process_easy.map(step => `<li>${step}</li>`).join('') + '</ul>'
-          : `<ul><li>${recipe.process_easy}</li></ul>`;
-        console.log('Process easy rendered');
-      } else if (recipe.process) {
-        // Handle the process field - it might already contain numbered steps
-        const processText = recipe.process;
-        if (processText.includes('1.') || processText.includes('1 ')) {
-          // Process already has numbering, split by numbered steps
-          const steps = processText.split(/(?=\d+\.)/).filter(step => step.trim());
-          if (steps.length > 1) {
-            processElem.innerHTML = '<ul>' + steps.map(step => `<li>${step.trim()}</li>`).join('') + '</ul>';
-          } else {
-            processElem.innerHTML = `<ul><li>${processText}</li></ul>`;
-          }
-        } else {
-          // Process doesn't have numbering, treat as single step
-          processElem.innerHTML = `<ul><li>${processText}</li></ul>`;
-        }
-        console.log('Process rendered');
+          ? recipe.process_easy.map((step, index) => `<li style="color: #f2ddc9; visibility: visible; opacity: 1; display: list-item; margin: 5px 0; list-style-type: decimal;">${step}</li>`).join('')
+          : `<li style="color: #f2ddc9; visibility: visible; opacity: 1; display: list-item; margin: 5px 0; list-style-type: decimal;">${recipe.process_easy}</li>`;
       } else {
-        processElem.innerHTML = '<p>Process instructions not available.</p>';
-        console.warn('No process instructions found');
+        processElem.innerHTML = '<li style="color: #f2ddc9; visibility: visible; opacity: 1; display: list-item; margin: 5px 0; list-style-type: decimal;">Process not available</li>';
       }
-      console.log('Process element HTML:', processElem.innerHTML);
+      
+      // Force process list to be visible
+      const processList = processElem.querySelector('ul');
+      if (processList) {
+        processList.style.display = "block";
+        processList.style.visibility = "visible";
+        processList.style.opacity = "1";
+        processList.style.margin = "10px 0";
+      }
+      
+      console.log('Process rendered with jargon:', showJargon);
     }
     
     // Initialize with easy instructions by default
@@ -936,29 +976,54 @@ function closeModal() {
   console.log('=== CLOSE MODAL DEBUG START ===');
   
   const modal = document.getElementById("recipeModal");
-  if (modal) {
-    console.log('Closing modal...');
-    
-    // Hide modal with new CSS approach
-    modal.classList.remove("show");
-    modal.classList.add("hidden");
-    modal.style.display = "none";
-    modal.style.visibility = "hidden";
-    modal.style.opacity = "0";
-    modal.style.pointerEvents = "none";
-    
-    console.log('Modal closed successfully');
-  } else {
+  if (!modal) {
     console.error('Modal element not found for closing');
+    return;
   }
   
-  // Restore body scroll on mobile
+  console.log('Closing modal...');
+  
+  // Reset body scroll on mobile
   if (window.innerWidth <= 768) {
     document.body.style.overflow = '';
     document.body.style.position = '';
     document.body.style.width = '';
   }
   
+  // Hide modal with proper state reset
+  modal.classList.remove("show");
+  modal.classList.add("hidden");
+  modal.style.display = "none";
+  modal.style.visibility = "hidden";
+  modal.style.opacity = "0";
+  modal.style.pointerEvents = "none";
+  modal.style.zIndex = "1000";
+  
+  // Reset all modal content visibility
+  const modalContent = modal.querySelector('.modal-content');
+  if (modalContent) {
+    modalContent.style.display = "none";
+    modalContent.style.visibility = "hidden";
+    modalContent.style.opacity = "0";
+  }
+  
+  const modalRight = modal.querySelector('.modal-right');
+  if (modalRight) {
+    modalRight.style.display = "none";
+    modalRight.style.visibility = "hidden";
+    modalRight.style.opacity = "0";
+  }
+  
+  // Reset all text elements
+  const textElements = modal.querySelectorAll('h2, h4, p, li, span, div');
+  textElements.forEach(element => {
+    element.style.color = "";
+    element.style.visibility = "";
+    element.style.opacity = "";
+    element.style.display = "";
+  });
+  
+  console.log('Modal closed successfully');
   console.log('=== CLOSE MODAL DEBUG END ===');
 }
 
@@ -1621,3 +1686,49 @@ function addRecipeStructuredData() {
     console.error('Error adding structured data:', error);
   }
 }
+
+// Function to reset page state and ensure clean display
+function resetPageState() {
+  console.log('Resetting page state...');
+  
+  // Reset any modal-related styles
+  const modal = document.getElementById("recipeModal");
+  if (modal) {
+    modal.classList.remove("show");
+    modal.classList.add("hidden");
+    modal.style.display = "none";
+    modal.style.visibility = "hidden";
+    modal.style.opacity = "0";
+    modal.style.pointerEvents = "none";
+  }
+  
+  // Reset body scroll
+  document.body.style.overflow = '';
+  document.body.style.position = '';
+  document.body.style.width = '';
+  
+  // Force recipe cards to be visible
+  const cards = document.querySelectorAll('.recipe-card');
+  cards.forEach(card => {
+    card.style.visibility = "visible";
+    card.style.opacity = "1";
+    card.style.display = "block";
+  });
+  
+  // Force card container to be visible
+  const cardContainer = document.getElementById('cardContainer');
+  if (cardContainer) {
+    cardContainer.style.visibility = "visible";
+    cardContainer.style.opacity = "1";
+    cardContainer.style.display = "grid";
+  }
+  
+  console.log('Page state reset complete');
+}
+
+// Add to window load event
+window.addEventListener('load', function() {
+  setTimeout(() => {
+    resetPageState();
+  }, 100);
+});

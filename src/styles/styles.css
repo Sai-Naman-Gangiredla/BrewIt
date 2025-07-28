@@ -1404,6 +1404,7 @@ input:checked + .slider:before {
   visibility: hidden !important;
   opacity: 0 !important;
   pointer-events: none !important;
+  z-index: 1000 !important;
 }
 
 #recipeModal.hidden {
@@ -1411,6 +1412,7 @@ input:checked + .slider:before {
   visibility: hidden !important;
   opacity: 0 !important;
   pointer-events: none !important;
+  z-index: 1000 !important;
 }
 
 /* Only show modal when explicitly triggered */
@@ -1419,6 +1421,7 @@ input:checked + .slider:before {
   visibility: visible !important;
   opacity: 1 !important;
   pointer-events: auto !important;
+  z-index: 10000 !important;
 }
 
 /* Ensure modal content is visible when modal is shown */
@@ -1428,6 +1431,7 @@ input:checked + .slider:before {
   opacity: 1 !important;
   background: #2d2217 !important;
   color: #f2ddc9 !important;
+  z-index: 10001 !important;
 }
 
 #recipeModal.show .modal-right {
@@ -1439,6 +1443,7 @@ input:checked + .slider:before {
   padding: 20px !important;
   overflow-y: auto !important;
   max-height: 80vh !important;
+  z-index: 10002 !important;
 }
 
 #recipeModal.show .modal-right * {
@@ -1540,4 +1545,27 @@ input:checked + .slider:before {
   opacity: 1 !important;
   color: #f2ddc9 !important;
   margin: 10px 0 !important;
+}
+
+/* Ensure recipe cards are always visible when modal is hidden */
+#recipeModal.hidden ~ .card-container,
+#recipeModal.hidden ~ #cardContainer {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: grid !important;
+}
+
+/* Force recipe cards to be visible */
+.recipe-card {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+}
+
+/* Prevent any blurring of content */
+.card-container,
+#cardContainer {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: grid !important;
 }
