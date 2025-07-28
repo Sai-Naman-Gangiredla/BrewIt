@@ -1,5 +1,5 @@
 // Service Worker for BrewIt - Coffee Recipe Hub
-const CACHE_NAME = 'brewit-v1.0.6';
+const CACHE_NAME = 'brewit-v1.0.7';
 const urlsToCache = [
   './',
   './index.html',
