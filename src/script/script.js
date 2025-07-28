@@ -446,6 +446,62 @@ function openModal(recipeKey) {
     console.log('No process available');
   }
 
+  // Initialize flavor radar chart if recipe has flavor profile
+  if (recipe.flavorProfile) {
+    try {
+      renderFlavorRadarChart(recipe.flavorProfile);
+      console.log('Flavor radar chart rendered');
+    } catch (error) {
+      console.error('Error rendering flavor radar chart:', error);
+    }
+  } else {
+    // Provide default flavor profile if none exists
+    const defaultProfile = {
+      bitterness: 3,
+      sweetness: 2,
+      acidity: 2,
+      strength: 3,
+      body: 3
+    };
+    try {
+      renderFlavorRadarChart(defaultProfile);
+      console.log('Default flavor radar chart rendered');
+    } catch (error) {
+      console.error('Error rendering default flavor radar chart:', error);
+    }
+  }
+
+  // Initialize brew strength and caffeine estimate
+  try {
+    const brewStrength = document.getElementById('brewStrength');
+    const brewStrengthValue = document.getElementById('brewStrengthValue');
+    const caffeineEstimate = document.getElementById('caffeineEstimate');
+    
+    if (brewStrength && brewStrengthValue) {
+      const strength = 3; // Default strength
+      updateCaffeineEstimate(recipe, strength);
+      console.log('Brew strength and caffeine estimate initialized');
+    }
+  } catch (error) {
+    console.error('Error initializing brew strength:', error);
+  }
+
+  // Initialize nutrition calculation
+  try {
+    updateNutritionDisplay(recipe);
+    console.log('Nutrition display updated');
+  } catch (error) {
+    console.error('Error updating nutrition display:', error);
+  }
+
+  // Initialize customization controls
+  try {
+    initializeCustomizationControls();
+    console.log('Customization controls initialized');
+  } catch (error) {
+    console.error('Error initializing customization controls:', error);
+  }
+
   // Show modal
   modal.style.display = 'flex';
   modal.style.visibility = 'visible';
@@ -457,6 +513,123 @@ function openModal(recipeKey) {
   document.body.style.overflow = 'hidden';
 
   console.log('Modal opened successfully for:', recipeKey);
+}
+
+// Function to update nutrition display
+function updateNutritionDisplay(recipe) {
+  const caloriesElement = document.getElementById('calories');
+  const carbsElement = document.getElementById('carbs');
+  const proteinElement = document.getElementById('protein');
+  
+  if (caloriesElement && carbsElement && proteinElement) {
+    // Default nutrition values (can be customized based on recipe)
+    const baseCalories = recipe.calories || 5;
+    const baseCarbs = recipe.carbs || 1;
+    const baseProtein = recipe.protein || 1;
+    
+    caloriesElement.textContent = baseCalories;
+    carbsElement.textContent = baseCarbs;
+    proteinElement.textContent = baseProtein;
+  }
+}
+
+// Function to initialize customization controls
+function initializeCustomizationControls() {
+  // Initialize milk type selector
+  const milkType = document.getElementById('milkType');
+  if (milkType) {
+    milkType.value = 'whole';
+  }
+
+  // Initialize checkboxes and their associated input fields
+  const addMilk = document.getElementById('addMilk');
+  const milkQty = document.getElementById('milkQty');
+  if (addMilk && milkQty) {
+    addMilk.checked = false;
+    milkQty.style.display = 'none';
+    milkQty.value = '0';
+  }
+
+  const addSugar = document.getElementById('addSugar');
+  const sugarQty = document.getElementById('sugarQty');
+  if (addSugar && sugarQty) {
+    addSugar.checked = false;
+    sugarQty.style.display = 'none';
+    sugarQty.value = '0';
+  }
+
+  const addIce = document.getElementById('addIce');
+  const iceQty = document.getElementById('iceQty');
+  if (addIce && iceQty) {
+    addIce.checked = false;
+    iceQty.style.display = 'none';
+    iceQty.value = '0';
+  }
+
+  const addFoam = document.getElementById('addFoam');
+  const foamQty = document.getElementById('foamQty');
+  if (addFoam && foamQty) {
+    addFoam.checked = false;
+    foamQty.style.display = 'none';
+    foamQty.value = '0';
+  }
+
+  // Initialize topping selector
+  const toppingType = document.getElementById('toppingType');
+  const toppingQty = document.getElementById('toppingQty');
+  if (toppingType && toppingQty) {
+    toppingType.value = '';
+    toppingQty.style.display = 'none';
+    toppingQty.value = '0';
+  }
+
+  // Add event listeners for checkboxes
+  if (addMilk && milkQty) {
+    addMilk.addEventListener('change', function() {
+      milkQty.style.display = this.checked ? 'inline' : 'none';
+    });
+  }
+
+  if (addSugar && sugarQty) {
+    addSugar.addEventListener('change', function() {
+      sugarQty.style.display = this.checked ? 'inline' : 'none';
+    });
+  }
+
+  if (addIce && iceQty) {
+    addIce.addEventListener('change', function() {
+      iceQty.style.display = this.checked ? 'inline' : 'none';
+    });
+  }
+
+  if (addFoam && foamQty) {
+    addFoam.addEventListener('change', function() {
+      foamQty.style.display = this.checked ? 'inline' : 'none';
+    });
+  }
+
+  if (toppingType && toppingQty) {
+    toppingType.addEventListener('change', function() {
+      toppingQty.style.display = this.value ? 'inline' : 'none';
+    });
+  }
+
+  // Initialize reset button
+  const resetCustomize = document.getElementById('resetCustomize');
+  if (resetCustomize) {
+    resetCustomize.addEventListener('click', function() {
+      if (addMilk) addMilk.checked = false;
+      if (milkQty) { milkQty.style.display = 'none'; milkQty.value = '0'; }
+      if (addSugar) addSugar.checked = false;
+      if (sugarQty) { sugarQty.style.display = 'none'; sugarQty.value = '0'; }
+      if (addIce) addIce.checked = false;
+      if (iceQty) { iceQty.style.display = 'none'; iceQty.value = '0'; }
+      if (addFoam) addFoam.checked = false;
+      if (foamQty) { foamQty.style.display = 'none'; foamQty.value = '0'; }
+      if (toppingType) toppingType.value = '';
+      if (toppingQty) { toppingQty.style.display = 'none'; toppingQty.value = '0'; }
+    });
+  }
 }
 
 function closeModal() {
