@@ -1,25 +1,37 @@
-* { box-sizing: border-box; }
-
-body {
+* { 
+  box-sizing: border-box; 
   margin: 0;
   padding: 0;
+}
+
+body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: #2d2217;
   color: #f2ddc9;
   line-height: 1.6;
+  margin: 0;
+  padding: 0;
 }
 
+/* Header Section */
 .header {
   background: #3a2a1a;
   padding: 20px;
   text-align: center;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .title {
   margin: 0;
   font-size: 2.5em;
   color: #ffe6b3;
+  display: flex;
+  align-items: center;
 }
 
 .title img {
@@ -29,21 +41,24 @@ body {
 }
 
 .center-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
+  font-size: 24px;
+  color: #f2ddc9;
+  font-weight: 600;
+  text-align: center;
+  flex: 1;
+  margin: 0 20px;
 }
 
+/* Navigation Bar */
 .nav {
   background: #3a2a1a;
   padding: 15px 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
   gap: 10px;
+  flex-wrap: wrap;
+  border-top: 1px solid #4a3a2a;
 }
 
 .nav button,
@@ -56,14 +71,22 @@ body {
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
+  transition: all 0.2s;
 }
 
 .nav button.active {
   background: #d2691e;
   color: white;
   border-color: #d2691e;
+  font-weight: bold;
 }
 
+.nav button:hover {
+  background: #5a4a3a;
+  transform: translateY(-1px);
+}
+
+/* Recipe Grid */
 .card-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -71,6 +94,7 @@ body {
   padding: 20px;
   max-width: 1400px;
   margin: 0 auto;
+  background: #2d2217;
 }
 
 .card.recipe-card {
@@ -81,6 +105,7 @@ body {
   transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
   border: 1px solid #4a3a2a;
+  position: relative;
 }
 
 .card:hover {
@@ -92,10 +117,12 @@ body {
   width: 100%;
   height: 200px;
   object-fit: cover;
+  display: block;
 }
 
 .card-body {
   padding: 15px;
+  position: relative;
 }
 
 .card-title.recipe-title {
@@ -103,6 +130,7 @@ body {
   font-size: 1.2em;
   color: #ffe6b3;
   font-weight: bold;
+  line-height: 1.3;
 }
 
 .card-cont {
@@ -110,6 +138,10 @@ body {
   font-size: 0.9em;
   line-height: 1.4;
   margin-bottom: 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .bi-heart {
@@ -119,22 +151,31 @@ body {
   font-size: 1.2em;
   cursor: pointer;
   transition: color 0.2s;
-  float: right;
-  margin-top: -10px;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 2;
 }
 
 .bi-heart.active {
   color: #ff6b6b;
 }
 
+.bi-heart:hover {
+  color: #ff6b6b;
+}
+
+/* Footer */
 footer {
   text-align: center;
   padding: 20px;
   background: #3a2a1a;
   color: #a0522d;
   margin-top: 40px;
+  border-top: 1px solid #4a3a2a;
 }
 
+/* Modal Styles */
 .modal {
   display: none;
   position: fixed;
@@ -156,6 +197,7 @@ footer {
   border-radius: 12px;
   overflow: hidden;
   max-height: 90vh;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 .modal-left {
@@ -222,6 +264,7 @@ footer {
   padding: 15px;
   margin: 15px 0;
   border-radius: 8px;
+  border: 1px solid #4a3a2a;
 }
 
 .close-btn {
@@ -233,12 +276,15 @@ footer {
   cursor: pointer;
   font-weight: bold;
   margin-top: 15px;
+  transition: all 0.2s;
 }
 
 .close-btn:hover {
   background: #ffe0a3;
+  transform: translateY(-1px);
 }
 
+/* Light Mode */
 .light-mode {
   background: #f5f5f5;
   color: #333;
@@ -247,11 +293,13 @@ footer {
 .light-mode .header {
   background: #fff;
   color: #333;
+  border-bottom: 1px solid #ddd;
 }
 
 .light-mode .nav {
   background: #fff;
   color: #333;
+  border-top: 1px solid #ddd;
 }
 
 .light-mode .nav button,
@@ -271,16 +319,19 @@ footer {
 .light-mode .modal {
   background: #fff;
   color: #333;
+  border-color: #ddd;
 }
 
 .light-mode .nutrition {
   background: #f0f0f0;
   color: #333;
+  border-color: #ddd;
 }
 
 .light-mode footer {
   background: #fff;
   color: #666;
+  border-top-color: #ddd;
 }
 
 .light-mode .bi-heart {
@@ -291,23 +342,7 @@ footer {
   color: #ff6b6b;
 }
 
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  z-index: 1000;
-}
-
-.modal[style*="display: flex"] {
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-}
-
+/* Animations */
 .card.recipe-card {
   transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -325,6 +360,7 @@ footer {
   transform: scale(0.95);
 }
 
+/* Daily Fact Banner */
 #dailyFactBanner {
   background: #ffe6b3;
   color: #6b3e26;
@@ -333,8 +369,10 @@ footer {
   margin: 10px 0;
   text-align: center;
   font-weight: 500;
+  border: 1px solid #d2691e;
 }
 
+/* Charts and Special Elements */
 #flavorRadarChart {
   margin: 20px auto;
   display: block;
@@ -351,6 +389,7 @@ footer {
   color: #a0522d;
 }
 
+/* Section Management */
 #remixSection, #quizSection {
   display: none;
   padding: 20px;
@@ -362,33 +401,9 @@ footer {
   display: none !important;
 }
 
+/* Navigation Buttons */
 .filter-btn, #remixNavBtn, #quizNavBtn {
   transition: background 0.2s, transform 0.1s;
-}
-
-.card.recipe-card {
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.card.recipe-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-}
-
-.steam-animation {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100px;
-  height: 100px;
-  pointer-events: none;
-}
-
-.steam-animation svg {
-  width: 100%;
-  height: 100%;
-  opacity: 0.6;
 }
 
 #remixNavBtn, #quizNavBtn {
@@ -409,6 +424,24 @@ footer {
   box-shadow: 0 4px 12px rgba(210, 105, 30, 0.4);
 }
 
+/* Steam Animation */
+.steam-animation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  pointer-events: none;
+}
+
+.steam-animation svg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+}
+
+/* Responsive Design */
 @media (max-width: 900px) {
   .card-container {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -443,6 +476,8 @@ footer {
 @media (max-width: 600px) {
   .header {
     padding: 15px;
+    flex-direction: column;
+    text-align: center;
   }
   
   .title {
@@ -450,8 +485,8 @@ footer {
   }
   
   .center-header {
-    flex-direction: column;
-    gap: 10px;
+    font-size: 18px;
+    margin: 10px 0;
   }
   
   .nav {
