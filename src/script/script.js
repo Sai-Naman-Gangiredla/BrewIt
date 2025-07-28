@@ -410,14 +410,16 @@ function openModal(recipeKey) {
   }
 
   // Set modal content
-  modalImage.src = recipe.image || `./public/images/${recipeKey}.jpeg`;
-  modalImage.alt = recipe.name;
-  modalTitle.textContent = recipe.name;
+  modalImage.src = recipe.img || recipe.image || `./public/images/${recipeKey}.jpeg`;
+  modalImage.alt = recipe.title || recipe.name || recipeKey;
+  modalTitle.textContent = recipe.title || recipe.name || recipeKey;
 
   console.log('Setting modal content:', {
     image: modalImage.src,
     title: modalTitle.textContent,
-    recipeName: recipe.name
+    recipeTitle: recipe.title,
+    recipeName: recipe.name,
+    recipeKey: recipeKey
   });
 
   // Debug: Check if title is actually set
@@ -439,17 +441,24 @@ function openModal(recipeKey) {
     console.log('No ingredients available');
   }
 
-  // Populate process
+  // Populate process - check multiple possible property names
   if (recipe.process_easy && Array.isArray(recipe.process_easy)) {
     modalProcess.innerHTML = recipe.process_easy.map((step, index) => 
       `<p>${index + 1}. ${step}</p>`
     ).join('');
-    console.log('Process populated:', modalProcess.innerHTML);
+    console.log('Process populated (easy):', modalProcess.innerHTML);
   } else if (recipe.process_jargon && Array.isArray(recipe.process_jargon)) {
     modalProcess.innerHTML = recipe.process_jargon.map((step, index) => 
       `<p>${index + 1}. ${step}</p>`
     ).join('');
     console.log('Process populated (jargon):', modalProcess.innerHTML);
+  } else if (recipe.process && typeof recipe.process === 'string') {
+    // Handle string process (split by steps)
+    const steps = recipe.process.split(/\d+\.\s*/).filter(step => step.trim());
+    modalProcess.innerHTML = steps.map((step, index) => 
+      `<p>${index + 1}. ${step.trim()}</p>`
+    ).join('');
+    console.log('Process populated (string):', modalProcess.innerHTML);
   } else {
     modalProcess.innerHTML = '<p>Process not available</p>';
     console.log('No process available');
