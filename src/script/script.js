@@ -378,7 +378,6 @@ function renderCards() {
 
 // --- MODAL LOGIC ---
 function openModal(recipeKey) {
-  console.log('=== TESTING IF DEBUGGING CODE IS RUNNING ===');
   console.log('Opening modal for recipe:', recipeKey);
   
   const recipe = recipes[recipeKey];
@@ -447,55 +446,10 @@ function openModal(recipeKey) {
     console.log('No process available');
   }
 
-  // Force visibility of modal content
-  const modalRight = modal.querySelector('.modal-right');
-  if (modalRight) {
-    modalRight.style.display = 'block';
-    modalRight.style.visibility = 'visible';
-    modalRight.style.opacity = '1';
-    modalRight.style.position = 'relative';
-    modalRight.style.zIndex = '1001';
-    console.log('Modal right forced visible');
-  }
-
-  // Force visibility of all text elements
-  const allTextElements = modal.querySelectorAll('h2, h4, ul, p, li');
-  allTextElements.forEach(element => {
-    element.style.display = 'block';
-    element.style.visibility = 'visible';
-    element.style.opacity = '1';
-    element.style.position = 'relative';
-    element.style.zIndex = '1001';
-  });
-  console.log('All text elements forced visible');
-
-  // Force specific elements to be visible
-  const title = modal.querySelector('#modalTitle');
-  const ingredients = modal.querySelector('#modalIngredients');
-  const process = modal.querySelector('#modalProcess');
-  const nutrition = modal.querySelector('.nutrition');
-  const listItems = modal.querySelectorAll('li');
-  const headings = modal.querySelectorAll('h2, h4');
-
-  [title, ingredients, process, nutrition, ...listItems, ...headings].forEach(element => {
-    if (element) {
-      element.style.display = 'block';
-      element.style.visibility = 'visible';
-      element.style.opacity = '1';
-      element.style.position = 'relative';
-      element.style.zIndex = '1001';
-      element.style.color = '#f2ddc9';
-      element.style.backgroundColor = 'transparent';
-    }
-  });
-
-  console.log('Specific elements forced visible');
-
   // Show modal
   modal.style.display = 'flex';
   modal.style.visibility = 'visible';
   modal.style.opacity = '1';
-  modal.style.zIndex = '10000';
 
   console.log('Modal displayed');
 
