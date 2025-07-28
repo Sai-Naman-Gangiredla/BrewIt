@@ -214,8 +214,10 @@ footer {
   order: 999 !important; /* Default order for all elements */
 }
 
-/* Specific modal content elements with proper order */
-.modal-right h2#modalTitle {
+/* Specific modal content elements with proper order - MORE SPECIFIC SELECTORS */
+.modal-right h2#modalTitle,
+.modal #modalTitle,
+#recipeModal #modalTitle {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -223,7 +225,10 @@ footer {
   font-size: 1.5em !important;
   font-weight: bold !important;
   margin-bottom: 15px !important;
+  margin-top: 0 !important;
   order: 1 !important;
+  position: relative !important;
+  z-index: 10 !important;
 }
 
 .modal-right h4:first-of-type {
@@ -237,7 +242,9 @@ footer {
   order: 2 !important;
 }
 
-.modal-right ul#modalIngredients {
+.modal-right ul#modalIngredients,
+.modal #modalIngredients,
+#recipeModal #modalIngredients {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -247,7 +254,9 @@ footer {
   order: 3 !important;
 }
 
-.modal-right ul#modalIngredients li {
+.modal-right ul#modalIngredients li,
+.modal #modalIngredients li,
+#recipeModal #modalIngredients li {
   display: list-item !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -255,7 +264,9 @@ footer {
   margin: 5px 0 !important;
 }
 
-.modal-right #jargonToggleGroup {
+.modal-right #jargonToggleGroup,
+.modal #jargonToggleGroup,
+#recipeModal #jargonToggleGroup {
   display: flex !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -265,7 +276,9 @@ footer {
   order: 4 !important;
 }
 
-.modal-right h4:nth-of-type(2) {
+.modal-right h4:nth-of-type(2),
+.modal h4:nth-of-type(2),
+#recipeModal h4:nth-of-type(2) {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -276,7 +289,9 @@ footer {
   order: 5 !important;
 }
 
-.modal-right p#modalProcess {
+.modal-right p#modalProcess,
+.modal #modalProcess,
+#recipeModal #modalProcess {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -287,7 +302,9 @@ footer {
 }
 
 /* Customization section */
-.modal-right .selectors {
+.modal-right .selectors,
+.modal .selectors,
+#recipeModal .selectors {
   order: 7 !important;
   display: block !important;
   visibility: visible !important;
@@ -295,7 +312,9 @@ footer {
   margin-top: 20px !important;
 }
 
-.modal-right .selectors h4 {
+.modal-right .selectors h4,
+.modal .selectors h4,
+#recipeModal .selectors h4 {
   color: #f2ddc9 !important;
   margin: 15px 0 8px 0 !important;
   font-size: 1.1em !important;
@@ -305,7 +324,9 @@ footer {
   opacity: 1 !important;
 }
 
-.modal-right .selectors ul {
+.modal-right .selectors ul,
+.modal .selectors ul,
+#recipeModal .selectors ul {
   margin: 10px 0 !important;
   padding-left: 20px !important;
   display: block !important;
@@ -313,7 +334,9 @@ footer {
   opacity: 1 !important;
 }
 
-.modal-right .selectors li {
+.modal-right .selectors li,
+.modal .selectors li,
+#recipeModal .selectors li {
   color: #f2ddc9 !important;
   margin: 5px 0 !important;
   display: list-item !important;
@@ -322,7 +345,9 @@ footer {
 }
 
 /* Nutrition section - move to bottom */
-.modal-right .nutrition {
+.modal-right .nutrition,
+.modal .nutrition,
+#recipeModal .nutrition {
   margin-top: 20px !important;
   background: #2d2217 !important;
   color: #f2ddc9 !important;
@@ -334,7 +359,9 @@ footer {
   order: 8 !important;
 }
 
-.modal-right .nutrition p {
+.modal-right .nutrition p,
+.modal .nutrition p,
+#recipeModal .nutrition p {
   margin: 5px 0 !important;
   color: #f2ddc9 !important;
   display: block !important;
@@ -343,7 +370,9 @@ footer {
 }
 
 /* Flavor radar chart */
-.modal-right #flavorRadarChart {
+.modal-right #flavorRadarChart,
+.modal #flavorRadarChart,
+#recipeModal #flavorRadarChart {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -353,7 +382,9 @@ footer {
 }
 
 /* Brew strength controls */
-.modal-right label[for="brewStrength"] {
+.modal-right label[for="brewStrength"],
+.modal label[for="brewStrength"],
+#recipeModal label[for="brewStrength"] {
   display: inline-block !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -361,7 +392,9 @@ footer {
   order: 10 !important;
 }
 
-.modal-right #brewStrength {
+.modal-right #brewStrength,
+.modal #brewStrength,
+#recipeModal #brewStrength {
   display: inline-block !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -369,7 +402,9 @@ footer {
   order: 10 !important;
 }
 
-.modal-right #brewStrengthValue {
+.modal-right #brewStrengthValue,
+.modal #brewStrengthValue,
+#recipeModal #brewStrengthValue {
   display: inline !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -377,7 +412,9 @@ footer {
   order: 10 !important;
 }
 
-.modal-right #caffeineEstimate {
+.modal-right #caffeineEstimate,
+.modal #caffeineEstimate,
+#recipeModal #caffeineEstimate {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -388,7 +425,9 @@ footer {
 }
 
 /* Close button */
-.modal-right .close-btn {
+.modal-right .close-btn,
+.modal .close-btn,
+#recipeModal .close-btn {
   margin-top: 20px !important;
   padding: 8px 12px !important;
   font-size: 14px !important;
