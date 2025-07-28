@@ -649,32 +649,58 @@ function initializeCustomizationControls() {
     console.log('Milk type initialized');
   }
 
-  // Initialize checkboxes
+  // Initialize checkboxes and their associated input fields
   const addMilk = document.getElementById('addMilk');
+  const milkQty = document.getElementById('milkQty');
   const addSugar = document.getElementById('addSugar');
+  const sugarQty = document.getElementById('sugarQty');
   const addIce = document.getElementById('addIce');
+  const iceQty = document.getElementById('iceQty');
   const addFoam = document.getElementById('addFoam');
+  const foamQty = document.getElementById('foamQty');
   
-  console.log('Checkboxes found:', { addMilk: !!addMilk, addSugar: !!addSugar, addIce: !!addIce, addFoam: !!addFoam });
+  console.log('Elements found:', { 
+    addMilk: !!addMilk, milkQty: !!milkQty,
+    addSugar: !!addSugar, sugarQty: !!sugarQty,
+    addIce: !!addIce, iceQty: !!iceQty,
+    addFoam: !!addFoam, foamQty: !!foamQty
+  });
   
+  // Initialize all checkboxes as unchecked and inputs as disabled
   if (addMilk) {
     addMilk.checked = false;
-    console.log('Milk checkbox unchecked');
+    if (milkQty) {
+      milkQty.disabled = true;
+      milkQty.value = '0';
+    }
+    console.log('Milk checkbox unchecked, input disabled');
   }
 
   if (addSugar) {
     addSugar.checked = false;
-    console.log('Sugar checkbox unchecked');
+    if (sugarQty) {
+      sugarQty.disabled = true;
+      sugarQty.value = '0';
+    }
+    console.log('Sugar checkbox unchecked, input disabled');
   }
 
   if (addIce) {
     addIce.checked = false;
-    console.log('Ice checkbox unchecked');
+    if (iceQty) {
+      iceQty.disabled = true;
+      iceQty.value = '0';
+    }
+    console.log('Ice checkbox unchecked, input disabled');
   }
 
   if (addFoam) {
     addFoam.checked = false;
-    console.log('Foam checkbox unchecked');
+    if (foamQty) {
+      foamQty.disabled = true;
+      foamQty.value = '0';
+    }
+    console.log('Foam checkbox unchecked, input disabled');
   }
 
   // Initialize topping selector
@@ -684,163 +710,99 @@ function initializeCustomizationControls() {
   }
 
   // Add event listeners for checkboxes
-  if (addMilk) {
+  if (addMilk && milkQty) {
     addMilk.addEventListener('change', function() {
-      const milkLi = addMilk.closest('li');
-      if (this.checked) {
-        // Create input field
-        const inputSpan = document.createElement('span');
-        inputSpan.id = 'milkInputSpan';
-        inputSpan.innerHTML = '<input type="number" id="milkQty" min="0" max="200" value="0" style="width:60px; margin-left:8px;" aria-label="Milk quantity (ml)"> ml';
-        milkLi.appendChild(inputSpan);
-        
-        // Add event listener to the new input
-        const milkQty = document.getElementById('milkQty');
-        if (milkQty) {
-          milkQty.addEventListener('input', function() {
-            updateNutritionDisplay(window.currentRecipe);
-          });
-        }
-      } else {
-        // Remove input field
-        const milkInputSpan = document.getElementById('milkInputSpan');
-        if (milkInputSpan) {
-          milkInputSpan.remove();
-        }
+      milkQty.disabled = !this.checked;
+      if (!this.checked) {
+        milkQty.value = '0';
       }
+      updateNutritionDisplay(window.currentRecipe);
+    });
+    milkQty.addEventListener('input', function() {
       updateNutritionDisplay(window.currentRecipe);
     });
   }
 
-  if (addSugar) {
+  if (addSugar && sugarQty) {
     addSugar.addEventListener('change', function() {
-      const sugarLi = addSugar.closest('li');
-      if (this.checked) {
-        // Create input field
-        const inputSpan = document.createElement('span');
-        inputSpan.id = 'sugarInputSpan';
-        inputSpan.innerHTML = '<input type="number" id="sugarQty" min="0" max="20" value="0" style="width:60px; margin-left:8px;" aria-label="Sugar quantity (g)"> g';
-        sugarLi.appendChild(inputSpan);
-        
-        // Add event listener to the new input
-        const sugarQty = document.getElementById('sugarQty');
-        if (sugarQty) {
-          sugarQty.addEventListener('input', function() {
-            updateNutritionDisplay(window.currentRecipe);
-          });
-        }
-      } else {
-        // Remove input field
-        const sugarInputSpan = document.getElementById('sugarInputSpan');
-        if (sugarInputSpan) {
-          sugarInputSpan.remove();
-        }
+      sugarQty.disabled = !this.checked;
+      if (!this.checked) {
+        sugarQty.value = '0';
       }
+      updateNutritionDisplay(window.currentRecipe);
+    });
+    sugarQty.addEventListener('input', function() {
       updateNutritionDisplay(window.currentRecipe);
     });
   }
 
-  if (addIce) {
+  if (addIce && iceQty) {
     addIce.addEventListener('change', function() {
-      const iceLi = addIce.closest('li');
-      if (this.checked) {
-        // Create input field
-        const inputSpan = document.createElement('span');
-        inputSpan.id = 'iceInputSpan';
-        inputSpan.innerHTML = '<input type="number" id="iceQty" min="0" max="200" value="0" style="width:60px; margin-left:8px;" aria-label="Ice quantity (g)"> g';
-        iceLi.appendChild(inputSpan);
-        
-        // Add event listener to the new input
-        const iceQty = document.getElementById('iceQty');
-        if (iceQty) {
-          iceQty.addEventListener('input', function() {
-            updateNutritionDisplay(window.currentRecipe);
-          });
-        }
-      } else {
-        // Remove input field
-        const iceInputSpan = document.getElementById('iceInputSpan');
-        if (iceInputSpan) {
-          iceInputSpan.remove();
-        }
+      iceQty.disabled = !this.checked;
+      if (!this.checked) {
+        iceQty.value = '0';
       }
+      updateNutritionDisplay(window.currentRecipe);
+    });
+    iceQty.addEventListener('input', function() {
       updateNutritionDisplay(window.currentRecipe);
     });
   }
 
-  if (addFoam) {
+  if (addFoam && foamQty) {
     addFoam.addEventListener('change', function() {
-      const foamLi = addFoam.closest('li');
-      if (this.checked) {
-        // Create input field
-        const inputSpan = document.createElement('span');
-        inputSpan.id = 'foamInputSpan';
-        inputSpan.innerHTML = '<input type="number" id="foamQty" min="0" max="100" value="0" style="width:60px; margin-left:8px;" aria-label="Foam quantity (ml)"> ml';
-        foamLi.appendChild(inputSpan);
-        
-        // Add event listener to the new input
-        const foamQty = document.getElementById('foamQty');
-        if (foamQty) {
-          foamQty.addEventListener('input', function() {
-            updateNutritionDisplay(window.currentRecipe);
-          });
-        }
-      } else {
-        // Remove input field
-        const foamInputSpan = document.getElementById('foamInputSpan');
-        if (foamInputSpan) {
-          foamInputSpan.remove();
-        }
+      foamQty.disabled = !this.checked;
+      if (!this.checked) {
+        foamQty.value = '0';
       }
+      updateNutritionDisplay(window.currentRecipe);
+    });
+    foamQty.addEventListener('input', function() {
       updateNutritionDisplay(window.currentRecipe);
     });
   }
 
   if (toppingType) {
     toppingType.addEventListener('change', function() {
-      const toppingLi = toppingType.closest('li');
-      if (this.value) {
-        // Create input field
-        const inputSpan = document.createElement('span');
-        inputSpan.id = 'toppingInputSpan';
-        inputSpan.innerHTML = '<input type="number" id="toppingQty" min="0" max="100" value="0" style="width:60px; margin-left:8px;" aria-label="Topping quantity (g)"> g';
-        toppingLi.appendChild(inputSpan);
-        
-        // Add event listener to the new input
-        const toppingQty = document.getElementById('toppingQty');
-        if (toppingQty) {
-          toppingQty.addEventListener('input', function() {
-            updateNutritionDisplay(window.currentRecipe);
-          });
-        }
-      } else {
-        // Remove input field
-        const toppingInputSpan = document.getElementById('toppingInputSpan');
-        if (toppingInputSpan) {
-          toppingInputSpan.remove();
-        }
-      }
       updateNutritionDisplay(window.currentRecipe);
     });
   }
 
-  if (milkType) {
-    milkType.addEventListener('change', function() {
-      updateNutritionDisplay(window.currentRecipe);
-    });
-  }
-
-  // Initialize reset button
+  // Add reset button functionality
   const resetCustomize = document.getElementById('resetCustomize');
   if (resetCustomize) {
     resetCustomize.addEventListener('click', function() {
-      if (addMilk) addMilk.checked = false;
-      if (addSugar) addSugar.checked = false;
-      if (addIce) addIce.checked = false;
-      if (addFoam) addFoam.checked = false;
+      if (addMilk) {
+        addMilk.checked = false;
+        if (milkQty) {
+          milkQty.disabled = true;
+          milkQty.value = '0';
+        }
+      }
+      if (addSugar) {
+        addSugar.checked = false;
+        if (sugarQty) {
+          sugarQty.disabled = true;
+          sugarQty.value = '0';
+        }
+      }
+      if (addIce) {
+        addIce.checked = false;
+        if (iceQty) {
+          iceQty.disabled = true;
+          iceQty.value = '0';
+        }
+      }
+      if (addFoam) {
+        addFoam.checked = false;
+        if (foamQty) {
+          foamQty.disabled = true;
+          foamQty.value = '0';
+        }
+      }
       if (toppingType) toppingType.value = '';
-      if (milkType) milkType.value = 'whole'; // Reset milk type
-      updateNutritionDisplay(window.currentRecipe); // Re-apply display to remove inputs
+      if (milkType) milkType.value = 'whole';
+      updateNutritionDisplay(window.currentRecipe);
     });
   }
 }
