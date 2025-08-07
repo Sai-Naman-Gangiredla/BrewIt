@@ -148,6 +148,10 @@ async function loadRecipes() {
         window.recipes = data;
         console.log('Recipes loaded successfully from:', url);
         console.log('Number of recipes:', Object.keys(data).length);
+        hideLoading();
+        renderCards();
+        applyCombinedFilter();
+        updateFavoriteUI();
         return data;
       } else {
         throw new Error('Invalid data format');
