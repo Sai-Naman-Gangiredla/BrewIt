@@ -73,87 +73,95 @@ function showMobileError() {
   document.body.appendChild(errMsg);
 }
 
-// Load recipes function
-function loadRecipes() {
-  // Initialize cardContainer
-  cardContainer = document.getElementById("cardContainer");
-  if (!cardContainer) {
-    console.error('Card container not found');
-    return;
-  }
-  
-  showLoading();
-
-  // Try multiple fetch strategies
-  const fetchStrategies = [
-    () => fetch('src/data/recipes.json'),
-    () => fetch('./src/data/recipes.json'),
-    () => fetch('/BrewIt/src/data/recipes.json'),
-    () => fetch('https://sai-naman-gangiredla.github.io/BrewIt/src/data/recipes.json'),
-    () => fetch(window.location.origin + '/BrewIt/src/data/recipes.json'),
-    () => fetch(window.location.origin + '/src/data/recipes.json')
+// Performance optimization: Preload critical images
+function preloadCriticalImages() {
+  const criticalImages = [
+    './public/images/beansbg.jpg',
+    './public/images/bg.jpg',
+    './public/images/coffeebeans.jpg'
   ];
+  
+  criticalImages.forEach(src => {
+    const img = new Image();
+    img.src = src;
+  });
+}
 
-  async function tryFetch(strategyIndex = 0) {
-    if (strategyIndex >= fetchStrategies.length) {
-      console.error('All fetch strategies failed');
-      hideLoading();
-      
-      // Show error message
-      if (window.innerWidth <= 768) {
-        showMobileError();
-      } else {
-        const errMsg = document.createElement('div');
-        errMsg.style.cssText = 'color: #ff6b6b; text-align: center; margin: 20px; padding: 20px; background: rgba(255,107,107,0.1); border-radius: 8px; border: 1px solid #ff6b6b;';
-        errMsg.innerHTML = `
-          <h3>⚠️ Error Loading Recipes</h3>
-          <p>Unable to load recipes. Please check your internet connection and try refreshing the page.</p>
-          <button onclick="location.reload()" style="background: #d2691e; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 10px;">Retry</button>
-        `;
-        document.body.prepend(errMsg);
-      }
-      return;
-    }
+// Enhanced image loading with fallbacks
+function loadImageWithFallback(imgElement, src, fallbacks = []) {
+  if (!imgElement) return;
+  
+  const tryLoad = (url) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(url);
+      img.onerror = () => reject();
+      img.src = url;
+    });
+  };
+  
+  // Try main source first
+  tryLoad(src)
+    .then(url => {
+      imgElement.src = url;
+      imgElement.style.display = 'block';
+    })
+    .catch(() => {
+      // Try fallbacks
+      const fallbackPromises = fallbacks.map(fallback => tryLoad(fallback));
+      Promise.any(fallbackPromises)
+        .then(url => {
+          imgElement.src = url;
+          imgElement.style.display = 'block';
+        })
+        .catch(() => {
+          // Hide image if all fail
+          imgElement.style.display = 'none';
+          console.warn('Failed to load image:', src);
+        });
+    });
+}
 
+// Enhanced recipe loading with better error handling
+async function loadRecipes() {
+  console.log('Loading recipes...');
+  
+  const urls = [
+    './src/data/recipes.json',
+    'src/data/recipes.json',
+    '/BrewIt/src/data/recipes.json',
+    'https://sai-naman-gangiredla.github.io/BrewIt/src/data/recipes.json'
+  ];
+  
+  for (const url of urls) {
     try {
-      console.log(`Trying fetch strategy ${strategyIndex + 1}...`);
-      const response = await fetchStrategies[strategyIndex]();
+      console.log('Trying to load recipes from:', url);
+      const response = await fetch(url);
       
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
       
       const data = await response.json();
-      console.log(`Successfully loaded recipes with strategy ${strategyIndex + 1}:`, data);
       
-      // Normalize all recipes to have process_jargon and process_easy
-      Object.keys(data).forEach(key => {
-        const rec = data[key];
-        if (!rec.process_jargon && rec.process) {
-          rec.process_jargon = rec.process;
-        }
-        if (!rec.process_easy && rec.process) {
-          rec.process_easy = rec.process;
-        }
-      });
-      
-      recipes = data;
-      console.log('Loaded recipes:', Object.keys(recipes).length);
-      window.selectedCategory = 'all';
-      hideLoading();
-      renderCards();
-      initUI();
-      addRecipeStructuredData();
-      
+      if (data && typeof data === 'object') {
+        window.recipes = data;
+        console.log('Recipes loaded successfully from:', url);
+        console.log('Number of recipes:', Object.keys(data).length);
+        return data;
+      } else {
+        throw new Error('Invalid data format');
+      }
     } catch (error) {
-      console.error(`Fetch strategy ${strategyIndex + 1} failed:`, error);
-      // Try next strategy
-      setTimeout(() => tryFetch(strategyIndex + 1), 100);
+      console.warn('Failed to load from:', url, error.message);
+      continue;
     }
   }
-
-  // Start with first strategy
-  tryFetch(0);
+  
+  // If all URLs fail, show error
+  console.error('Failed to load recipes from all sources');
+  showToast('Unable to load recipes. Please check your internet connection and refresh the page.', 'error', 5000);
+  return null;
 }
 
 // Wait for DOM to be ready before loading recipes
@@ -1301,17 +1309,84 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // --- Toast notification function ---
-function showToast(message) {
-  const toast = document.getElementById('toast');
-  if (toast) {
-    toast.textContent = message;
+function showToast(message, type = 'info', duration = 3000) {
+  console.log('Showing toast:', message, type);
+  
+  // Remove any existing toasts
+  const existingToasts = document.querySelectorAll('.toast-notification');
+  existingToasts.forEach(toast => toast.remove());
+  
+  // Create toast element
+  const toast = document.createElement('div');
+  toast.className = `toast-notification toast-${type}`;
+  toast.setAttribute('role', 'alert');
+  toast.setAttribute('aria-live', 'assertive');
+  toast.innerHTML = `
+    <div class="toast-content">
+      <span class="toast-message">${message}</span>
+      <button class="toast-close" aria-label="Close notification" onclick="this.parentElement.parentElement.remove()">×</button>
+    </div>
+  `;
+  
+  // Add toast styles
+  toast.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    max-width: 350px;
+    background: ${type === 'error' ? '#d32f2f' : type === 'success' ? '#388e3c' : '#1976d2'};
+    color: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 100000;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease;
+    font-size: 14px;
+    line-height: 1.4;
+  `;
+  
+  // Add to page
+  document.body.appendChild(toast);
+  
+  // Animate in
+  setTimeout(() => {
     toast.style.opacity = '1';
-    toast.style.pointerEvents = 'auto';
+    toast.style.transform = 'translateX(0)';
+  }, 10);
+  
+  // Auto remove after duration
+  if (duration > 0) {
     setTimeout(() => {
-      toast.style.opacity = '0';
-      toast.style.pointerEvents = 'none';
-    }, 3000);
+      if (toast.parentElement) {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+          if (toast.parentElement) {
+            toast.remove();
+          }
+        }, 300);
+      }
+    }, duration);
   }
+  
+  // Mobile responsive positioning
+  if (window.innerWidth <= 768) {
+    toast.style.cssText += `
+      top: 10px;
+      right: 10px;
+      left: 10px;
+      max-width: none;
+      transform: translateY(-100%);
+    `;
+    
+    setTimeout(() => {
+      toast.style.transform = 'translateY(0)';
+    }, 10);
+  }
+  
+  return toast;
 }
 
 // Make key functions globally accessible

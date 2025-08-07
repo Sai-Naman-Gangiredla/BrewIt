@@ -1,10 +1,19 @@
 * { box-sizing: border-box; }
 
-body {
-      margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #181818;
-  color: #f2ddc9;
+body, html {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  outline: none !important;
+  background-color: #1a1a1a !important;
+  color: #f2ddc9 !important;
+}
+
+/* Remove any default browser borders */
+*, *::before, *::after {
+  box-sizing: border-box;
+  border: none;
+  outline: none;
 }
 
 .header {
@@ -338,10 +347,110 @@ footer {
 .modal .selectors li,
 #recipeModal .selectors li {
   color: #f2ddc9 !important;
-  margin: 5px 0 !important;
-  display: list-item !important;
+  margin: 8px 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
   visibility: visible !important;
   opacity: 1 !important;
+  min-height: 32px !important;
+}
+
+/* Checkbox styling */
+.modal-right .selectors input[type="checkbox"],
+.modal .selectors input[type="checkbox"],
+#recipeModal .selectors input[type="checkbox"] {
+  margin: 0 !important;
+  width: 16px !important;
+  height: 16px !important;
+  cursor: pointer !important;
+  flex-shrink: 0 !important;
+}
+
+/* Label styling */
+.modal-right .selectors label,
+.modal .selectors label,
+#recipeModal .selectors label {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  flex-wrap: wrap !important;
+}
+
+/* Input field styling */
+.modal-right .selectors input[type="number"],
+.modal .selectors input[type="number"],
+#recipeModal .selectors input[type="number"] {
+  width: 70px !important;
+  height: 28px !important;
+  padding: 4px 6px !important;
+  border: 1px solid #555 !important;
+  border-radius: 4px !important;
+  background: #333 !important;
+  color: #f2ddc9 !important;
+  font-size: 14px !important;
+  text-align: center !important;
+  margin: 0 4px !important;
+  flex-shrink: 0 !important;
+}
+
+/* Disabled input styling */
+.modal-right .selectors input[type="number"]:disabled,
+.modal .selectors input[type="number"]:disabled,
+#recipeModal .selectors input[type="number"]:disabled {
+  background: #2a2a2a !important;
+  color: #888 !important;
+  border-color: #444 !important;
+  cursor: not-allowed !important;
+}
+
+/* Select dropdown styling */
+.modal-right .selectors select,
+.modal .selectors select,
+#recipeModal .selectors select {
+  width: 130px !important;
+  height: 28px !important;
+  padding: 4px 6px !important;
+  border: 1px solid #555 !important;
+  border-radius: 4px !important;
+  background: #333 !important;
+  color: #f2ddc9 !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  flex-shrink: 0 !important;
+}
+
+/* Button styling */
+.modal-right .selectors button,
+.modal .selectors button,
+#recipeModal .selectors button {
+  padding: 6px 12px !important;
+  background: #d2691e !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+  font-size: 14px !important;
+  margin-top: 10px !important;
+}
+
+.modal-right .selectors button:hover,
+.modal .selectors button:hover,
+#recipeModal .selectors button:hover {
+  background: #b85a1a !important;
+}
+
+/* Unit text styling */
+.modal-right .selectors span,
+.modal .selectors span,
+#recipeModal .selectors span {
+  color: #f2ddc9 !important;
+  font-size: 14px !important;
+  margin: 0 4px !important;
+  flex-shrink: 0 !important;
 }
 
 /* Nutrition section - move to bottom */
@@ -2243,4 +2352,551 @@ input:checked + .slider:before {
   background: white;
   color: #333;
   margin-left: 8px;
+}
+
+/* Customization section - improved alignment and sizing */
+.modal-right .selectors,
+.modal .selectors,
+#recipeModal .selectors {
+  order: 7 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin-top: 20px !important;
+}
+
+.modal-right .selectors h4,
+.modal .selectors h4,
+#recipeModal .selectors h4 {
+  color: #f2ddc9 !important;
+  margin: 15px 0 8px 0 !important;
+  font-size: 1.1em !important;
+  font-weight: bold !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.modal-right .selectors ul,
+.modal .selectors ul,
+#recipeModal .selectors ul {
+  margin: 10px 0 !important;
+  padding-left: 20px !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.modal-right .selectors li,
+.modal .selectors li,
+#recipeModal .selectors li {
+  color: #f2ddc9 !important;
+  margin: 8px 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  min-height: 32px !important;
+}
+
+/* Checkbox styling */
+.modal-right .selectors input[type="checkbox"],
+.modal .selectors input[type="checkbox"],
+#recipeModal .selectors input[type="checkbox"] {
+  margin: 0 !important;
+  width: 16px !important;
+  height: 16px !important;
+  cursor: pointer !important;
+  flex-shrink: 0 !important;
+}
+
+/* Label styling */
+.modal-right .selectors label,
+.modal .selectors label,
+#recipeModal .selectors label {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  flex-wrap: wrap !important;
+}
+
+/* Input field styling */
+.modal-right .selectors input[type="number"],
+.modal .selectors input[type="number"],
+#recipeModal .selectors input[type="number"] {
+  width: 70px !important;
+  height: 28px !important;
+  padding: 4px 6px !important;
+  border: 1px solid #555 !important;
+  border-radius: 4px !important;
+  background: #333 !important;
+  color: #f2ddc9 !important;
+  font-size: 14px !important;
+  text-align: center !important;
+  margin: 0 4px !important;
+  flex-shrink: 0 !important;
+}
+
+/* Disabled input styling */
+.modal-right .selectors input[type="number"]:disabled,
+.modal .selectors input[type="number"]:disabled,
+#recipeModal .selectors input[type="number"]:disabled {
+  background: #2a2a2a !important;
+  color: #888 !important;
+  border-color: #444 !important;
+  cursor: not-allowed !important;
+}
+
+/* Select dropdown styling */
+.modal-right .selectors select,
+.modal .selectors select,
+#recipeModal .selectors select {
+  width: 130px !important;
+  height: 28px !important;
+  padding: 4px 6px !important;
+  border: 1px solid #555 !important;
+  border-radius: 4px !important;
+  background: #333 !important;
+  color: #f2ddc9 !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  flex-shrink: 0 !important;
+}
+
+/* Button styling */
+.modal-right .selectors button,
+.modal .selectors button,
+#recipeModal .selectors button {
+  padding: 6px 12px !important;
+  background: #d2691e !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+  font-size: 14px !important;
+  margin-top: 10px !important;
+}
+
+.modal-right .selectors button:hover,
+.modal .selectors button:hover,
+#recipeModal .selectors button:hover {
+  background: #b85a1a !important;
+}
+
+/* Unit text styling */
+.modal-right .selectors span,
+.modal .selectors span,
+#recipeModal .selectors span {
+  color: #f2ddc9 !important;
+  font-size: 14px !important;
+  margin: 0 4px !important;
+  flex-shrink: 0 !important;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .modal-right .selectors li,
+  .modal .selectors li,
+  #recipeModal .selectors li {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+    margin: 12px 0 !important;
+  }
+  
+  .modal-right .selectors input[type="number"],
+  .modal .selectors input[type="number"],
+  #recipeModal .selectors input[type="number"] {
+    width: 80px !important;
+    height: 32px !important;
+    font-size: 16px !important;
+  }
+  
+  .modal-right .selectors select,
+  .modal .selectors select,
+  #recipeModal .selectors select {
+    width: 140px !important;
+    height: 32px !important;
+    font-size: 16px !important;
+  }
+}
+
+/* Navigation and Filter Bar - Improved Layout */
+.nav-container {
+  background: #2d2217;
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin: 20px auto;
+  max-width: 1200px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Filter buttons container */
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+  align-items: center;
+  justify-content: center;
+}
+
+.filter-btn {
+  padding: 8px 16px;
+  background: #3a2a1a;
+  color: #f2ddc9;
+  border: 1px solid #5a4a3a;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.filter-btn:hover {
+  background: #4a3a2a;
+  border-color: #6a5a4a;
+}
+
+.filter-btn.active {
+  background: #d2691e;
+  border-color: #d2691e;
+  color: white;
+}
+
+/* Search and sort row */
+.search-sort-row {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  max-width: 300px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #5a4a3a;
+  border-radius: 20px;
+  background: #3a2a1a;
+  color: #f2ddc9;
+  font-size: 14px;
+  min-width: 200px;
+}
+
+.search-input::placeholder {
+  color: #a0522d;
+}
+
+.sort-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sort-select {
+  padding: 8px 12px;
+  border: 1px solid #5a4a3a;
+  border-radius: 20px;
+  background: #3a2a3a;
+  color: #f2ddc9;
+  font-size: 14px;
+  cursor: pointer;
+  min-width: 120px;
+}
+
+/* Mobile responsive navigation */
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 12px 15px;
+    margin: 15px 10px;
+    border-radius: 8px;
+  }
+  
+  .filter-buttons {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .filter-buttons::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .filter-btn {
+    padding: 6px 12px;
+    font-size: 13px;
+    flex-shrink: 0;
+    min-width: fit-content;
+  }
+  
+  .search-sort-row {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+  
+  .search-container {
+    max-width: none;
+  }
+  
+  .search-input {
+    min-width: 0;
+    width: 100%;
+  }
+  
+  .sort-container {
+    justify-content: center;
+  }
+  
+  .sort-select {
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-container {
+    padding: 10px 12px;
+    margin: 10px 8px;
+  }
+  
+  .filter-buttons {
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  
+  .filter-btn {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+  
+  .search-input {
+    font-size: 16px; /* Prevent zoom on iOS */
+    padding: 10px 12px;
+  }
+  
+  .sort-select {
+    font-size: 16px; /* Prevent zoom on iOS */
+    padding: 10px 12px;
+  }
+}
+
+/* Desktop optimizations */
+@media (min-width: 769px) {
+  .nav-container {
+    padding: 20px 25px;
+    margin: 25px auto;
+  }
+  
+  .filter-buttons {
+    justify-content: flex-start;
+    margin-bottom: 20px;
+  }
+  
+  .search-sort-row {
+    justify-content: space-between;
+  }
+  
+  .search-container {
+    max-width: 400px;
+  }
+  
+  .sort-container {
+    margin-left: auto;
+  }
+}
+
+/* Dark Mode Consistency - Global Overrides */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #555 #2d2217;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #2d2217;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
+/* Modal dark theme consistency */
+.modal {
+  background-color: rgba(0, 0, 0, 0.9) !important;
+}
+
+.modal-content {
+  background-color: #232323 !important;
+  color: #f2ddc9 !important;
+  border: 1px solid #444 !important;
+}
+
+.modal-left {
+  background: #222 !important;
+  border-right: 1px solid #444 !important;
+}
+
+.modal-right {
+  background-color: #232323 !important;
+  color: #f2ddc9 !important;
+}
+
+/* Form elements dark theme */
+input, select, textarea, button {
+  background-color: #333 !important;
+  color: #f2ddc9 !important;
+  border: 1px solid #555 !important;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #d2691e !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(210, 105, 30, 0.2) !important;
+}
+
+input:disabled, select:disabled, textarea:disabled {
+  background-color: #2a2a2a !important;
+  color: #888 !important;
+  border-color: #444 !important;
+}
+
+/* Dropdown styling */
+select {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f2ddc9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 16px;
+  padding-right: 30px !important;
+}
+
+/* Button consistency */
+button {
+  background-color: #3a2a1a !important;
+  color: #f2ddc9 !important;
+  border: 1px solid #5a4a3a !important;
+  transition: all 0.3s ease !important;
+}
+
+button:hover:not(:disabled) {
+  background-color: #4a3a2a !important;
+  border-color: #6a5a4a !important;
+}
+
+button:active:not(:disabled) {
+  background-color: #2a1a0a !important;
+  transform: translateY(1px);
+}
+
+button:disabled {
+  background-color: #2a2a2a !important;
+  color: #888 !important;
+  border-color: #444 !important;
+  cursor: not-allowed !important;
+}
+
+/* Primary action buttons */
+.btn-primary, .close-btn, #resetCustomize {
+  background-color: #d2691e !important;
+  color: white !important;
+  border-color: #d2691e !important;
+}
+
+.btn-primary:hover, .close-btn:hover, #resetCustomize:hover {
+  background-color: #b85a1a !important;
+  border-color: #b85a1a !important;
+}
+
+/* Checkbox and radio consistency */
+input[type="checkbox"], input[type="radio"] {
+  accent-color: #d2691e;
+  background-color: #333 !important;
+  border: 1px solid #555 !important;
+}
+
+input[type="checkbox"]:checked, input[type="radio"]:checked {
+  background-color: #d2691e !important;
+  border-color: #d2691e !important;
+}
+
+/* Range slider consistency */
+input[type="range"] {
+  background: #333 !important;
+  border: 1px solid #555 !important;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  background: #d2691e !important;
+  border: 1px solid #b85a1a !important;
+}
+
+input[type="range"]::-moz-range-thumb {
+  background: #d2691e !important;
+  border: 1px solid #b85a1a !important;
+}
+
+/* Link consistency */
+a {
+  color: #d2691e !important;
+  text-decoration: none !important;
+}
+
+a:hover {
+  color: #b85a1a !important;
+  text-decoration: underline !important;
+}
+
+/* Focus indicators for accessibility */
+*:focus-visible {
+  outline: 2px solid #d2691e !important;
+  outline-offset: 2px !important;
+}
+
+/* Mobile-specific dark theme fixes */
+@media (max-width: 768px) {
+  .modal-content {
+    background-color: #232323 !important;
+  }
+  
+  input, select, textarea {
+    font-size: 16px !important; /* Prevent zoom on iOS */
+  }
+  
+  /* Mobile scrollbar */
+  .modal-right::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .modal-right::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 2px;
+  }
 }
