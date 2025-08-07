@@ -916,9 +916,16 @@ function showSection(sectionId) {
   if (existingRemix) existingRemix.remove();
   const existingQuiz = document.getElementById('quizSection');
   if (existingQuiz) existingQuiz.remove();
-  
+
+  // Ensure cardContainer is initialized
+  if (!cardContainer) {
+    cardContainer = document.getElementById('cardContainer');
+  }
+
   // Hide cardContainer by default
-  cardContainer.classList.add('section-hidden');
+  if (cardContainer) {
+    cardContainer.classList.add('section-hidden');
+  }
   
   if (sectionId === 'remixSection') {
     // --- Remix Generator UI ---
@@ -1130,12 +1137,14 @@ function showSection(sectionId) {
     };
   } else {
     // Show home/recipes
-    cardContainer.classList.remove('section-hidden');
+    if (cardContainer) {
+      cardContainer.classList.remove('section-hidden');
+    }
     // Remove any dynamic section if present
-    const existingRemix = document.getElementById('remixSection');
-    if (existingRemix) existingRemix.remove();
-    const existingQuiz = document.getElementById('quizSection');
-    if (existingQuiz) existingQuiz.remove();
+    const existingRemix2 = document.getElementById('remixSection');
+    if (existingRemix2) existingRemix2.remove();
+    const existingQuiz2 = document.getElementById('quizSection');
+    if (existingQuiz2) existingQuiz2.remove();
   }
 }
 
