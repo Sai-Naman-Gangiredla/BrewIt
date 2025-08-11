@@ -24,6 +24,62 @@ function showLoading() {
   if (spinner) spinner.style.display = 'flex';
 }
 
+// Create a recipe card element
+function createRecipeCard(recipe, recipeKey, isFavorite = false) {
+  try {
+    const card = document.createElement('div');
+    card.className = 'recipe-card';
+    card.setAttribute('data-recipe-key', recipeKey);
+
+    // Image
+    const img = document.createElement('img');
+    img.alt = recipe.title || recipe.name || recipeKey;
+    img.loading = 'lazy';
+    loadImageWithFallback(
+      img,
+      recipe.img || recipe.image || `./public/images/${recipeKey}.jpeg`,
+      [
+        `./public/images/${recipeKey}.jpg`,
+        `./public/images/${recipeKey}.png`,
+      ]
+    );
+
+    // Title
+    const title = document.createElement('h3');
+    title.className = 'card-title';
+    title.textContent = recipe.title || recipe.name || recipeKey;
+
+    // Favorite indicator
+    const favIndicator = document.createElement('div');
+    favIndicator.className = 'favorite-indicator';
+    favIndicator.style.display = isFavorite ? 'block' : 'none';
+
+    // Favorite button
+    const favBtn = document.createElement('button');
+    favBtn.className = 'favorite-btn';
+    favBtn.type = 'button';
+    favBtn.dataset.recipeKey = recipeKey;
+    favBtn.innerHTML = isFavorite ? '❤️' : '🤍';
+    favBtn.setAttribute('aria-label', isFavorite ? 'Remove from favorites' : 'Add to favorites');
+    favBtn.addEventListener('click', (e) => toggleFavorite(recipeKey, e));
+
+    // Card layout
+    const infoWrap = document.createElement('div');
+    infoWrap.className = 'card-info';
+    infoWrap.appendChild(title);
+
+    card.appendChild(img);
+    card.appendChild(infoWrap);
+    card.appendChild(favIndicator);
+    card.appendChild(favBtn);
+
+    return card;
+  } catch (e) {
+    console.error('Error creating recipe card:', e);
+    return null;
+  }
+}
+
 // Hide loading spinner
 function hideLoading() {
   const spinner = document.getElementById('loadingSpinner');
@@ -476,7 +532,6 @@ function renderFilteredCards(filteredRecipes) {
 
 // =====================
 // Favorites Management
-// =====================
 
 // Initialize favorites array
 let favorites = [];
@@ -530,7 +585,7 @@ function toggleFavorite(recipeKey, event) {
     return false;
   }
   
-  const currentFavorites = loadFavorites();
+  const currentFavorites = getFavorites();
   const isFavorited = currentFavorites.includes(recipeKey);
   let updatedFavorites;
   
@@ -601,7 +656,7 @@ function updateModalFavoriteButton(recipeKey) {
 
 // Update favorite indicators in the UI
 function updateFavoriteUI() {
-  const currentFavorites = loadFavorites();
+  const currentFavorites = getFavorites();
   
   // Update recipe cards
   document.querySelectorAll('.recipe-card').forEach(card => {
