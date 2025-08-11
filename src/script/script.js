@@ -55,6 +55,71 @@ function saveFavorites(newFavorites) {
   }
 }
 
+// Toggle favorite status for a recipe
+function toggleFavorite(recipeKey, event) {
+  if (event) {
+    event.stopPropagation(); // Prevent card click event
+  }
+  
+  if (!recipeKey || !(recipeKey in recipes)) {
+    console.error('Invalid recipe key:', recipeKey);
+    return false;
+  }
+  
+  const currentFavorites = getFavorites();
+  const isFavorited = currentFavorites.includes(recipeKey);
+  let updatedFavorites;
+  
+  if (isFavorited) {
+    updatedFavorites = currentFavorites.filter(key => key !== recipeKey);
+  } else {
+    updatedFavorites = [...currentFavorites, recipeKey];
+  }
+  
+  const success = saveFavorites(updatedFavorites);
+  if (success) {
+    // Show feedback with appropriate message and emoji
+    showToast(
+      updatedFavorites.includes(recipeKey) 
+        ? 'Added to favorites ❤️' 
+        : 'Removed from favorites',
+      'success'
+    );
+  }
+  
+  return updatedFavorites.includes(recipeKey);
+}
+
+// Update favorite indicators in the UI
+function updateFavoriteUI() {
+  const currentFavorites = getFavorites();
+  
+  // Update recipe cards
+  document.querySelectorAll('.recipe-card').forEach(card => {
+    const recipeKey = card.getAttribute('data-recipe-key');
+    if (!recipeKey) return;
+    
+    const favBtn = card.querySelector('.favorite-btn');
+    if (favBtn) {
+      const isFavorited = currentFavorites.includes(recipeKey);
+      favBtn.innerHTML = isFavorited ? '❤️' : '🤍';
+      favBtn.classList.toggle('favorited', isFavorited);
+      favBtn.setAttribute('aria-label', 
+        isFavorited ? 'Remove from favorites' : 'Add to favorites');
+    }
+  });
+  
+  // Update favorites count in the filter button
+  const favBtn = document.getElementById('favBtn');
+  if (favBtn) {
+    const favCount = favBtn.querySelector('.fav-count');
+    if (favCount) {
+      favCount.textContent = currentFavorites.length;
+      favCount.style.display = currentFavorites.length > 0 ? 'inline-block' : 'none';
+    }
+  }
+}
+
 // Global error handler
 window.addEventListener('error', (event) => {
   console.error('Global error:', event.error);
