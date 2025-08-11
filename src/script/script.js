@@ -191,6 +191,282 @@ document.addEventListener('DOMContentLoaded', function() {
   loadRecipes(); // Load recipes after UI is initialized
 });
 
+// Initialize UI elements and event handlers
+function initUI() {
+  console.log('Initializing UI...');
+  
+  // Initialize filter buttons
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', function() {
+      // Remove active class from all buttons
+      filterButtons.forEach(b => {
+        b.classList.remove('active');
+        b.removeAttribute('aria-current');
+      });
+      
+      // Add active class to clicked button
+      this.classList.add('active');
+      this.setAttribute('aria-current', 'page');
+      
+      // Apply filter
+      const category = this.getAttribute('data-category');
+      filterRecipes(category);
+    });
+  });
+  
+  // Initialize search input
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      applyCombinedFilter();
+    });
+  }
+  
+  // Initialize sort select
+  const sortSelect = document.getElementById('sortSelect');
+  if (sortSelect) {
+    sortSelect.addEventListener('change', function() {
+      applyCombinedFilter();
+    });
+  }
+  
+  // Initialize dark mode toggle
+  const darkModeToggle = document.getElementById('darkModeToggle');
+  if (darkModeToggle) {
+    darkModeToggle.addEventListener('click', toggleDarkMode);
+  }
+  
+  // Initialize navigation buttons
+  const remixNavBtn = document.getElementById('remixNavBtn');
+  const quizNavBtn = document.getElementById('quizNavBtn');
+  
+  if (remixNavBtn) {
+    remixNavBtn.addEventListener('click', () => {
+      showToast('Remix section coming soon!');
+    });
+  }
+  
+  if (quizNavBtn) {
+    quizNavBtn.addEventListener('click', () => {
+      showToast('Coffee quiz coming soon!');
+    });
+  }
+  
+  // Initialize modal close functionality
+  const modal = document.getElementById('recipeModal');
+  if (modal) {
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+    
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.style.display === 'flex') {
+        closeModal();
+      }
+    });
+  }
+  
+  // Initialize back to top button
+  const backToTopBtn = document.getElementById('backToTopBtn');
+  const bottomScrollBtn = document.getElementById('bottomScrollToTopBtn');
+  
+  if (backToTopBtn) {
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+  
+  if (bottomScrollBtn) {
+    bottomScrollBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+  
+  // Show/hide back to top button on scroll
+  window.addEventListener('scroll', function() {
+    if (backToTopBtn) {
+      if (window.pageYOffset > 300) {
+        backToTopBtn.style.display = 'block';
+      } else {
+        backToTopBtn.style.display = 'none';
+      }
+    }
+  });
+  
+  console.log('UI initialization complete');
+}
+
+// Filter recipes by category
+function filterRecipes(category) {
+  console.log('Filtering by category:', category);
+  applyCombinedFilter();
+}
+
+// Apply combined filter (category + search + sort)
+function applyCombinedFilter() {
+  if (!recipes || Object.keys(recipes).length === 0) {
+    console.log('No recipes loaded yet');
+    return;
+  }
+  
+  const activeFilter = document.querySelector('.filter-btn.active');
+  const category = activeFilter ? activeFilter.getAttribute('data-category') : 'all';
+  const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
+  const sortBy = document.getElementById('sortSelect')?.value || 'default';
+  
+  let filteredRecipes = Object.keys(recipes);
+  
+  // Filter by category
+  if (category !== 'all') {
+    if (category === 'favourites') {
+      const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+      filteredRecipes = filteredRecipes.filter(key => favorites.includes(key));
+    } else {
+      filteredRecipes = filteredRecipes.filter(key => {
+        const recipe = recipes[key];
+        return recipe.type && recipe.type.toLowerCase() === category;
+      });
+    }
+  }
+  
+  // Filter by search term
+  if (searchTerm) {
+    filteredRecipes = filteredRecipes.filter(key => {
+      const recipe = recipes[key];
+      return recipe.title.toLowerCase().includes(searchTerm) ||
+             (recipe.ingredients && recipe.ingredients.some(ing => 
+               ing.toLowerCase().includes(searchTerm)
+             ));
+    });
+  }
+  
+  // Sort recipes
+  if (sortBy !== 'default') {
+    filteredRecipes.sort((a, b) => {
+      const recipeA = recipes[a];
+      const recipeB = recipes[b];
+      
+      switch (sortBy) {
+        case 'name':
+          return recipeA.title.localeCompare(recipeB.title);
+        case 'calories':
+          return (recipeA.calories || 0) - (recipeB.calories || 0);
+        case 'type':
+          return (recipeA.type || '').localeCompare(recipeB.type || '');
+        default:
+          return 0;
+      }
+    });
+  }
+  
+  // Render filtered recipes
+  renderFilteredCards(filteredRecipes);
+  
+  // Show/hide no results message
+  const noResults = document.getElementById('noResults');
+  if (noResults) {
+    noResults.style.display = filteredRecipes.length === 0 ? 'block' : 'none';
+  }
+}
+
+// Render filtered recipe cards
+function renderFilteredCards(filteredKeys) {
+  if (!cardContainer) return;
+  
+  cardContainer.innerHTML = '';
+  
+  filteredKeys.forEach(key => {
+    const recipe = recipes[key];
+    const card = document.createElement('div');
+    card.className = 'card recipe-card';
+    card.setAttribute('data-type', recipe.type);
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', `View ${recipe.title} recipe`);
+    
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    const isFavorite = favorites.includes(key);
+    
+    card.innerHTML = `
+      <img src="${recipe.img}" alt="${recipe.title}" loading="lazy" onerror="this.style.display='none'">
+      <div class="card-body">
+        <h3 class="card-title recipe-title">${recipe.title}</h3>
+        <p class="card-cont">${(recipe.process || recipe.process_easy || recipe.process_jargon || '').toString().slice(0, 40)}...</p>
+        <button class="bi ${isFavorite ? 'bi-heart-fill' : 'bi-heart'}" aria-label="${isFavorite ? 'Remove from favorites' : 'Add to favorites'}" onclick="event.stopPropagation(); toggleFavorite('${key}')"></button>
+      </div>
+    `;
+    
+    card.addEventListener('click', () => openModal(key));
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openModal(key);
+      }
+    });
+    
+    cardContainer.appendChild(card);
+  });
+}
+
+// Toggle favorite status
+function toggleFavorite(recipeKey) {
+  const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+  const index = favorites.indexOf(recipeKey);
+  
+  if (index > -1) {
+    favorites.splice(index, 1);
+    showToast('Removed from favorites');
+  } else {
+    favorites.push(recipeKey);
+    showToast('Added to favorites');
+  }
+  
+  localStorage.setItem('favorites', JSON.stringify(favorites));
+  updateFavoriteUI();
+  
+  // Refresh display if currently showing favorites
+  const activeFilter = document.querySelector('.filter-btn.active');
+  if (activeFilter && activeFilter.getAttribute('data-category') === 'favourites') {
+    applyCombinedFilter();
+  }
+}
+
+// Dark mode toggle
+function toggleDarkMode() {
+  document.body.classList.toggle('light-mode');
+  const isDark = !document.body.classList.contains('light-mode');
+  localStorage.setItem('darkMode', isDark);
+  
+  const toggle = document.getElementById('darkModeToggle');
+  if (toggle) {
+    const icon = toggle.querySelector('i');
+    if (icon) {
+      icon.className = isDark ? 'bi bi-moon' : 'bi bi-sun';
+    }
+  }
+  
+  showToast(isDark ? 'Dark mode enabled' : 'Light mode enabled');
+}
+
+// Show toast notification
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  if (toast) {
+    toast.textContent = message;
+    toast.style.opacity = '1';
+    toast.style.bottom = '40px';
+    
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.bottom = '20px';
+    }, 3000);
+  }
+}
+
 const additions = {
   none: { calories: 0, carbs: 0, protein: 0 },
   milk: { calories: 50, carbs: 5, protein: 2 },
@@ -200,7 +476,7 @@ const additions = {
 
 // --- Persistent Favorites ---
 function getFavorites() {
-  return JSON.parse(localStorage.getItem('favorites') || '{}');
+  return JSON.parse(localStorage.getItem('favorites') || '[]');
 }
 function setFavorites(favs) {
   localStorage.setItem('favorites', JSON.stringify(favs));
@@ -208,16 +484,29 @@ function setFavorites(favs) {
 let favorites = getFavorites();
 
 function updateFavoriteUI() {
-  favorites = getFavorites(); // Always sync with localStorage
+  const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
   document.querySelectorAll('.recipe-card').forEach(card => {
-    const title = card.querySelector('.card-title').textContent;
+    const title = card.querySelector('.card-title')?.textContent;
     const heart = card.querySelector('.bi-heart, .bi-heart-fill');
-    if (favorites[title]) {
-      heart.classList.add('bi-heart-fill');
-      heart.classList.remove('bi-heart');
-    } else {
-      heart.classList.remove('bi-heart-fill');
-      heart.classList.add('bi-heart');
+    
+    if (title && heart) {
+      // Find recipe key by title
+      const recipeKey = Object.keys(recipes).find(key => 
+        recipes[key].title === title
+      );
+      
+      if (recipeKey) {
+        const isFavorite = favorites.includes(recipeKey);
+        if (isFavorite) {
+          heart.classList.add('bi-heart-fill');
+          heart.classList.remove('bi-heart');
+          heart.setAttribute('aria-label', 'Remove from favorites');
+        } else {
+          heart.classList.remove('bi-heart-fill');
+          heart.classList.add('bi-heart');
+          heart.setAttribute('aria-label', 'Add to favorites');
+        }
+      }
     }
   });
 }
@@ -334,74 +623,10 @@ function renderCards() {
     return;
   }
   
-  cardContainer.innerHTML = '';
-  const sortedKeys = getSortedRecipeKeys();
-  console.log('Sorted recipe keys:', sortedKeys.length);
+  // Use the new combined filter system instead of direct rendering
+  applyCombinedFilter();
   
-  sortedKeys.forEach(key => {
-    const recipe = recipes[key];
-    if (!recipe) {
-      console.error('Recipe not found for key:', key);
-      return;
-    }
-    
-    const card = document.createElement('div');
-    card.className = 'card recipe-card';
-    card.setAttribute('data-type', recipe.type);
-    card.setAttribute('tabindex', '0');
-    card.setAttribute('role', 'button');
-    card.setAttribute('aria-label', `View ${recipe.title} recipe`);
-
-        card.innerHTML = `
-      <img src="${recipe.img}" alt="${recipe.title}" loading="lazy" onerror="this.style.display='none'">
-      <div class="card-body">
-        <h3 class="card-title recipe-title">${recipe.title}</h3>
-        <p class="card-cont">${
-          (recipe.process || recipe.process_easy || recipe.process_jargon || '').toString().slice(0, 40)
-        }...</p>
-        <button class="bi bi-heart" aria-label="Add to favorites"></button>
-          </div>
-        `;
-    
-    const heartBtn = card.querySelector('.bi-heart');
-    if (heartBtn) {
-      heartBtn.addEventListener('click', (event) => {
-        event.stopPropagation();
-        const title = card.querySelector('.card-title').textContent;
-        favorites = getFavorites(); // Always reload before update
-        if (favorites[title]) {
-          delete favorites[title];
-        } else {
-          favorites[title] = true;
-        }
-        setFavorites(favorites);
-        favorites = getFavorites(); // Always reload after update
-        updateFavoriteUI();
-        showToast(favorites[title] ? `Added to favorites!` : `Removed from favorites!`);
-        applyCombinedFilter();
-      });
-    }
-    
-    // Add click event for modal
-    card.addEventListener('click', (event) => {
-      console.log('Card clicked for recipe:', key);
-      event.preventDefault();
-      event.stopPropagation();
-      openModal(key);
-    });
-    
-    // Add keyboard support
-    card.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        openModal(key);
-      }
-    });
-    
-    cardContainer.appendChild(card);
-  });
-  
-  console.log('Cards rendered successfully');
+  console.log('Cards rendered successfully via applyCombinedFilter');
 }
 
 // --- MODAL LOGIC ---
@@ -836,33 +1061,20 @@ function initializeCustomizationControls() {
 }
 
 function closeModal() {
-  const modal = document.getElementById("recipeModal");
-  modal.style.display = "none";
-  modal.classList.add("hidden");
+  console.log('Closing modal...');
   
-  // Restore body scroll on mobile
-  if (window.innerWidth <= 768) {
-    document.body.style.overflow = '';
-    document.body.style.position = '';
-    document.body.style.width = '';
-  }
-  
-  // Remove blur from main content
-  const mainContent = document.getElementById("mainContent");
-  if (mainContent) {
-    mainContent.classList.remove("blurred");
-  }
-  
-  // Clear any mobile error messages
-  const mobileError = document.querySelector('.mobile-error');
-  if (mobileError) {
-    mobileError.remove();
-  }
-  
-  // Reset focus to a safe element
-  const firstCard = document.querySelector('.recipe-card');
-  if (firstCard) {
-    firstCard.focus();
+  const modal = document.getElementById('recipeModal');
+  if (modal) {
+    modal.style.display = 'none';
+    modal.style.visibility = 'hidden';
+    modal.style.opacity = '0';
+    
+    // Restore body scroll
+    document.body.style.overflow = 'auto';
+    
+    console.log('Modal closed successfully');
+  } else {
+    console.error('Modal element not found when trying to close');
   }
 }
 
