@@ -1,3 +1,60 @@
+// =====================
+// Favorites Management
+// =====================
+
+// Initialize favorites array
+let favorites = [];
+
+// Return validated favorites array from localStorage
+function getFavorites() {
+  try {
+    const saved = localStorage.getItem('brewItFavorites');
+    const parsed = saved ? JSON.parse(saved) : [];
+    return Array.isArray(parsed) ? parsed.filter(key => key in recipes) : [];
+  } catch (e) {
+    console.error('Error reading favorites:', e);
+    return [];
+  }
+}
+
+// Load favorites from localStorage with validation
+function loadFavorites() {
+  try {
+    const saved = localStorage.getItem('brewItFavorites');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      // Only keep favorites that exist in recipes
+      favorites = Array.isArray(parsed) 
+        ? parsed.filter(key => key in recipes)
+        : [];
+    } else {
+      favorites = [];
+    }
+  } catch (e) {
+    console.error('Error loading favorites:', e);
+    favorites = [];
+  }
+  return [...favorites];
+}
+
+// Save favorites to localStorage and update UI
+function saveFavorites(newFavorites) {
+  try {
+    // Ensure we're only storing valid recipe keys
+    const validFavorites = Array.isArray(newFavorites) 
+      ? [...new Set(newFavorites.filter(key => key in recipes))] // Remove duplicates
+      : [];
+    
+    favorites = validFavorites;
+    localStorage.setItem('brewItFavorites', JSON.stringify(favorites));
+    updateFavoriteUI();
+    return true;
+  } catch (e) {
+    console.error('Error saving favorites:', e);
+    return false;
+  }
+}
+
 // Global error handler
 window.addEventListener('error', (event) => {
   console.error('Global error:', event.error);
@@ -530,204 +587,7 @@ function renderFilteredCards(filteredRecipes) {
   });
 }
 
-// =====================
-// Favorites Management
 
-// Initialize favorites array
-let favorites = [];
-
-// Load favorites from localStorage with validation
-function loadFavorites() {
-  try {
-    const saved = localStorage.getItem('brewItFavorites');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      // Only keep favorites that exist in recipes
-      favorites = Array.isArray(parsed) 
-        ? parsed.filter(key => key in recipes)
-        : [];
-    } else {
-      favorites = [];
-    }
-  } catch (e) {
-    console.error('Error loading favorites:', e);
-    favorites = [];
-  }
-  return [...favorites]; // Return a copy
-}
-
-// Save favorites to localStorage and update UI
-function saveFavorites(newFavorites) {
-  try {
-    // Ensure we're only storing valid recipe keys
-    const validFavorites = Array.isArray(newFavorites) 
-      ? [...new Set(newFavorites.filter(key => key in recipes))] // Remove duplicates
-      : [];
-    
-    favorites = validFavorites;
-    localStorage.setItem('brewItFavorites', JSON.stringify(favorites));
-    updateFavoriteUI();
-    return true;
-  } catch (e) {
-    console.error('Error saving favorites:', e);
-    return false;
-  }
-}
-
-// Toggle favorite status for a recipe
-function toggleFavorite(recipeKey, event) {
-  if (event) {
-    event.stopPropagation(); // Prevent card click event
-  }
-  
-  if (!recipeKey || !(recipeKey in recipes)) {
-    console.error('Invalid recipe key:', recipeKey);
-    return false;
-  }
-  
-  const currentFavorites = getFavorites();
-  const isFavorited = currentFavorites.includes(recipeKey);
-  let updatedFavorites;
-  
-  if (isFavorited) {
-    updatedFavorites = currentFavorites.filter(key => key !== recipeKey);
-  } else {
-    updatedFavorites = [...currentFavorites, recipeKey];
-  }
-  
-  const success = saveFavorites(updatedFavorites);
-  if (success) {
-    // Update all favorite buttons for this recipe
-    updateFavoriteUI();
-    
-    // Show feedback with appropriate message and emoji
-    showToast(
-      updatedFavorites.includes(recipeKey) 
-        ? 'Added to favorites ❤️' 
-        : 'Removed from favorites',
-      'success'
-    );
-    
-    // If modal is open for this recipe, update its favorite button
-    const modal = document.getElementById('recipeModal');
-    if (modal && modal.style.display === 'flex' && window.currentRecipeKey === recipeKey) {
-      const favBtn = modal.querySelector('.favorite-btn');
-      if (favBtn) {
-        const isNowFavorited = updatedFavorites.includes(recipeKey);
-        favBtn.innerHTML = isNowFavorited ? '❤️' : '🤍';
-        favBtn.classList.toggle('favorited', isNowFavorited);
-        favBtn.setAttribute('aria-label', 
-          isNowFavorited ? 'Remove from favorites' : 'Add to favorites');
-        
-        // Add animation class for visual feedback
-        favBtn.classList.add('heart-beat');
-        setTimeout(() => favBtn.classList.remove('heart-beat'), 1000);
-      }
-    }
-    
-    // Update filter if favorites filter is active
-    const activeFilter = document.querySelector('.filter-btn.active');
-    if (activeFilter && activeFilter.id === 'favBtn') {
-      applyCombinedFilter();
-    }
-  }
-  
-  return updatedFavorites.includes(recipeKey);
-}
-
-// Update favorite button in modal
-function updateModalFavoriteButton(recipeKey) {
-  const modal = document.getElementById('recipeModal');
-  if (!modal || modal.style.display !== 'flex') return;
-  
-  const favBtn = modal.querySelector('.favorite-btn');
-  if (!favBtn) return;
-  
-  const isFavorited = favorites.includes(recipeKey);
-  favBtn.innerHTML = isFavorited ? '❤️' : '🤍';
-  favBtn.classList.toggle('favorited', isFavorited);
-  favBtn.setAttribute('aria-label', 
-    isFavorited ? 'Remove from favorites' : 'Add to favorites');
-  
-  // Add animation
-  favBtn.classList.add('heart-beat');
-  setTimeout(() => favBtn.classList.remove('heart-beat'), 1000);
-}
-
-// Update favorite indicators in the UI
-function updateFavoriteUI() {
-  const currentFavorites = getFavorites();
-  
-  // Update recipe cards
-  document.querySelectorAll('.recipe-card').forEach(card => {
-    const recipeKey = card.getAttribute('data-recipe-key');
-    if (!recipeKey) return;
-    
-    const isFavorited = currentFavorites.includes(recipeKey);
-    
-    // Update favorite indicator
-    const favIndicator = card.querySelector('.favorite-indicator');
-    if (favIndicator) {
-      favIndicator.style.display = isFavorited ? 'block' : 'none';
-    }
-    
-    // Update favorite button in card
-    const favBtn = card.querySelector('.favorite-btn');
-    if (favBtn) {
-      favBtn.innerHTML = isFavorited ? '❤️' : '🤍';
-      favBtn.dataset.recipeKey = recipeKey; // Ensure recipe key is set
-      favBtn.classList.toggle('favorited', isFavorited);
-      favBtn.setAttribute('aria-label', 
-        isFavorited ? 'Remove from favorites' : 'Add to favorites');
-      
-      // Add animation class for visual feedback
-      if (isFavorited) {
-        favBtn.classList.add('heart-beat');
-        setTimeout(() => favBtn.classList.remove('heart-beat'), 1000);
-      }
-    }
-  });
-  
-  // Update modal favorite button if open
-  const modal = document.getElementById('recipeModal');
-  if (modal && modal.style.display === 'flex' && window.currentRecipeKey) {
-    const modalFavBtn = modal.querySelector('#modalFavoriteBtn');
-    if (modalFavBtn) {
-      const isFavorited = currentFavorites.includes(window.currentRecipeKey);
-      modalFavBtn.innerHTML = isFavorited ? '❤️' : '🤍';
-      modalFavBtn.setAttribute('aria-label', 
-        isFavorited ? 'Remove from favorites' : 'Add to favorites');
-    }
-  }
-  
-  // Update favorites filter button state
-  if (typeof updateFilterButtons === 'function') {
-    updateFilterButtons();
-  }
-}
-
-// Initialize UI when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  loadFavorites();
-  updateFavoriteUI();
-  
-  // Event delegation for favorite buttons in the card container
-  document.addEventListener('click', (event) => {
-    // Handle favorite button clicks in cards
-    const favBtn = event.target.closest('.favorite-btn');
-    if (favBtn && favBtn.dataset.recipeKey) {
-      toggleFavorite(favBtn.dataset.recipeKey, event);
-    }
-  });
-  
-  // Handle favorite button in modal
-  document.addEventListener('click', (event) => {
-    const modalFavBtn = event.target.closest('#modalFavoriteBtn');
-    if (modalFavBtn && window.currentRecipeKey) {
-      toggleFavorite(window.currentRecipeKey, event);
-    }
-  });
-});
 
 // Store current recipe globally for nutrition calculations
 let currentRecipe = null;
