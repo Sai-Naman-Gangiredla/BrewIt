@@ -801,11 +801,8 @@ function openModal(recipeKey) {
     console.error('Error initializing customization controls:', error);
   }
 
-  // Show modal
-  modal.style.display = 'flex';
-  modal.style.visibility = 'visible';
-  modal.style.opacity = '1';
-
+  // Show modal with CSS class
+  modal.classList.add('show');
   console.log('Modal displayed');
 
   // Prevent body scroll on mobile
@@ -1090,9 +1087,7 @@ function closeModal() {
   
   const modal = document.getElementById('recipeModal');
   if (modal) {
-    modal.style.display = 'none';
-    modal.style.visibility = 'hidden';
-    modal.style.opacity = '0';
+    modal.classList.remove('show');
     
     // Restore body scroll
     document.body.style.overflow = 'auto';
