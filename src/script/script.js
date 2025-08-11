@@ -1822,12 +1822,23 @@ function showQuizModal() {
   console.log('Quiz modal would show questions:', quizQuestions);
 }
 
-// Make key functions globally accessible
+// Provide legacy-compatible search function if not defined
+if (typeof searchRecipes !== 'function') {
+  function searchRecipes() {
+    try { applyCombinedFilter(); } catch (e) { console.error('searchRecipes fallback failed:', e); }
+  }
+}
+
+// Make key functions globally accessible (guarded)
 window.searchRecipes = searchRecipes;
 window.filterRecipes = filterRecipes;
 window.applyCombinedFilter = applyCombinedFilter;
-window.openModal = openModal;
-window.openRecipeModal = openRecipeModal;
+if (typeof openModal === 'function') {
+  window.openModal = openModal;
+}
+if (typeof openRecipeModal === 'function') {
+  window.openRecipeModal = openRecipeModal;
+}
 window.showToast = showToast;
 window.showQuizModal = showQuizModal;
 
