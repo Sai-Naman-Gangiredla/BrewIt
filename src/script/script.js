@@ -150,24 +150,28 @@ async function loadRecipes() {
         recipes = data; // Ensure global variable is set
         console.log('Recipes loaded successfully from:', url);
         console.log('Number of recipes:', Object.keys(data).length);
-        hideLoading();
-        
-        // Initialize UI after successful load with direct rendering
+        // After loading recipes, render using the combined filter pipeline
+        // This guarantees correct integration with search/filter/sort
         setTimeout(() => {
           // Ensure cardContainer is available
           if (!cardContainer) {
             cardContainer = document.getElementById('cardContainer');
           }
-          
-          // Force render all recipes initially
+
           if (cardContainer && recipes) {
-            renderFilteredCards(Object.keys(recipes));
-            updateFavoriteUI();
-            console.log('Recipes rendered successfully');
+            try {
+              applyCombinedFilter();
+              updateFavoriteUI();
+              console.log('Recipes rendered successfully via applyCombinedFilter');
+            } catch (e) {
+              console.error('Error rendering recipes:', e);
+            }
           } else {
             console.error('cardContainer or recipes not available for rendering');
           }
-        }, 100);
+          // Hide loading after attempting to render
+          hideLoading();
+        }, 50);
         
         return data;
       } else {
