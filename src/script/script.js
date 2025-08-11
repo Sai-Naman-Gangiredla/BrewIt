@@ -253,13 +253,16 @@ function initUI() {
   
   if (remixNavBtn) {
     remixNavBtn.addEventListener('click', () => {
-      showToast('Remix section coming soon!');
+      // Filter to show remix-style recipes
+      filterRecipes('remix');
+      showToast('Showing remix-style recipes!');
     });
   }
   
   if (quizNavBtn) {
     quizNavBtn.addEventListener('click', () => {
-      showToast('Coffee quiz coming soon!');
+      // Show quiz modal or functionality
+      showQuizModal();
     });
   }
   
@@ -274,7 +277,7 @@ function initUI() {
     
     // Close modal on Escape key
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && modal.style.display === 'flex') {
+      if (e.key === 'Escape' && modal.classList.contains('show')) {
         closeModal();
       }
     });
@@ -1089,8 +1092,8 @@ function closeModal() {
   if (modal) {
     modal.classList.remove('show');
     
-    // Restore body scroll
-    document.body.style.overflow = 'auto';
+    // Restore body scroll - use empty string to reset to default
+    document.body.style.overflow = '';
     
     console.log('Modal closed successfully');
   } else {
@@ -1650,12 +1653,29 @@ function showToast(message, type = 'info', duration = 3000) {
   return toast;
 }
 
+// Show quiz modal for finding your brew
+function showQuizModal() {
+  // Create a simple quiz modal for now
+  const quizQuestions = [
+    "Do you prefer hot or iced coffee?",
+    "How strong do you like your coffee?",
+    "Do you like milk in your coffee?"
+  ];
+  
+  // For now, show a toast with quiz info
+  showToast('Coffee Quiz: Answer a few questions to find your perfect brew!');
+  
+  // TODO: Implement full quiz modal functionality
+  console.log('Quiz modal would show questions:', quizQuestions);
+}
+
 // Make key functions globally accessible
 window.searchRecipes = searchRecipes;
 window.filterRecipes = filterRecipes;
 window.applyCombinedFilter = applyCombinedFilter;
 window.openModal = openModal;
 window.showToast = showToast;
+window.showQuizModal = showQuizModal;
 
 // Register Service Worker for PWA functionality
 if ('serviceWorker' in navigator) {
