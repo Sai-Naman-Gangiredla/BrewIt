@@ -152,11 +152,21 @@ async function loadRecipes() {
         console.log('Number of recipes:', Object.keys(data).length);
         hideLoading();
         
-        // Initialize UI after successful load
+        // Initialize UI after successful load with direct rendering
         setTimeout(() => {
-          renderCards();
-          applyCombinedFilter();
-          updateFavoriteUI();
+          // Ensure cardContainer is available
+          if (!cardContainer) {
+            cardContainer = document.getElementById('cardContainer');
+          }
+          
+          // Force render all recipes initially
+          if (cardContainer && recipes) {
+            renderFilteredCards(Object.keys(recipes));
+            updateFavoriteUI();
+            console.log('Recipes rendered successfully');
+          } else {
+            console.error('cardContainer or recipes not available for rendering');
+          }
         }, 100);
         
         return data;
@@ -308,8 +318,14 @@ function filterRecipes(category) {
 
 // Apply combined filter (category + search + sort)
 function applyCombinedFilter() {
+  console.log('applyCombinedFilter called, recipes available:', !!recipes, recipes ? Object.keys(recipes).length : 0);
+  
   if (!recipes || Object.keys(recipes).length === 0) {
-    console.log('No recipes loaded yet');
+    console.log('No recipes loaded yet, showing no results');
+    const noResults = document.getElementById('noResults');
+    if (noResults) {
+      noResults.style.display = 'block';
+    }
     return;
   }
   
@@ -318,18 +334,23 @@ function applyCombinedFilter() {
   const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
   const sortBy = document.getElementById('sortSelect')?.value || 'default';
   
+  console.log('Filter settings:', { category, searchTerm, sortBy });
+  
   let filteredRecipes = Object.keys(recipes);
+  console.log('Initial recipes count:', filteredRecipes.length);
   
   // Filter by category
   if (category !== 'all') {
     if (category === 'favourites') {
       const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
       filteredRecipes = filteredRecipes.filter(key => favorites.includes(key));
+      console.log('Filtered by favorites:', filteredRecipes.length);
     } else {
       filteredRecipes = filteredRecipes.filter(key => {
         const recipe = recipes[key];
         return recipe.type && recipe.type.toLowerCase() === category;
       });
+      console.log('Filtered by category:', category, filteredRecipes.length);
     }
   }
   
@@ -342,6 +363,7 @@ function applyCombinedFilter() {
                ing.toLowerCase().includes(searchTerm)
              ));
     });
+    console.log('Filtered by search:', searchTerm, filteredRecipes.length);
   }
   
   // Sort recipes
@@ -361,7 +383,10 @@ function applyCombinedFilter() {
           return 0;
       }
     });
+    console.log('Sorted by:', sortBy);
   }
+  
+  console.log('Final filtered recipes count:', filteredRecipes.length);
   
   // Render filtered recipes
   renderFilteredCards(filteredRecipes);
