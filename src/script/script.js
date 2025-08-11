@@ -734,6 +734,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ... (rest of the code remains the same)
 
+// Properly define openRecipeModal to show the recipe details modal
+function openRecipeModal(recipeKey) {
+  const recipe = recipes && recipes[recipeKey];
+  if (!recipe) {
+    console.error('Recipe not found for key:', recipeKey);
+    showToast('Recipe not found');
+    return;
+  }
+
   console.log('Recipe data:', recipe);
 
   const modal = document.getElementById('recipeModal');
@@ -1818,6 +1827,7 @@ window.searchRecipes = searchRecipes;
 window.filterRecipes = filterRecipes;
 window.applyCombinedFilter = applyCombinedFilter;
 window.openModal = openModal;
+window.openRecipeModal = openRecipeModal;
 window.showToast = showToast;
 window.showQuizModal = showQuizModal;
 
