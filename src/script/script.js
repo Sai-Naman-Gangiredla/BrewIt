@@ -125,6 +125,7 @@ function loadImageWithFallback(imgElement, src, fallbacks = []) {
 // Enhanced recipe loading with better error handling
 async function loadRecipes() {
   console.log('Loading recipes...');
+  showLoading();
   
   const urls = [
     './src/data/recipes.json',
@@ -144,17 +145,23 @@ async function loadRecipes() {
       
       const data = await response.json();
       
-      if (data && typeof data === 'object') {
+      if (data && typeof data === 'object' && Object.keys(data).length > 0) {
         window.recipes = data;
+        recipes = data; // Ensure global variable is set
         console.log('Recipes loaded successfully from:', url);
         console.log('Number of recipes:', Object.keys(data).length);
         hideLoading();
-        renderCards();
-        applyCombinedFilter();
-        updateFavoriteUI();
+        
+        // Initialize UI after successful load
+        setTimeout(() => {
+          renderCards();
+          applyCombinedFilter();
+          updateFavoriteUI();
+        }, 100);
+        
         return data;
       } else {
-        throw new Error('Invalid data format');
+        throw new Error('Invalid data format or empty data');
       }
     } catch (error) {
       console.warn('Failed to load from:', url, error.message);
@@ -164,15 +171,24 @@ async function loadRecipes() {
   
   // If all URLs fail, show error
   console.error('Failed to load recipes from all sources');
-  showToast('Unable to load recipes. Please check your internet connection and refresh the page.', 'error', 5000);
+  hideLoading();
+  showMobileError();
   return null;
 }
 
 // Wait for DOM to be ready before loading recipes
 document.addEventListener('DOMContentLoaded', function() {
-  console.log('DOM loaded, starting recipe load...');
+  console.log('DOM loaded, starting initialization...');
+  
+  // Initialize cardContainer first
+  cardContainer = document.getElementById('cardContainer');
+  if (!cardContainer) {
+    console.error('cardContainer element not found!');
+    return;
+  }
+  
   initUI(); // Initialize UI and navigation buttons
-  loadRecipes();
+  loadRecipes(); // Load recipes after UI is initialized
 });
 
 const additions = {

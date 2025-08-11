@@ -1,12 +1,13 @@
 * { box-sizing: border-box; }
 
 body, html {
-  margin: 0 !important;
-  padding: 0 !important;
-  border: none !important;
-  outline: none !important;
-  background-color: #1a1a1a !important;
-  color: #f2ddc9 !important;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background-color: #1a1a1a;
+  color: #f2ddc9;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Remove any default browser borders */
@@ -82,48 +83,84 @@ body, html {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
   padding: 20px;
+  background-color: #1a1a1a;
+  min-height: 50vh;
 }
 
 .card.recipe-card {
   background: #232323;
-      color: #f2ddc9;
+  color: #f2ddc9;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
   max-width: 350px;
   min-width: 250px;
   width: 100%;
   margin: 0 auto;
+  position: relative;
 }
 
-.card:hover {
+.card.recipe-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+}
+
+.card.recipe-card:focus {
+  outline: 2px solid #d2691e;
+  outline-offset: 2px;
 }
 
 .card img {
   width: 100%;
-  height: 180px;
+  height: 200px;
   object-fit: cover;
+  display: block;
 }
 
 .card-body {
-      padding: 15px;
+  padding: 15px;
+  position: relative;
 }
 
-.card-title.recipe-title {
+.card-title {
   font-size: 18px;
-  margin: 0 0 10px;
-    }
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #f2ddc9;
+  line-height: 1.3;
+}
+
+.card-cont {
+  font-size: 14px;
+  color: #ccc;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
 
 .bi-heart {
-  color: crimson;
+  position: absolute;
+  top: 15px;
+  right: 15px;
   background: none;
-      border: none;
-  font-size: 20px;
-      cursor: pointer;
-    }
+  border: none;
+  color: #d2691e;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.bi-heart:hover {
+  background-color: rgba(210, 105, 30, 0.2);
+  transform: scale(1.1);
+}
+
+.bi-heart.favorited {
+  color: #ff6b6b;
+}
 
 footer {
   text-align: center;
@@ -132,18 +169,17 @@ footer {
   color: #f2ddc9;
 }
 
-/* Modal styles - Fixed for right-edge slide-out panel */
+/* Modal styles - Clean implementation */
 .modal {
   display: none;
   position: fixed;
-  z-index: 10000;
+  z-index: 1000;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.8);
-  align-items: center;
-  justify-content: flex-end;
+  backdrop-filter: blur(5px);
 }
 
 .modal[style*="display: flex"] {
@@ -153,19 +189,16 @@ footer {
 }
 
 .modal-content {
-  background-color: #232323;
-      color: #f2ddc9;
-  margin: 0;
+  display: flex;
+  background-color: #2a2a2a;
+  margin: 5% auto;
   padding: 0;
-  border-radius: 10px 0 0 10px;
+  border-radius: 15px;
   width: 90%;
   max-width: 900px;
-  height: 100vh;
+  max-height: 80vh;
   overflow: hidden;
-      display: flex;
-  flex-direction: row;
-  box-shadow: -4px 0 24px rgba(0,0,0,0.18);
-  animation: slideInFromRight 0.3s ease-out;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 @keyframes slideInFromRight {
@@ -178,44 +211,22 @@ footer {
 }
 
 .modal-left {
-  flex: 0 0 260px;
-      display: flex;
-  align-items: center;
-      justify-content: center;
-  background: #222;
-  min-height: 100%;
-  min-width: 200px;
-  max-width: 260px;
-  height: 100%;
-  position: relative;
+  flex: 1;
+  min-width: 300px;
 }
 
 .modal-left img {
-  display: block;
-  max-width: 220px;
-  max-height: 90%;
-  width: auto;
-      height: auto;
-  object-fit: contain;
-  border-radius: 10px;
-  margin: 0 auto;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      background: #fff;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* Modal content order - ensure proper sequence */
 .modal-right {
-  flex: 1 1 0;
-  min-width: 0;
-  padding: 28px 32px 28px 32px;
+  flex: 1;
+  padding: 30px;
   overflow-y: auto;
-  max-height: 100%;
-  background-color: #232323;
   color: #f2ddc9;
-  display: flex !important;
-  flex-direction: column !important;
-  visibility: visible !important;
-  opacity: 1 !important;
 }
 
 /* Force proper content order with flexbox */
@@ -1530,383 +1541,33 @@ footer {
 
 /* Better loading states for mobile */
 #loadingSpinner {
-      display: flex;
-      justify-content: center;
-  align-items: center;
-  min-height: 200px;
-  font-size: 18px;
+      display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  color: #d2691e;
+  font-size: 24px;
+  text-align: center;
+}
+
+#loadingSpinner::after {
+  content: "Loading recipes...";
+  display: block;
+  margin-top: 10px;
+  font-size: 16px;
   color: #f2ddc9;
 }
 
-/* Improved accessibility for mobile */
-/* Mobile Navigation Improvements */
-@media (max-width: 768px) {
-  /* Better focus indicators */
-  .recipe-card:focus,
-  .nav button:focus,
-  .close-btn:focus {
-    outline: 2px solid #d2691e;
-    outline-offset: 2px;
-  }
-  
-  /* Prevent horizontal scroll */
-  body {
-    overflow-x: hidden;
-  }
-  
-  /* Better modal backdrop */
-  .modal {
-    background: rgba(0, 0, 0, 0.8);
-  }
-  
-  /* Improved card layout */
-  .card-container {
-    grid-template-columns: 1fr;
-    max-width: 100%;
-  }
-  
-  .card.recipe-card {
-    max-width: 100%;
-    margin: 0;
-  }
-  
-  /* CRITICAL: MOBILE NAVIGATION REDESIGN - Force override */
-  .nav {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 8px !important;
-    padding: 8px 12px !important;
-    background-color: #2d2217 !important;
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 100 !important;
-    align-items: stretch !important;
-  }
-  
-  /* Horizontal scrollable filter buttons - Force override */
-  .nav .filter-buttons {
-    display: flex !important;
-    gap: 8px !important;
-    overflow-x: auto !important;
-    padding: 4px 0 !important;
-    -webkit-overflow-scrolling: touch !important;
-    scrollbar-width: none !important; /* Firefox */
-    -ms-overflow-style: none !important; /* IE and Edge */
-    flex-wrap: nowrap !important;
-    align-items: center !important;
-  }
-  
-  .nav .filter-buttons::-webkit-scrollbar {
-    display: none !important; /* Chrome, Safari, Opera */
-  }
-  
-  .nav .filter-buttons button {
-    flex-shrink: 0 !important;
-    white-space: nowrap !important;
-    min-width: auto !important;
-    padding: 8px 16px !important;
-    font-size: 14px !important;
-    border-radius: 20px !important;
-    border: 1px solid #5a4633 !important;
-    background: #3a2c1a !important;
-    color: #f2ddc9 !important;
-    transition: all 0.2s !important;
-    display: inline-block !important;
-    margin: 0 !important;
-  }
-  
-  .nav .filter-buttons button.active {
-    background-color: #d2691e !important;
-    color: white !important;
-    font-weight: bold !important;
-    border: 1px solid #a0522d !important;
-  }
-  
-  /* Search and sort row - Force override */
-  .nav .search-sort-row {
-    display: flex !important;
-    gap: 8px !important;
-    align-items: center !important;
-    margin-top: 4px !important;
-    flex-wrap: wrap !important;
-  }
-  
-  .nav .search-sort-row input,
-  .nav .search-sort-row select {
-    flex: 1 !important;
-    padding: 8px 12px !important;
-    border-radius: 8px !important;
-    border: 1px solid #5a4633 !important;
-    background: #3a2c1a !important;
-    color: #f2ddc9 !important;
-    font-size: 14px !important;
-    min-height: 44px !important;
-  }
-  
-  .nav .search-sort-row select {
-    flex: 0 0 auto !important;
-    min-width: 100px !important;
-  }
-  
-  /* Dark mode toggle - Force override */
-  .nav #darkModeToggle {
-    flex-shrink: 0 !important;
-    padding: 8px !important;
-    border-radius: 50% !important;
-    border: 1px solid #5a4633 !important;
-    background: #3a2c1a !important;
-    color: #f2ddc9 !important;
-    width: 40px !important;
-    height: 40px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-  
-  /* Compact header - Force override */
-  .header {
-    padding: 8px 12px !important;
-    height: auto !important;
-    min-height: 60px !important;
-  }
-  
-  .header .title {
-    font-size: 24px !important;
-  }
-  
-  .header .center-header {
-    font-size: 16px !important;
-    margin: 4px 0 !important;
-  }
-  
-  /* More space for cards - Force override */
-  .card-container {
-    padding: 12px !important;
-    gap: 16px !important;
-  }
-  
-  /* Better touch targets - Force override */
-  .nav button, .nav input, .close-btn {
-    min-height: 44px !important;
-    touch-action: manipulation !important;
-  }
-  
-  /* Improved card layout for mobile - Force override */
-  .card.recipe-card {
-    touch-action: manipulation !important;
-    -webkit-tap-highlight-color: transparent !important;
-  }
-  
-  .card.recipe-card:active {
-    transform: scale(0.98) !important;
-  }
-  
-  /* Compact card design for mobile - Force override */
-  .card.recipe-card .card-body {
-    padding: 12px !important;
-  }
-  
-  .card.recipe-card .card-title {
-    font-size: 16px !important;
-    margin-bottom: 8px !important;
-  }
-  
-  .card.recipe-card img {
-    height: 140px !important;
-  }
-  
-  /* Better spacing for mobile - Force override */
-  .header {
-    margin-bottom: 0 !important;
-  }
-  
-  .nav {
-    margin-bottom: 8px !important;
-  }
-  
-  /* Ensure proper scrolling - Force override */
-  .filter-buttons {
-    scroll-behavior: smooth !important;
-  }
-  
-  /* Active state improvements - Force override */
-  .nav .filter-buttons button.active {
-    box-shadow: 0 2px 8px rgba(210, 105, 30, 0.3) !important;
-  }
-  
-  /* Hover effects for better feedback - Force override */
-  .nav .filter-buttons button:hover {
-    background: #4a3c2a !important;
-    transform: translateY(-1px) !important;
-  }
-  
-  /* CRITICAL: Override any existing nav styles */
-  .nav > button {
-    display: none !important;
-  }
-  
-  .nav > input {
-    display: none !important;
-  }
-  
-  .nav > select {
-    display: none !important;
-  }
-}
-
-@media (max-width: 600px) {
-  #backToTopBtn {
-    right: 16px;
-    bottom: 16px;
-    width: 40px;
-    height: 40px;
-    font-size: 1.5rem;
-  }
-}
-.header #homeLogo img {
-  vertical-align: middle;
-  margin-right: 8px;
-}
-
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 44px;
-  height: 24px;
-}
-.switch input {display:none;}
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: #ccc;
-  transition: .4s;
-  border-radius: 24px;
-}
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 18px;
-  width: 18px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  transition: .4s;
-  border-radius: 50%;
-}
-input:checked + .slider {
-  background-color: #a0522d;
-}
-input:checked + .slider:before {
-  transform: translateX(20px);
-}
-
-.segmented-toggle {
-  display: inline-flex;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
-  background: #23201c;
-}
-.seg-btn {
-      border: none;
-      background: none;
-  color: #e6d3b3;
-  padding: 7px 18px;
-  font-size: 1em;
-  font-weight: 500;
-      cursor: pointer;
-  transition: background 0.18s, color 0.18s;
-  outline: none;
-}
-.seg-btn:not(:last-child) {
-  border-right: 1px solid #3a3327;
-    }
-.seg-btn-active, .seg-btn:focus {
-  background: #a0522d;
-  color: #fff;
-  border-radius: 0;
-    }
-
-/* 1. Section/page transitions */
-#remixSection, #quizSection, #cardContainer {
-  transition: opacity 0.4s, transform 0.4s;
-  opacity: 1;
-  transform: translateY(0);
-}
+/* Section visibility */
 .section-hidden {
-  display: none !important;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(30px);
+  display: none;
 }
 
-/* 2. Nav button active animation */
-.filter-btn, #remixNavBtn, #quizNavBtn {
-  transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+.section-visible {
+  display: block;
 }
-
-/* 3. Card hover effect */
-.card.recipe-card {
-  transition: box-shadow 0.25s, transform 0.25s;
-    }
-.card.recipe-card:hover {
-  box-shadow: 0 6px 24px rgba(160,82,45,0.18);
-  transform: scale(1.035);
-  z-index: 2;
-}
-
-/* 4. Modal fade/slide */
-#recipeModal {
-  transition: opacity 0.35s, transform 0.35s;
-  opacity: 1;
-  transform: translateY(0);
-}
-#recipeModal.hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(40px);
-    }
-
-/* 5. Custom focus ring */
-.filter-btn:focus, #remixNavBtn:focus, #quizNavBtn:focus, #homeLogo:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px #ffe6b3, 0 2px 8px rgba(160,82,45,0.08);
-    }
-
-/* 6. Section heading animation */
-.section-heading {
-  color: #3a2a1a;
-  font-weight: 700;
-  opacity: 1;
-  transform: translateY(-20px);
-  animation: fadeInDown 0.7s forwards;
-}
-@keyframes fadeInDown {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* 7. Toast notification for section changes */
-#sectionToast {
-  position: fixed;
-  left: 50%;
-  top: 24px;
-  transform: translateX(-50%);
-  background: #ffe6b3;
-  color: #6b3e26;
-  padding: 10px 32px;
-  border-radius: 24px;
-  font-size: 1.1em;
-  font-weight: 600;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 99999;
-  box-shadow: 0 2px 12px rgba(160,82,45,0.10);
-  transition: opacity 0.3s, top 0.3s;
-    }
 #sectionToast.show {
   opacity: 1;
   top: 48px;
@@ -2100,7 +1761,7 @@ input:checked + .slider:before {
     flex: 0 0 150px;
     min-width: 100%;
     max-width: 100%;
-    height: 150px;
+      height: 150px;
   }
   
   .modal-left img {
@@ -2110,7 +1771,7 @@ input:checked + .slider:before {
   
   .modal-right {
     flex: 1;
-    padding: 15px;
+      padding: 15px;
   }
     }
 
@@ -2551,7 +2212,7 @@ input:checked + .slider:before {
   color: #f2ddc9;
   border: 1px solid #5a4a3a;
   border-radius: 20px;
-  cursor: pointer;
+      cursor: pointer;
   font-size: 14px;
   transition: all 0.3s ease;
   white-space: nowrap;
@@ -2614,7 +2275,7 @@ input:checked + .slider:before {
   background: #3a2a3a;
   color: #f2ddc9;
   font-size: 14px;
-  cursor: pointer;
+      cursor: pointer;
   min-width: 120px;
 }
 
@@ -2661,7 +2322,7 @@ input:checked + .slider:before {
   
   .search-input {
     min-width: 0;
-    width: 100%;
+      width: 100%;
   }
   
   .sort-container {
@@ -2899,4 +2560,4 @@ a:hover {
     background: #555;
     border-radius: 2px;
   }
-}
+    }
