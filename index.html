@@ -37,7 +37,20 @@
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#2d2217">
+  <meta name="theme-color" content="#333333">
+  <script>
+    // Forcefully unregister service workers to break cache loops
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for(let registration of registrations) {
+          registration.unregister();
+          console.log('Service Worker unregistered successfully');
+        }
+      }).catch(function(err) {
+        console.log('Service Worker unregistration failed: ', err);
+      });
+    }
+  </script>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="BrewIt">
