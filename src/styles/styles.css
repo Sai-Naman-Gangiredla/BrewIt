@@ -1,401 +1,12 @@
 * { box-sizing: border-box; }
 
-/* ====================
-   Dark Mode Variables
-   ==================== */
-:root {
-  /* Light theme (default) */
-  --bg-color: #ffffff;
-  --text-color: #333333;
-  --header-bg: #222222;
-  --card-bg: #f8f9fa;
-  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  --border-color: #e0e0e0;
-  --primary-color: #007bff;
-  --primary-hover: #0056b3;
-  --text-muted: #6c757d;
-  --modal-bg: #ffffff;
-  --modal-text: #333333;
-  --input-bg: #ffffff;
-  --input-text: #333333;
-  --input-border: #ced4da;
-}
-
-/* Dark theme */
-[data-theme="dark"] {
-  --bg-color: #1a1a1a;
-  --text-color: #f0f0f0;
-  --header-bg: #111111;
-  --card-bg: #2d2d2d;
-  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  --border-color: #444444;
-  --primary-color: #4a90e2;
-  --primary-hover: #6ba8f0;
-  --text-muted: #a0a0a0;
-  --modal-bg: #2a2a2a;
-  --modal-text: #f0f0f0;
-  --input-bg: #333333;
-  --input-text: #f0f0f0;
-  --input-border: #555555;
-}
-
-/* Base styles */
-body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* === MODAL STYLES === */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  overflow-y: auto;
-  padding: 40px 20px;
-  box-sizing: border-box;
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(5px);
-  animation: fadeIn 0.3s ease-out;
-}
-
-.modal.show {
-  display: flex;
-  animation: fadeIn 0.3s ease-in-out;
-  backdrop-filter: blur(4px);
-}
-
-.modal-content {
-  background-color: var(--modal-bg);
-  color: var(--modal-text);
-  border-radius: 15px;
-  box-shadow: var(--card-shadow);
-  display: flex;
-  max-width: 900px;
-  max-height: 80vh;
-  width: 90%;
-  overflow: hidden;
-  position: relative;
-  animation: slideIn 0.3s ease-out;
-  border: 1px solid var(--border-color);
-}
-
-/* Update cards */
-.recipe-card {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  box-shadow: var(--card-shadow);
-  color: var(--text-color);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.recipe-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Update header */
-.header {
-  background-color: var(--header-bg);
-  color: white;
-}
-
-/* Update inputs and buttons */
-input, select, textarea {
-  background-color: var(--input-bg) !important;
-  color: var(--input-text) !important;
-  border: 1px solid var(--input-border) !important;
-}
-
-button, .btn {
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  transition: background-color 0.2s ease;
-}
-
-button:hover, .btn:hover {
-  background-color: var(--primary-hover);
-}
-
-/* Update text colors */
-h1, h2, h3, h4, h5, h6 {
-  color: var(--text-color);
-}
-
-p, span, div {
-  color: var(--text-color);
-}
-
-/* Update modal specific styles */
-.modal-right h4, 
-.modal-right label, 
-#modalTitle {
-  color: var(--modal-text) !important;
-}
-
-/* Update form elements */
-.form-control {
-  background-color: var(--input-bg);
-  color: var(--input-text);
-  border-color: var(--input-border);
-}
-
-/* Update navigation */
-.nav {
-  background-color: var(--header-bg);
-}
-
-.nav button {
-  color: var(--text-color);
-}
-
-/* Update toast notifications */
-.toast {
-  background-color: var(--card-bg);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-}
-
-.modal-left {
-  flex: 1;
-  min-width: 300px;
-  position: relative;
-  padding-right: 40px;
-  min-width: 350px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
-  border-right: 1px solid rgba(160, 82, 45, 0.1);
-  margin-right: 30px;
-}
-
-.modal-left img {
-  width: 100%;
-  height: auto;
-  max-height: 400px;
-  object-fit: cover;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.modal-left img:hover {
-  transform: scale(1.02);
-}
-
-.modal-right {
-  flex: 1;
-  padding: 30px;
-  background-color: #2a2a2a;
-  color: #f2ddc9;
-  overflow-y: auto;
-  max-height: 80vh;
-}
-
-.modal-right h2 {
-  margin: 0 0 20px 0;
-  color: #d2691e;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.modal-right h4 {
-  color: #d2691e;
-  margin: 20px 0 10px 0;
-  font-size: 18px;
-}
-
-.modal-right ul {
-  list-style-type: disc;
-  margin: 0 0 20px 20px;
-  padding: 0;
-}
-
-.modal-right li {
-  margin: 8px 0;
-  color: #f2ddc9;
-  line-height: 1.5;
-}
-
-/* Close button */
-.modal .close {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-  z-index: 1001;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s;
-}
-
-.modal .close:hover,
-.modal .close:focus {
-  color: #6b3e26;
-  background: #fff;
-  transform: rotate(90deg) scale(1.1);
-  outline: none;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* Modal animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideUp {
-  from { 
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to { 
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes heartBeat {
-  0% { transform: scale(1); }
-  14% { transform: scale(1.3); }
-  28% { transform: scale(1); }
-  42% { transform: scale(1.3); }
-  70% { transform: scale(1); }
-}
-
-/* Favorite button styles */
-.favorite-btn {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 5px;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  z-index: 1;
-}
-
-.favorite-btn:hover {
-  transform: scale(1.1);
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.favorite-btn:active {
-  transform: scale(0.95);
-}
-
-.favorite-btn.heart-beat {
-  animation: heartBeat 1s ease;
-}
-
-/* Modal favorite button */
-#modalFavoriteBtn {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  z-index: 10;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 50%;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  transition: all 0.3s ease;
-}
-
-#modalFavoriteBtn:hover {
-  transform: scale(1.1);
-  background: rgba(0, 0, 0, 0.7);
-  border-color: rgba(255, 255, 255, 0.5);
-}
-
-#modalFavoriteBtn.heart-beat {
-  animation: heartBeat 1s ease;
-}
-
-.heart-beat {
-  animation: heartBeat 1s;
-}
-
-@keyframes slideIn {
-  from { 
-    opacity: 0;
-    transform: scale(0.9) translateY(-20px);
-  }
-  to { 
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-/* Mobile responsive modal */
-@media (max-width: 768px) {
-  .modal-content {
-    flex-direction: column;
-    max-width: 95%;
-    max-height: 90vh;
-  }
-  
-  .modal-left {
-    min-width: auto;
-    height: 250px;
-  }
-  
-  .modal-left img {
-    border-radius: 15px 15px 0 0;
-  }
-  
-  .modal-right {
-    padding: 20px;
-  }
-  
-  .modal-right h2 {
-    font-size: 24px;
-  }
-}
-
 body, html {
-  margin: 0;
-  padding: 0;
-  border: none;
-  outline: none;
-  background-color: #1a1a1a;
-  color: #f2ddc9;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  outline: none !important;
+  background-color: #1a1a1a !important;
+  color: #f2ddc9 !important;
 }
 
 /* Remove any default browser borders */
@@ -471,84 +82,48 @@ body, html {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
   padding: 20px;
-  background-color: #1a1a1a;
-  min-height: 50vh;
 }
 
 .card.recipe-card {
   background: #232323;
-  color: #f2ddc9;
+      color: #f2ddc9;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s;
   max-width: 350px;
   min-width: 250px;
   width: 100%;
   margin: 0 auto;
-  position: relative;
 }
 
-.card.recipe-card:hover {
+.card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
-}
-
-.card.recipe-card:focus {
-  outline: 2px solid #d2691e;
-  outline-offset: 2px;
 }
 
 .card img {
   width: 100%;
-  height: 200px;
+  height: 180px;
   object-fit: cover;
-  display: block;
 }
 
 .card-body {
-  padding: 15px;
-  position: relative;
+      padding: 15px;
 }
 
-.card-title {
+.card-title.recipe-title {
   font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 8px;
-  color: #f2ddc9;
-  line-height: 1.3;
-}
-
-.card-cont {
-  font-size: 14px;
-  color: #ccc;
-  margin-bottom: 10px;
-  line-height: 1.4;
-}
+  margin: 0 0 10px;
+    }
 
 .bi-heart {
-  position: absolute;
-  top: 15px;
-  right: 15px;
+  color: crimson;
   background: none;
-  border: none;
-  color: #d2691e;
-  font-size: 18px;
-  cursor: pointer;
-  padding: 5px;
-  border-radius: 50%;
-  transition: all 0.3s ease;
-}
-
-.bi-heart:hover {
-  background-color: rgba(210, 105, 30, 0.2);
-  transform: scale(1.1);
-}
-
-.bi-heart.favorited {
-  color: #ff6b6b;
-}
+      border: none;
+  font-size: 20px;
+      cursor: pointer;
+    }
 
 footer {
   text-align: center;
@@ -557,17 +132,18 @@ footer {
   color: #f2ddc9;
 }
 
-/* Modal styles - Clean implementation */
+/* Modal styles - Fixed for right-edge slide-out panel */
 .modal {
   display: none;
   position: fixed;
-  z-index: 1000;
+  z-index: 10000;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(5px);
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .modal[style*="display: flex"] {
@@ -577,19 +153,19 @@ footer {
 }
 
 .modal-content {
-  display: flex;
-  background-color: #fff9f0;
-  padding: 30px;
-  border-radius: 16px;
-  max-width: 1000px;
+  background-color: #232323;
+      color: #f2ddc9;
+  margin: 0;
+  padding: 0;
+  border-radius: 10px 0 0 10px;
   width: 90%;
-  max-height: 90vh;
-  overflow-y: auto;
-  display: flex;
-  position: relative;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(160, 82, 45, 0.2);
-  animation: slideUp 0.3s ease-out;
+  max-width: 900px;
+  height: 100vh;
+  overflow: hidden;
+      display: flex;
+  flex-direction: row;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.18);
+  animation: slideInFromRight 0.3s ease-out;
 }
 
 @keyframes slideInFromRight {
@@ -602,59 +178,44 @@ footer {
 }
 
 .modal-left {
-  flex: 1;
-  min-width: 300px;
+  flex: 0 0 260px;
+      display: flex;
+  align-items: center;
+      justify-content: center;
+  background: #222;
+  min-height: 100%;
+  min-width: 200px;
+  max-width: 260px;
+  height: 100%;
+  position: relative;
 }
 
 .modal-left img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  display: block;
+  max-width: 220px;
+  max-height: 90%;
+  width: auto;
+      height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+  margin: 0 auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      background: #fff;
 }
 
 /* Modal content order - ensure proper sequence */
 .modal-right {
-  flex: 1.5;
-  padding: 0 20px;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 28px 32px 28px 32px;
   overflow-y: auto;
   max-height: 100%;
-  position: relative;
-}
-
-/* Favorite button in modal */
-.modal .favorite-btn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #d4a76a;
-  transition: transform 0.2s, color 0.2s;
-  z-index: 10;
-  padding: 8px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal .favorite-btn:hover {
-  transform: scale(1.1);
-  color: #ff6b6b;
-}
-
-.modal .favorite-btn.favorited {
-  color: #ff6b6b;
-}
-
-.modal .favorite-btn i {
-  pointer-events: none;
+  background-color: #232323;
+  color: #f2ddc9;
+  display: flex !important;
+  flex-direction: column !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 /* Force proper content order with flexbox */
@@ -1969,33 +1530,383 @@ footer {
 
 /* Better loading states for mobile */
 #loadingSpinner {
-      display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-  color: #d2691e;
-  font-size: 24px;
-  text-align: center;
-}
-
-#loadingSpinner::after {
-  content: "Loading recipes...";
-  display: block;
-  margin-top: 10px;
-  font-size: 16px;
+      display: flex;
+      justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  font-size: 18px;
   color: #f2ddc9;
 }
 
-/* Section visibility */
-.section-hidden {
-  display: none;
+/* Improved accessibility for mobile */
+/* Mobile Navigation Improvements */
+@media (max-width: 768px) {
+  /* Better focus indicators */
+  .recipe-card:focus,
+  .nav button:focus,
+  .close-btn:focus {
+    outline: 2px solid #d2691e;
+    outline-offset: 2px;
+  }
+  
+  /* Prevent horizontal scroll */
+  body {
+    overflow-x: hidden;
+  }
+  
+  /* Better modal backdrop */
+  .modal {
+    background: rgba(0, 0, 0, 0.8);
+  }
+  
+  /* Improved card layout */
+  .card-container {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+  
+  .card.recipe-card {
+    max-width: 100%;
+    margin: 0;
+  }
+  
+  /* CRITICAL: MOBILE NAVIGATION REDESIGN - Force override */
+  .nav {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    padding: 8px 12px !important;
+    background-color: #2d2217 !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
+    align-items: stretch !important;
+  }
+  
+  /* Horizontal scrollable filter buttons - Force override */
+  .nav .filter-buttons {
+    display: flex !important;
+    gap: 8px !important;
+    overflow-x: auto !important;
+    padding: 4px 0 !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important; /* Firefox */
+    -ms-overflow-style: none !important; /* IE and Edge */
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+  }
+  
+  .nav .filter-buttons::-webkit-scrollbar {
+    display: none !important; /* Chrome, Safari, Opera */
+  }
+  
+  .nav .filter-buttons button {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    min-width: auto !important;
+    padding: 8px 16px !important;
+    font-size: 14px !important;
+    border-radius: 20px !important;
+    border: 1px solid #5a4633 !important;
+    background: #3a2c1a !important;
+    color: #f2ddc9 !important;
+    transition: all 0.2s !important;
+    display: inline-block !important;
+    margin: 0 !important;
+  }
+  
+  .nav .filter-buttons button.active {
+    background-color: #d2691e !important;
+    color: white !important;
+    font-weight: bold !important;
+    border: 1px solid #a0522d !important;
+  }
+  
+  /* Search and sort row - Force override */
+  .nav .search-sort-row {
+    display: flex !important;
+    gap: 8px !important;
+    align-items: center !important;
+    margin-top: 4px !important;
+    flex-wrap: wrap !important;
+  }
+  
+  .nav .search-sort-row input,
+  .nav .search-sort-row select {
+    flex: 1 !important;
+    padding: 8px 12px !important;
+    border-radius: 8px !important;
+    border: 1px solid #5a4633 !important;
+    background: #3a2c1a !important;
+    color: #f2ddc9 !important;
+    font-size: 14px !important;
+    min-height: 44px !important;
+  }
+  
+  .nav .search-sort-row select {
+    flex: 0 0 auto !important;
+    min-width: 100px !important;
+  }
+  
+  /* Dark mode toggle - Force override */
+  .nav #darkModeToggle {
+    flex-shrink: 0 !important;
+    padding: 8px !important;
+    border-radius: 50% !important;
+    border: 1px solid #5a4633 !important;
+    background: #3a2c1a !important;
+    color: #f2ddc9 !important;
+    width: 40px !important;
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  /* Compact header - Force override */
+  .header {
+    padding: 8px 12px !important;
+    height: auto !important;
+    min-height: 60px !important;
+  }
+  
+  .header .title {
+    font-size: 24px !important;
+  }
+  
+  .header .center-header {
+    font-size: 16px !important;
+    margin: 4px 0 !important;
+  }
+  
+  /* More space for cards - Force override */
+  .card-container {
+    padding: 12px !important;
+    gap: 16px !important;
+  }
+  
+  /* Better touch targets - Force override */
+  .nav button, .nav input, .close-btn {
+    min-height: 44px !important;
+    touch-action: manipulation !important;
+  }
+  
+  /* Improved card layout for mobile - Force override */
+  .card.recipe-card {
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+  
+  .card.recipe-card:active {
+    transform: scale(0.98) !important;
+  }
+  
+  /* Compact card design for mobile - Force override */
+  .card.recipe-card .card-body {
+    padding: 12px !important;
+  }
+  
+  .card.recipe-card .card-title {
+    font-size: 16px !important;
+    margin-bottom: 8px !important;
+  }
+  
+  .card.recipe-card img {
+    height: 140px !important;
+  }
+  
+  /* Better spacing for mobile - Force override */
+  .header {
+    margin-bottom: 0 !important;
+  }
+  
+  .nav {
+    margin-bottom: 8px !important;
+  }
+  
+  /* Ensure proper scrolling - Force override */
+  .filter-buttons {
+    scroll-behavior: smooth !important;
+  }
+  
+  /* Active state improvements - Force override */
+  .nav .filter-buttons button.active {
+    box-shadow: 0 2px 8px rgba(210, 105, 30, 0.3) !important;
+  }
+  
+  /* Hover effects for better feedback - Force override */
+  .nav .filter-buttons button:hover {
+    background: #4a3c2a !important;
+    transform: translateY(-1px) !important;
+  }
+  
+  /* CRITICAL: Override any existing nav styles */
+  .nav > button {
+    display: none !important;
+  }
+  
+  .nav > input {
+    display: none !important;
+  }
+  
+  .nav > select {
+    display: none !important;
+  }
 }
 
-.section-visible {
-  display: block;
+@media (max-width: 600px) {
+  #backToTopBtn {
+    right: 16px;
+    bottom: 16px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
 }
+.header #homeLogo img {
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+.switch input {display:none;}
+.slider {
+  position: absolute;
+      cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+input:checked + .slider {
+  background-color: #a0522d;
+}
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+.segmented-toggle {
+  display: inline-flex;
+  border-radius: 8px;
+      overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+  background: #23201c;
+}
+.seg-btn {
+      border: none;
+      background: none;
+  color: #e6d3b3;
+  padding: 7px 18px;
+  font-size: 1em;
+  font-weight: 500;
+      cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+  outline: none;
+}
+.seg-btn:not(:last-child) {
+  border-right: 1px solid #3a3327;
+    }
+.seg-btn-active, .seg-btn:focus {
+  background: #a0522d;
+  color: #fff;
+  border-radius: 0;
+    }
+
+/* 1. Section/page transitions */
+#remixSection, #quizSection, #cardContainer {
+  transition: opacity 0.4s, transform 0.4s;
+  opacity: 1;
+  transform: translateY(0);
+}
+.section-hidden {
+  display: none !important;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(30px);
+}
+
+/* 2. Nav button active animation */
+.filter-btn, #remixNavBtn, #quizNavBtn {
+  transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+}
+
+/* 3. Card hover effect */
+.card.recipe-card {
+  transition: box-shadow 0.25s, transform 0.25s;
+    }
+.card.recipe-card:hover {
+  box-shadow: 0 6px 24px rgba(160,82,45,0.18);
+  transform: scale(1.035);
+  z-index: 2;
+}
+
+/* 4. Modal fade/slide */
+#recipeModal {
+  transition: opacity 0.35s, transform 0.35s;
+  opacity: 1;
+  transform: translateY(0);
+}
+#recipeModal.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(40px);
+    }
+
+/* 5. Custom focus ring */
+.filter-btn:focus, #remixNavBtn:focus, #quizNavBtn:focus, #homeLogo:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px #ffe6b3, 0 2px 8px rgba(160,82,45,0.08);
+    }
+
+/* 6. Section heading animation */
+.section-heading {
+  color: #3a2a1a;
+  font-weight: 700;
+  opacity: 1;
+  transform: translateY(-20px);
+  animation: fadeInDown 0.7s forwards;
+}
+@keyframes fadeInDown {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 7. Toast notification for section changes */
+#sectionToast {
+  position: fixed;
+  left: 50%;
+  top: 24px;
+  transform: translateX(-50%);
+  background: #ffe6b3;
+  color: #6b3e26;
+  padding: 10px 32px;
+  border-radius: 24px;
+  font-size: 1.1em;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 99999;
+  box-shadow: 0 2px 12px rgba(160,82,45,0.10);
+  transition: opacity 0.3s, top 0.3s;
+    }
 #sectionToast.show {
   opacity: 1;
   top: 48px;

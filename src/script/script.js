@@ -1,125 +1,3 @@
-// =====================
-// Favorites Management
-// =====================
-
-// Initialize favorites array
-let favorites = [];
-
-// Return validated favorites array from localStorage
-function getFavorites() {
-  try {
-    const saved = localStorage.getItem('brewItFavorites');
-    const parsed = saved ? JSON.parse(saved) : [];
-    return Array.isArray(parsed) ? parsed.filter(key => key in recipes) : [];
-  } catch (e) {
-    console.error('Error reading favorites:', e);
-    return [];
-  }
-}
-
-// Load favorites from localStorage with validation
-function loadFavorites() {
-  try {
-    const saved = localStorage.getItem('brewItFavorites');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      // Only keep favorites that exist in recipes
-      favorites = Array.isArray(parsed) 
-        ? parsed.filter(key => key in recipes)
-        : [];
-    } else {
-      favorites = [];
-    }
-  } catch (e) {
-    console.error('Error loading favorites:', e);
-    favorites = [];
-  }
-  return [...favorites];
-}
-
-// Save favorites to localStorage and update UI
-function saveFavorites(newFavorites) {
-  try {
-    // Ensure we're only storing valid recipe keys
-    const validFavorites = Array.isArray(newFavorites) 
-      ? [...new Set(newFavorites.filter(key => key in recipes))] // Remove duplicates
-      : [];
-    
-    favorites = validFavorites;
-    localStorage.setItem('brewItFavorites', JSON.stringify(favorites));
-    updateFavoriteUI();
-    return true;
-  } catch (e) {
-    console.error('Error saving favorites:', e);
-    return false;
-  }
-}
-
-// Toggle favorite status for a recipe
-function toggleFavorite(recipeKey, event) {
-  if (event) {
-    event.stopPropagation(); // Prevent card click event
-  }
-  
-  if (!recipeKey || !(recipeKey in recipes)) {
-    console.error('Invalid recipe key:', recipeKey);
-    return false;
-  }
-  
-  const currentFavorites = getFavorites();
-  const isFavorited = currentFavorites.includes(recipeKey);
-  let updatedFavorites;
-  
-  if (isFavorited) {
-    updatedFavorites = currentFavorites.filter(key => key !== recipeKey);
-  } else {
-    updatedFavorites = [...currentFavorites, recipeKey];
-  }
-  
-  const success = saveFavorites(updatedFavorites);
-  if (success) {
-    // Show feedback with appropriate message and emoji
-    showToast(
-      updatedFavorites.includes(recipeKey) 
-        ? 'Added to favorites ❤️' 
-        : 'Removed from favorites',
-      'success'
-    );
-  }
-  
-  return updatedFavorites.includes(recipeKey);
-}
-
-// Update favorite indicators in the UI
-function updateFavoriteUI() {
-  const currentFavorites = getFavorites();
-  
-  // Update recipe cards
-  document.querySelectorAll('.recipe-card').forEach(card => {
-    const recipeKey = card.getAttribute('data-recipe-key');
-    if (!recipeKey) return;
-    
-    const favBtn = card.querySelector('.favorite-btn');
-    if (favBtn) {
-      const isFavorited = currentFavorites.includes(recipeKey);
-      favBtn.innerHTML = isFavorited ? '❤️' : '🤍';
-      favBtn.classList.toggle('favorited', isFavorited);
-      favBtn.setAttribute('aria-label', 
-        isFavorited ? 'Remove from favorites' : 'Add to favorites');
-    }
-  });
-  
-  // Update favorites count in the filter button
-  const favBtn = document.getElementById('favBtn');
-  if (favBtn) {
-    const favCount = favBtn.querySelector('.fav-count');
-    if (favCount) {
-      favCount.textContent = currentFavorites.length;
-      favCount.style.display = currentFavorites.length > 0 ? 'inline-block' : 'none';
-    }
-  }
-}
-
 // Global error handler
 window.addEventListener('error', (event) => {
   console.error('Global error:', event.error);
@@ -144,62 +22,6 @@ function showLoading() {
   const spinner = document.getElementById('loadingSpinner');
   if (cardContainer) cardContainer.style.display = 'none';
   if (spinner) spinner.style.display = 'flex';
-}
-
-// Create a recipe card element
-function createRecipeCard(recipe, recipeKey, isFavorite = false) {
-  try {
-    const card = document.createElement('div');
-    card.className = 'recipe-card';
-    card.setAttribute('data-recipe-key', recipeKey);
-
-    // Image
-    const img = document.createElement('img');
-    img.alt = recipe.title || recipe.name || recipeKey;
-    img.loading = 'lazy';
-    loadImageWithFallback(
-      img,
-      recipe.img || recipe.image || `./public/images/${recipeKey}.jpeg`,
-      [
-        `./public/images/${recipeKey}.jpg`,
-        `./public/images/${recipeKey}.png`,
-      ]
-    );
-
-    // Title
-    const title = document.createElement('h3');
-    title.className = 'card-title';
-    title.textContent = recipe.title || recipe.name || recipeKey;
-
-    // Favorite indicator
-    const favIndicator = document.createElement('div');
-    favIndicator.className = 'favorite-indicator';
-    favIndicator.style.display = isFavorite ? 'block' : 'none';
-
-    // Favorite button
-    const favBtn = document.createElement('button');
-    favBtn.className = 'favorite-btn';
-    favBtn.type = 'button';
-    favBtn.dataset.recipeKey = recipeKey;
-    favBtn.innerHTML = isFavorite ? '❤️' : '🤍';
-    favBtn.setAttribute('aria-label', isFavorite ? 'Remove from favorites' : 'Add to favorites');
-    favBtn.addEventListener('click', (e) => toggleFavorite(recipeKey, e));
-
-    // Card layout
-    const infoWrap = document.createElement('div');
-    infoWrap.className = 'card-info';
-    infoWrap.appendChild(title);
-
-    card.appendChild(img);
-    card.appendChild(infoWrap);
-    card.appendChild(favIndicator);
-    card.appendChild(favBtn);
-
-    return card;
-  } catch (e) {
-    console.error('Error creating recipe card:', e);
-    return null;
-  }
 }
 
 // Hide loading spinner
@@ -303,7 +125,6 @@ function loadImageWithFallback(imgElement, src, fallbacks = []) {
 // Enhanced recipe loading with better error handling
 async function loadRecipes() {
   console.log('Loading recipes...');
-  showLoading();
   
   const urls = [
     './src/data/recipes.json',
@@ -323,37 +144,17 @@ async function loadRecipes() {
       
       const data = await response.json();
       
-      if (data && typeof data === 'object' && Object.keys(data).length > 0) {
+      if (data && typeof data === 'object') {
         window.recipes = data;
-        recipes = data; // Ensure global variable is set
         console.log('Recipes loaded successfully from:', url);
         console.log('Number of recipes:', Object.keys(data).length);
-        // After loading recipes, render using the combined filter pipeline
-        // This guarantees correct integration with search/filter/sort
-        setTimeout(() => {
-          // Ensure cardContainer is available
-          if (!cardContainer) {
-            cardContainer = document.getElementById('cardContainer');
-          }
-
-          if (cardContainer && recipes) {
-            try {
-              applyCombinedFilter();
-              updateFavoriteUI();
-              console.log('Recipes rendered successfully via applyCombinedFilter');
-            } catch (e) {
-              console.error('Error rendering recipes:', e);
-            }
-          } else {
-            console.error('cardContainer or recipes not available for rendering');
-          }
-          // Hide loading after attempting to render
-          hideLoading();
-        }, 50);
-        
+        hideLoading();
+        renderCards();
+        applyCombinedFilter();
+        updateFavoriteUI();
         return data;
       } else {
-        throw new Error('Invalid data format or empty data');
+        throw new Error('Invalid data format');
       }
     } catch (error) {
       console.warn('Failed to load from:', url, error.message);
@@ -363,365 +164,243 @@ async function loadRecipes() {
   
   // If all URLs fail, show error
   console.error('Failed to load recipes from all sources');
-  hideLoading();
-  showMobileError();
+  showToast('Unable to load recipes. Please check your internet connection and refresh the page.', 'error', 5000);
   return null;
 }
 
 // Wait for DOM to be ready before loading recipes
 document.addEventListener('DOMContentLoaded', function() {
-  console.log('DOM loaded, starting initialization...');
-  
-  // Initialize cardContainer first
-  cardContainer = document.getElementById('cardContainer');
-  if (!cardContainer) {
-    console.error('cardContainer element not found!');
-    return;
-  }
-  
+  console.log('DOM loaded, starting recipe load...');
   initUI(); // Initialize UI and navigation buttons
-  loadRecipes(); // Load recipes after UI is initialized
+  loadRecipes();
 });
 
-// Initialize UI elements and event handlers
-function initUI() {
-  console.log('Initializing UI...');
-  
-  // Initialize filter buttons
-  const filterButtons = document.querySelectorAll('.filter-btn');
-  filterButtons.forEach(btn => {
-    btn.addEventListener('click', function() {
-      // Remove active class from all buttons
-      filterButtons.forEach(b => {
-        b.classList.remove('active');
-        b.removeAttribute('aria-current');
-      });
-      
-      // Add active class to clicked button
-      this.classList.add('active');
-      this.setAttribute('aria-current', 'page');
-      
-      // Apply filter
-      const category = this.getAttribute('data-category');
-      filterRecipes(category);
-    });
-  });
-  
-  // Initialize search input
-  const searchInput = document.getElementById('searchInput');
-  if (searchInput) {
-    searchInput.addEventListener('input', function() {
-      applyCombinedFilter();
-    });
-  }
-  
-  // Initialize sort select
-  const sortSelect = document.getElementById('sortSelect');
-  if (sortSelect) {
-    sortSelect.addEventListener('change', function() {
-      applyCombinedFilter();
-    });
-  }
-  
-  // Initialize dark mode toggle
-  const darkModeToggle = document.getElementById('darkModeToggle');
-  if (darkModeToggle) {
-    darkModeToggle.addEventListener('click', toggleDarkMode);
-  }
-  
-  // Initialize navigation buttons
-  const remixNavBtn = document.getElementById('remixNavBtn');
-  const quizNavBtn = document.getElementById('quizNavBtn');
-  
-  if (remixNavBtn) {
-    remixNavBtn.addEventListener('click', () => {
-      // Filter to show remix-style recipes
-      filterRecipes('remix');
-      showToast('Showing remix-style recipes!');
-    });
-  }
-  
-  if (quizNavBtn) {
-    quizNavBtn.addEventListener('click', () => {
-      // Show quiz modal or functionality
-      showQuizModal();
-    });
-  }
-  
-  // Initialize modal close functionality
-  const modal = document.getElementById('recipeModal');
-  if (modal) {
-    modal.addEventListener('click', function(e) {
-      if (e.target === modal) {
-        closeModal();
-      }
-    });
-    
-    // Close modal on Escape key
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && modal.classList.contains('show')) {
-        closeModal();
-      }
-    });
-  }
-  
-  // Initialize back to top button
-  const backToTopBtn = document.getElementById('backToTopBtn');
-  const bottomScrollBtn = document.getElementById('bottomScrollToTopBtn');
-  
-  if (backToTopBtn) {
-    backToTopBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
-  
-  if (bottomScrollBtn) {
-    bottomScrollBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
-  
-  // Show/hide back to top button on scroll
-  window.addEventListener('scroll', function() {
-    if (backToTopBtn) {
-      if (window.pageYOffset > 300) {
-        backToTopBtn.style.display = 'block';
-      } else {
-        backToTopBtn.style.display = 'none';
-      }
+const additions = {
+  none: { calories: 0, carbs: 0, protein: 0 },
+  milk: { calories: 50, carbs: 5, protein: 2 },
+  sugar: { calories: 30, carbs: 8, protein: 0 },
+  "milk+sugar": { calories: 80, carbs: 13, protein: 2 }
+};
+
+// --- Persistent Favorites ---
+function getFavorites() {
+  return JSON.parse(localStorage.getItem('favorites') || '{}');
+}
+function setFavorites(favs) {
+  localStorage.setItem('favorites', JSON.stringify(favs));
+}
+let favorites = getFavorites();
+
+function updateFavoriteUI() {
+  favorites = getFavorites(); // Always sync with localStorage
+  document.querySelectorAll('.recipe-card').forEach(card => {
+    const title = card.querySelector('.card-title').textContent;
+    const heart = card.querySelector('.bi-heart, .bi-heart-fill');
+    if (favorites[title]) {
+      heart.classList.add('bi-heart-fill');
+      heart.classList.remove('bi-heart');
+    } else {
+      heart.classList.remove('bi-heart-fill');
+      heart.classList.add('bi-heart');
     }
   });
-  
-  console.log('UI initialization complete');
 }
 
-// Filter recipes by category
+// --- MISSING FILTER/SEARCH FUNCTIONS ---
 function filterRecipes(category) {
-  console.log('Filtering by category:', category);
+  window.selectedCategory = category;
   applyCombinedFilter();
 }
 
-// Apply combined filter (category + search + sort)
-function applyCombinedFilter() {
-  console.log('applyCombinedFilter called, recipes available:', !!recipes, recipes ? Object.keys(recipes).length : 0);
-  
-  if (!recipes || Object.keys(recipes).length === 0) {
-    console.log('No recipes loaded yet, showing no results');
-    const noResults = document.getElementById('noResults');
-    if (noResults) {
-      noResults.style.display = 'block';
-    }
-    return;
-  }
-  
-  // Get filter, search, and sort values
-  const activeFilter = document.querySelector('.filter-btn.active');
-  const category = activeFilter ? activeFilter.getAttribute('data-category') : 'all';
-  const searchQuery = document.getElementById('searchInput') ? document.getElementById('searchInput').value.toLowerCase() : '';
-  const sortSelect = document.getElementById('sortSelect');
-  const sortBy = sortSelect ? sortSelect.value : 'default';
-  
-  console.log('Filtering with:', { category, searchQuery, sortBy });
-  
-  // Filter by category
-  let filteredRecipes = [];
-  if (category === 'all') {
-    filteredRecipes = Object.entries(recipes);
-  } else if (category === 'favourites') {
-    const favorites = getFavorites();
-    filteredRecipes = Object.entries(recipes).filter(([key]) => favorites.includes(key));
-  } else {
-    filteredRecipes = Object.entries(recipes).filter(([_, recipe]) => {
-      return recipe.type && recipe.type.toLowerCase() === category.toLowerCase();
-    });
-  }
-  
-  // Filter by search query
-  if (searchQuery) {
-    filteredRecipes = filteredRecipes.filter(([_, recipe]) => {
-      const titleMatch = recipe.title && recipe.title.toLowerCase().includes(searchQuery);
-      const ingredientMatch = recipe.ingredients && 
-        recipe.ingredients.some(ing => ing.toLowerCase().includes(searchQuery));
-      return titleMatch || ingredientMatch;
-    });
-  }
-  
-  // Sort recipes if sort is specified
-  if (sortBy !== 'default') {
-    filteredRecipes.sort((a, b) => {
-      const recipeA = a[1];
-      const recipeB = b[1];
-      
-      // Handle different sort criteria
-      switch (sortBy) {
-        case 'name':
-          // Sort by recipe title (A-Z)
-          return (recipeA.title || '').localeCompare(recipeB.title || '');
-          
-        case 'calories':
-          // Sort by calories (low to high)
-          const caloriesA = parseInt(recipeA.nutrition?.calories) || 0;
-          const caloriesB = parseInt(recipeB.nutrition?.calories) || 0;
-          return caloriesA - caloriesB;
-          
-        case 'type':
-          // Sort by type (hot/iced)
-          const typeA = recipeA.type || '';
-          const typeB = recipeB.type || '';
-          return typeA.localeCompare(typeB);
-          
-        default:
-          return 0;
-      }
-    });
-    console.log('Sorted recipes by:', sortBy);
-  }
-  
-  console.log('Final filtered recipes count:', filteredRecipes.length);
-  
-  // Convert back to object for rendering
-  const filteredRecipesObj = Object.fromEntries(filteredRecipes);
-  
-  // Render the filtered and sorted recipes
-  if (filteredRecipes.length > 0) {
-    renderFilteredCards(filteredRecipesObj);
-  } else {
-    // Clear the container if no results
-    const cardContainer = document.getElementById('cardContainer');
-    if (cardContainer) cardContainer.innerHTML = '';
-  }
-  
-  // Show/hide no results message
-  const noResults = document.getElementById('noResults');
-  if (noResults) {
-    noResults.style.display = filteredRecipes.length === 0 ? 'block' : 'none';
-  }
-  
-  // Return the filtered and sorted recipes for potential further processing
-  return filteredRecipesObj;
+function searchRecipes() {
+  applyCombinedFilter();
 }
 
-// Render filtered recipe cards
-function renderFilteredCards(filteredRecipes) {
-  console.log('Rendering filtered cards, count:', Object.keys(filteredRecipes).length);
-  const cardContainer = document.getElementById('cardContainer');
-  if (!cardContainer) {
-    console.error('Card container not found');
-    return;
-  }
-  
-  // Clear existing cards
-  cardContainer.innerHTML = '';
-  
-  // Get favorites for heart icon state
-  const favorites = getFavorites();
-  
-  // Create and append recipe cards
-  Object.entries(filteredRecipes).forEach(([recipeKey, recipe]) => {
-    if (recipe) {
-      const isFavorite = favorites.includes(recipeKey);
-      const card = createRecipeCard(recipe, recipeKey, isFavorite);
-      if (card) {
-        // Set card attributes
-        card.setAttribute('data-type', recipe.type || 'other');
-        card.setAttribute('tabindex', '0');
-        card.setAttribute('role', 'button');
-        card.setAttribute('aria-label', `View ${recipe.title} recipe`);
-        
-        // Add click handler to open modal
-        card.addEventListener('click', (e) => {
-          // Don't open modal if clicking on favorite button
-          if (!e.target.closest('.favorite-btn')) {
-            openRecipeModal(recipeKey);
-          }
-        });
-        
-        // Add keyboard support
-        card.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            openRecipeModal(recipeKey);
-          }
-        });
-        
-        cardContainer.appendChild(card);
+function applyCombinedFilter() {
+  const input = document.getElementById("searchInput").value.toLowerCase();
+  let anyVisible = false;
+  document.querySelectorAll(".recipe-card").forEach(card => {
+    const type = card.getAttribute("data-type");
+    const titleElem = card.querySelector(".card-title");
+    const title = titleElem.textContent.toLowerCase();
+    const heartIcon = card.querySelector(".bi-heart, .bi-heart-fill");
+    const isFav = heartIcon && heartIcon.classList.contains("bi-heart-fill");
+
+    let matchCategory = false;
+    
+    if (window.selectedCategory === "all") {
+      matchCategory = true;
+    } else if (window.selectedCategory === "favourites") {
+      matchCategory = isFav; // Only show favorited items
+    } else if (window.selectedCategory === "hot") {
+      matchCategory = type === "hot";
+    } else if (window.selectedCategory === "iced") {
+      matchCategory = type === "iced";
+    } else {
+      matchCategory = true; // Default to show all
+    }
+
+    const matchSearch = !input || title.includes(input);
+    const shouldShow = matchCategory && matchSearch;
+    
+    card.style.display = shouldShow ? "block" : "none";
+    
+    if (shouldShow) {
+      anyVisible = true;
+      // Highlight match
+      if (input && title.includes(input)) {
+        const re = new RegExp(`(${input.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'ig');
+        titleElem.innerHTML = card.querySelector(".card-title").textContent.replace(re, '<mark>$1</mark>');
       } else {
-        console.error('Failed to create card for recipe:', recipeKey);
+        titleElem.innerHTML = card.querySelector(".card-title").textContent;
       }
+    } else {
+      // Remove highlight if hidden
+      titleElem.innerHTML = card.querySelector(".card-title").textContent;
     }
   });
+  document.getElementById('noResults').style.display = anyVisible ? 'none' : 'block';
 }
 
-
-
-// Store current recipe globally for nutrition calculations
-let currentRecipe = null;
-
-function setCurrentRecipe(recipe) {
-  window.currentRecipe = recipe;
-  currentRecipe = recipe;
-  console.log('Current recipe set:', recipe?.name || 'No recipe');
-}
-
-// Close modal function
-function closeModal() {
-  const modal = document.getElementById('recipeModal');
-  if (!modal) return;
-  
-  // Start fade out animation
-  modal.classList.add('fade-out');
-  const modalImg = modal.querySelector('.modal-img');
-  if (modalImg) {
-    modalImg.classList.remove('fade-in');
-  }
-  
-  // Wait for animation to complete before hiding
-  setTimeout(() => {
-    modal.style.display = 'none';
-    modal.classList.remove('fade-out');
-    if (modalImg) {
-      modalImg.classList.remove('fade-in');
-    }
-    
-    // Reset form if exists
-    const form = document.getElementById('remixForm');
-    if (form) form.reset();
-    
-    // Notify any listeners that the modal was closed
-    modal.dispatchEvent(new Event('modal-closed'));
-  }, 300); // Match this with CSS transition duration
-}
-
-// Initialize modal event listeners
-document.addEventListener('DOMContentLoaded', () => {
-  const modal = document.getElementById('recipeModal');
-  if (modal) {
-    // Close modal when clicking outside content
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        closeModal();
-      }
-    });
-    
-    // Close modal with Escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.style.display === 'flex') {
-        closeModal();
-      }
-    });
-  }
+// --- Sorting Logic ---
+const sortSelect = document.getElementById('sortSelect');
+sortSelect.addEventListener('change', () => {
+  renderCards();
+  updateFavoriteUI();
+  applyCombinedFilter();
 });
 
-// ... (rest of the code remains the same)
+// --- Popularity order for most common coffees ---
+const popularityOrder = [
+  "espresso", "cappuccino", "latte", "americano", "mocha", "macchiato", "flatwhite", "coldbrew", "frappe", "affogato",
+  "cortado", "dalgona", "mochavalencia", "irishcoffee", "vienna", "cafeaulait", "affogatoalcaffe", "cafezorro", "cafeviennois",
+  // ...add more as desired, or let the rest follow
+];
 
-// Properly define openRecipeModal to show the recipe details modal
-function openRecipeModal(recipeKey) {
-  const recipe = recipes && recipes[recipeKey];
+function getSortedRecipeKeys() {
+  const keys = Object.keys(recipes);
+  const sortValue = document.getElementById('sortSelect').value;
+  if (sortValue === 'name') {
+    return keys.sort((a, b) => {
+      const titleA = recipes[a].title.toLowerCase();
+      const titleB = recipes[b].title.toLowerCase();
+      return titleA.localeCompare(titleB);
+    });
+  } else if (sortValue === 'calories') {
+    return keys.sort((a, b) => {
+      const calA = recipes[a].baseNutrition ? recipes[a].baseNutrition.calories : 0;
+      const calB = recipes[b].baseNutrition ? recipes[b].baseNutrition.calories : 0;
+      return calA - calB;
+    });
+  } else if (sortValue === 'type') {
+    return keys.sort((a, b) => {
+      const typeA = recipes[a].type || '';
+      const typeB = recipes[b].type || '';
+      if (typeA === typeB) {
+        return recipes[a].title.localeCompare(recipes[b].title);
+      }
+      return typeA.localeCompare(typeB);
+    });
+  } else {
+    // Default: most popular at top, rest alphabetically
+    const popular = popularityOrder.filter(key => keys.includes(key));
+    const rest = keys.filter(key => !popularityOrder.includes(key))
+      .sort((a, b) => recipes[a].title.localeCompare(recipes[b].title));
+    return [...popular, ...rest];
+  }
+}
+
+function renderCards() {
+  console.log('renderCards called, recipes count:', Object.keys(recipes).length);
+  
+  if (!cardContainer) {
+    console.error('cardContainer is not initialized');
+    return;
+  }
+  
+  cardContainer.innerHTML = '';
+  const sortedKeys = getSortedRecipeKeys();
+  console.log('Sorted recipe keys:', sortedKeys.length);
+  
+  sortedKeys.forEach(key => {
+    const recipe = recipes[key];
+    if (!recipe) {
+      console.error('Recipe not found for key:', key);
+      return;
+    }
+    
+    const card = document.createElement('div');
+    card.className = 'card recipe-card';
+    card.setAttribute('data-type', recipe.type);
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', `View ${recipe.title} recipe`);
+
+        card.innerHTML = `
+      <img src="${recipe.img}" alt="${recipe.title}" loading="lazy" onerror="this.style.display='none'">
+      <div class="card-body">
+        <h3 class="card-title recipe-title">${recipe.title}</h3>
+        <p class="card-cont">${
+          (recipe.process || recipe.process_easy || recipe.process_jargon || '').toString().slice(0, 40)
+        }...</p>
+        <button class="bi bi-heart" aria-label="Add to favorites"></button>
+          </div>
+        `;
+    
+    const heartBtn = card.querySelector('.bi-heart');
+    if (heartBtn) {
+      heartBtn.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const title = card.querySelector('.card-title').textContent;
+        favorites = getFavorites(); // Always reload before update
+        if (favorites[title]) {
+          delete favorites[title];
+        } else {
+          favorites[title] = true;
+        }
+        setFavorites(favorites);
+        favorites = getFavorites(); // Always reload after update
+        updateFavoriteUI();
+        showToast(favorites[title] ? `Added to favorites!` : `Removed from favorites!`);
+        applyCombinedFilter();
+      });
+    }
+    
+    // Add click event for modal
+    card.addEventListener('click', (event) => {
+      console.log('Card clicked for recipe:', key);
+      event.preventDefault();
+      event.stopPropagation();
+      openModal(key);
+    });
+    
+    // Add keyboard support
+    card.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openModal(key);
+      }
+    });
+    
+    cardContainer.appendChild(card);
+  });
+  
+  console.log('Cards rendered successfully');
+}
+
+// --- MODAL LOGIC ---
+function openModal(recipeKey) {
+  console.log('Opening modal for recipe:', recipeKey);
+  
+  const recipe = recipes[recipeKey];
   if (!recipe) {
-    console.error('Recipe not found for key:', recipeKey);
+    console.error('Recipe not found:', recipeKey);
     showToast('Recipe not found');
     return;
   }
+
+  // Store current recipe globally for nutrition calculations
+  window.currentRecipe = recipe;
 
   console.log('Recipe data:', recipe);
 
@@ -856,8 +535,11 @@ function openRecipeModal(recipeKey) {
     console.error('Error initializing customization controls:', error);
   }
 
-  // Show modal with CSS class
-  modal.classList.add('show');
+  // Show modal
+  modal.style.display = 'flex';
+  modal.style.visibility = 'visible';
+  modal.style.opacity = '1';
+
   console.log('Modal displayed');
 
   // Prevent body scroll on mobile
@@ -1138,18 +820,33 @@ function initializeCustomizationControls() {
 }
 
 function closeModal() {
-  console.log('Closing modal...');
+  const modal = document.getElementById("recipeModal");
+  modal.style.display = "none";
+  modal.classList.add("hidden");
   
-  const modal = document.getElementById('recipeModal');
-  if (modal) {
-    modal.classList.remove('show');
-    
-    // Restore body scroll - use empty string to reset to default
+  // Restore body scroll on mobile
+  if (window.innerWidth <= 768) {
     document.body.style.overflow = '';
-    
-    console.log('Modal closed successfully');
-  } else {
-    console.error('Modal element not found when trying to close');
+    document.body.style.position = '';
+    document.body.style.width = '';
+  }
+  
+  // Remove blur from main content
+  const mainContent = document.getElementById("mainContent");
+  if (mainContent) {
+    mainContent.classList.remove("blurred");
+  }
+  
+  // Clear any mobile error messages
+  const mobileError = document.querySelector('.mobile-error');
+  if (mobileError) {
+    mobileError.remove();
+  }
+  
+  // Reset focus to a safe element
+  const firstCard = document.querySelector('.recipe-card');
+  if (firstCard) {
+    firstCard.focus();
   }
 }
 
@@ -1214,57 +911,42 @@ function showDailyFact() {
 
 // 4. Navigation and display logic for Remix and Quiz sections
 function showSection(sectionId) {
-  console.log('showSection called with:', sectionId);
-  
   // Ensure .main-content exists
   const mainContent = document.querySelector('.main-content');
   if (!mainContent) return;
   
-  // Get or initialize cardContainer
+  // Remove any existing dynamic section
+  const existingRemix = document.getElementById('remixSection');
+  if (existingRemix) existingRemix.remove();
+  const existingQuiz = document.getElementById('quizSection');
+  if (existingQuiz) existingQuiz.remove();
+
+  // Ensure cardContainer is initialized
   if (!cardContainer) {
     cardContainer = document.getElementById('cardContainer');
   }
 
-  // Hide all sections first
-  const allSections = document.querySelectorAll('section, #cardContainer');
-  allSections.forEach(section => {
-    section.classList.add('section-hidden');
-    section.style.display = 'none';
-  });
-
-  // Remove any existing dynamic sections to prevent duplicates
-  const existingRemix = document.getElementById('remixSection');
-  const existingQuiz = document.getElementById('quizSection');
-  if (existingRemix) existingRemix.remove();
-  if (existingQuiz) existingQuiz.remove();
+  // Hide cardContainer by default
+  if (cardContainer) {
+    cardContainer.classList.add('section-hidden');
+  }
   
   if (sectionId === 'remixSection') {
-    console.log('Creating Remix section');
     // --- Remix Generator UI ---
     const remixSection = document.createElement('section');
     remixSection.id = 'remixSection';
-    remixSection.style.display = 'block';
-    remixSection.style.padding = '20px';
-    remixSection.style.maxWidth = '800px';
-    remixSection.style.margin = '0 auto';
-    remixSection.style.backgroundColor = 'rgba(0,0,0,0.05)';
-    remixSection.style.borderRadius = '12px';
-    remixSection.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
-    
     remixSection.innerHTML = `
-      <h2 class="section-heading" style="color: #3a2a1a; text-align: center; margin-bottom: 20px;">Remix Generator</h2>
-      <form id="remixForm" style="margin: 32px auto; max-width: 400px; text-align: left; background: white; padding: 24px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-        <div style="margin-bottom: 20px;">
-          <label style="color:#3a2a1a;font-weight:500;display:block;margin-bottom:8px;">Base:</label>
-          <select id="remixBase" style="width:100%;padding:10px;border-radius:6px;border:1px solid #ddd;font-size:16px;">
+      <h2 class="section-heading">Remix Generator</h2>
+      <form id="remixForm" style="margin:32px auto;max-width:400px;text-align:left;">
+        <label style="color:#3a2a1a;font-weight:500;">Base:
+          <select id="remixBase" style="width:100%;margin-bottom:12px;">
             <option value="espresso">Espresso</option>
             <option value="coffee">Coffee</option>
             <option value="coldbrew">Cold Brew</option>
             <option value="matcha">Matcha</option>
           </select>
-        </div>
-        <div style="margin-bottom: 20px;">
-          <label style="color:#3a2a1a;font-weight:500;display:block;margin-bottom:8px;">Milk:
+        </label><br>
+        <label style="color:#3a2a1a;font-weight:500;">Milk:
           <select id="remixMilk" style="width:100%;margin-bottom:12px;">
             <option value="none">None</option>
             <option value="whole">Whole Milk</option>
@@ -1347,29 +1029,18 @@ function showSection(sectionId) {
       document.getElementById('remixResult').innerHTML = resultHtml;
     };
   } else if (sectionId === 'quizSection') {
-    console.log('Creating Quiz section');
     // --- Find Your Brew Quiz UI ---
     const quizSection = document.createElement('section');
     quizSection.id = 'quizSection';
-    quizSection.style.display = 'block';
-    quizSection.style.padding = '20px';
-    quizSection.style.maxWidth = '800px';
-    quizSection.style.margin = '0 auto';
-    quizSection.style.backgroundColor = 'rgba(0,0,0,0.05)';
-    quizSection.style.borderRadius = '12px';
-    quizSection.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
-    
     quizSection.innerHTML = `
-      <h2 class="section-heading" style="color: #3a2a1a; text-align: center; margin-bottom: 20px;">Find Your Perfect Brew</h2>
-      <form id="brewQuiz" style="margin: 32px auto; max-width: 400px; text-align: left; background: white; padding: 24px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-        <div style="margin-bottom: 20px;">
-          <label style="color:#3a2a1a;font-weight:500;display:block;margin-bottom:8px;">What's your coffee style?
+      <h2 class="section-heading">Find Your Brew</h2>
+      <form id="brewQuiz" style="margin:32px auto;max-width:400px;text-align:left;">
+        <label style="color:#3a2a1a;font-weight:500;">Hot or Iced?
           <select id="quizType" style="width:100%;margin-bottom:12px;">
             <option value="hot">Hot</option>
             <option value="iced">Iced</option>
           </select>
         </label><br>
-        <label style="color:#3a2a1a;font-weight:500;display:block;margin-bottom:8px;">How strong do you like it?
         <label style="color:#3a2a1a;font-weight:500;">Strength:
           <select id="quizStrength" style="width:100%;margin-bottom:12px;">
             <option value="mild">Mild</option>
@@ -1543,38 +1214,14 @@ function initUI() {
     homeLogo.setAttribute('aria-label', 'Go to all recipes');
   }
   // Nav button listeners
-  const remixBtn = document.getElementById('remixNavBtn');
-  const quizBtn = document.getElementById('quizNavBtn');
-  
-  if (remixBtn) {
-    remixBtn.onclick = (e) => {
-      e.preventDefault();
-      console.log('Remix button clicked');
-      showSection('remixSection');
-      setActiveNav('remixNavBtn');
-      // Show the section immediately
-      const remixSection = document.getElementById('remixSection');
-      if (remixSection) {
-        remixSection.style.display = 'block';
-        remixSection.classList.remove('section-hidden');
-      }
-    };
-  }
-
-  if (quizBtn) {
-    quizBtn.onclick = (e) => {
-      e.preventDefault();
-      console.log('Quiz button clicked');
-      showSection('quizSection');
-      setActiveNav('quizNavBtn');
-      // Show the section immediately
-      const quizSection = document.getElementById('quizSection');
-      if (quizSection) {
-        quizSection.style.display = 'block';
-        quizSection.classList.remove('section-hidden');
-      }
-    };
-  }
+  document.getElementById('remixNavBtn').onclick = () => { 
+    showSection('remixSection'); 
+    setActiveNav('remixNavBtn'); 
+  };
+  document.getElementById('quizNavBtn').onclick = () => { 
+    showSection('quizSection'); 
+    setActiveNav('quizNavBtn'); 
+  };
   document.getElementById('allBtn').onclick = () => { 
     filterRecipes('all'); 
     setActiveNav('allBtn'); 
@@ -1617,69 +1264,38 @@ function initUI() {
   backToTopBtn.onclick = function() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-  // Dark mode functionality
-  function initializeDarkMode() {
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    if (!darkModeToggle) return;
-    
-    // Set initial state
-    const savedMode = localStorage.getItem('darkMode');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isDarkMode = savedMode === null ? prefersDark : savedMode === 'true';
-    
-    // Apply dark mode
-    function setDarkMode(enabled) {
-      if (enabled) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        document.body.classList.add('dark-mode');
-        document.body.classList.remove('light-mode');
-        darkModeToggle.innerHTML = '<i class="bi bi-sun"></i>';
-        darkModeToggle.setAttribute('aria-label', 'Switch to light mode');
-        localStorage.setItem('darkMode', 'true');
-      } else {
-        document.documentElement.setAttribute('data-theme', 'light');
-        document.body.classList.add('light-mode');
-        document.body.classList.remove('dark-mode');
-        darkModeToggle.innerHTML = '<i class="bi bi-moon"></i>';
-        darkModeToggle.setAttribute('aria-label', 'Switch to dark mode');
-        localStorage.setItem('darkMode', 'false');
-      }
+  // Dark mode toggle (ensure only one event listener)
+  const darkModeToggle = document.getElementById('darkModeToggle');
+  const body = document.body;
+  function setDarkMode(enabled) {
+    if (enabled) {
+      document.body.classList.remove('light-mode');
+      darkModeToggle.innerHTML = '<i class="bi bi-sun"></i>';
+      localStorage.setItem('darkMode', 'true');
+    } else {
+      document.body.classList.add('light-mode');
+      darkModeToggle.innerHTML = '<i class="bi bi-moon"></i>';
+      localStorage.setItem('darkMode', 'false');
     }
-    
-    // Initialize with saved or system preference
-    setDarkMode(isDarkMode);
-    
-    // Toggle on click
-    darkModeToggle.addEventListener('click', () => {
-      const isDark = document.body.classList.contains('dark-mode');
-      setDarkMode(!isDark);
-    });
-    
-    // Listen for system theme changes
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-      if (localStorage.getItem('darkMode') === null) {
-        setDarkMode(e.matches);
-      }
-    });
   }
-  
-  // Initialize dark mode
-  initializeDarkMode();
-  // Search and sort event listeners
-  const searchInput = document.getElementById('searchInput');
-  const sortSelect = document.getElementById('sortSelect');
-  
-  if (searchInput) {
-    searchInput.addEventListener('input', searchRecipes);
+  // Initialize dark mode with dark as default
+  const saved = localStorage.getItem('darkMode');
+  if (saved === null) {
+    // Default to dark mode
+    setDarkMode(true);
+  } else {
+    setDarkMode(saved === 'true');
   }
-  
-  // Sort functionality
-  if (sortSelect) {
-    sortSelect.addEventListener('change', function() {
-      console.log('Sort changed to:', this.value);
-      applyCombinedFilter();
-    });
-  }
+  // Remove all previous event listeners by replacing the element
+  const newToggle = darkModeToggle.cloneNode(true);
+  darkModeToggle.parentNode.replaceChild(newToggle, darkModeToggle);
+  newToggle.addEventListener('click', () => {
+    setDarkMode(body.classList.contains('light-mode'));
+  });
+  // Search
+  document.getElementById('searchInput').addEventListener('input', function() {
+    searchRecipes();
+  });
 }
 
 // --- Keyboard navigation and shortcuts ---
@@ -1786,41 +1402,12 @@ function showToast(message, type = 'info', duration = 3000) {
   return toast;
 }
 
-// Show quiz modal for finding your brew
-function showQuizModal() {
-  // Create a simple quiz modal for now
-  const quizQuestions = [
-    "Do you prefer hot or iced coffee?",
-    "How strong do you like your coffee?",
-    "Do you like milk in your coffee?"
-  ];
-  
-  // For now, show a toast with quiz info
-  showToast('Coffee Quiz: Answer a few questions to find your perfect brew!');
-  
-  // TODO: Implement full quiz modal functionality
-  console.log('Quiz modal would show questions:', quizQuestions);
-}
-
-// Provide legacy-compatible search function if not defined
-if (typeof searchRecipes !== 'function') {
-  function searchRecipes() {
-    try { applyCombinedFilter(); } catch (e) { console.error('searchRecipes fallback failed:', e); }
-  }
-}
-
-// Make key functions globally accessible (guarded)
+// Make key functions globally accessible
 window.searchRecipes = searchRecipes;
 window.filterRecipes = filterRecipes;
 window.applyCombinedFilter = applyCombinedFilter;
-if (typeof openModal === 'function') {
-  window.openModal = openModal;
-}
-if (typeof openRecipeModal === 'function') {
-  window.openRecipeModal = openRecipeModal;
-}
+window.openModal = openModal;
 window.showToast = showToast;
-window.showQuizModal = showQuizModal;
 
 // Register Service Worker for PWA functionality
 if ('serviceWorker' in navigator) {
