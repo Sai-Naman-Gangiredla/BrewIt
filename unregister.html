@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Service Worker Unregister</title>
+</head>
+<body>
+  <h1>Unregistering Service Worker...</h1>
+  <p>If you see this page, the service worker should be unregistered. Please check the console for messages.</p>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(registrations => {
+        if (registrations.length) {
+          for (let registration of registrations) {
+            registration.unregister();
+            console.log('Service Worker unregistered:', registration);
+          }
+          alert('All service workers have been unregistered. Please go back to the main page and do a hard refresh (Ctrl+Shift+R).');
+        } else {
+          alert('No service workers found to unregister.');
+        }
+      }).catch(err => {
+        console.error('Service Worker unregistration failed:', err);
+        alert('An error occurred while unregistering service workers. Check the console.');
+      });
+    } else {
+      alert('Service workers are not supported in this browser.');
+    }
+  </script>
+</body>
+</html>
