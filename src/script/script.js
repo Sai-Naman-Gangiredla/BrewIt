@@ -78,7 +78,11 @@ function preloadCriticalImages() {
   const criticalImages = [
     './public/images/beansbg.jpg',
     './public/images/bg.jpg',
-    './public/images/coffeebeans.jpg'
+    './public/images/coffeebeans.jpg',
+    // Fallbacks
+    'public/images/beansbg.jpg',
+    'public/images/bg.jpg',
+    'public/images/coffeebeans.jpg'
   ];
   
   criticalImages.forEach(src => {
@@ -127,16 +131,26 @@ async function loadRecipes() {
   console.log('Loading recipes...');
   
   const urls = [
+    './recipes.json',
+    'recipes.json',
     './src/data/recipes.json',
     'src/data/recipes.json',
+    '/src/data/recipes.json',
+    './data/recipes.json',
+    'data/recipes.json',
+    '/data/recipes.json',
+    '/BrewIt/recipes.json',
     '/BrewIt/src/data/recipes.json',
-    'https://sai-naman-gangiredla.github.io/BrewIt/src/data/recipes.json'
+    '/BrewIt/data/recipes.json',
+    'https://sai-naman-gangiredla.github.io/BrewIt/recipes.json',
+    'https://sai-naman-gangiredla.github.io/BrewIt/src/data/recipes.json',
+    'https://sai-naman-gangiredla.github.io/BrewIt/data/recipes.json'
   ];
   
   for (const url of urls) {
     try {
       console.log('Trying to load recipes from:', url);
-      const response = await fetch(url);
+      const response = await fetch(url, { cache: 'no-store' });
       
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -1202,6 +1216,21 @@ function clearSearchAndApplyFilter() {
 }
 
 function initUI() {
+  // Initialize daily fact banner
+  const dailyFacts = [
+    "Coffee is the second most traded commodity in the world after oil",
+    "A cup of black coffee only has 1-2 calories", 
+    "The word 'coffee' comes from the Arabic word 'qahwah'",
+    "Coffee beans are actually the seeds of a fruit called a coffee cherry",
+    "Brazil produces about 1/3 of the world's coffee"
+  ];
+
+  const dailyFactBanner = document.getElementById('dailyFactBanner');
+  if (dailyFactBanner) {
+    const randomFact = dailyFacts[Math.floor(Math.random() * dailyFacts.length)];
+    dailyFactBanner.textContent = "☕ Did you know? " + randomFact;
+  }
+
   // Make BrewIt logo clickable to go home (full reload)
   const homeLogo = document.getElementById('homeLogo');
   if (homeLogo) {
