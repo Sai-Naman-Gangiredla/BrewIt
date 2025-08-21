@@ -78,11 +78,7 @@ function preloadCriticalImages() {
   const criticalImages = [
     './public/images/beansbg.jpg',
     './public/images/bg.jpg',
-    './public/images/coffeebeans.jpg',
-    // Fallbacks
-    'public/images/beansbg.jpg',
-    'public/images/bg.jpg',
-    'public/images/coffeebeans.jpg'
+    './public/images/coffeebeans.jpg'
   ];
   
   criticalImages.forEach(src => {
@@ -126,41 +122,35 @@ function loadImageWithFallback(imgElement, src, fallbacks = []) {
     });
 }
 
-// Enhanced recipe loading with better error handling
+// Enhanced recipe loading with multi-strategy and better error handling
 async function loadRecipes() {
   console.log('Loading recipes...');
   
-  const urls = [
-    './recipes.json',
-    'recipes.json',
-    './src/data/recipes.json',
-    'src/data/recipes.json',
-    '/src/data/recipes.json',
-    './data/recipes.json',
-    'data/recipes.json',
-    '/data/recipes.json',
-    '/BrewIt/recipes.json',
-    '/BrewIt/src/data/recipes.json',
-    '/BrewIt/data/recipes.json',
-    'https://sai-naman-gangiredla.github.io/BrewIt/recipes.json',
-    'https://sai-naman-gangiredla.github.io/BrewIt/src/data/recipes.json',
-    'https://sai-naman-gangiredla.github.io/BrewIt/data/recipes.json'
+  // Multi-strategy approach for loading recipes.json
+  const strategies = [
+    // Strategy 1: Relative path from current directory
+    () => fetch('./src/data/recipes.json'),
+    // Strategy 2: Relative path without ./
+    () => fetch('src/data/recipes.json'),
+    // Strategy 3: GitHub Pages absolute path
+    () => fetch('/BrewIt/src/data/recipes.json'),
+    // Strategy 4: Full URL fallback (deployed URL)
+    () => fetch('https://sai-naman-gangiredla.github.io/BrewIt/src/data/recipes.json'),
+    // Strategy 5: Dynamic origin + project base
+    () => fetch(window.location.origin + '/BrewIt/src/data/recipes.json'),
+    // Strategy 6: Dynamic origin + root
+    () => fetch(window.location.origin + '/src/data/recipes.json')
   ];
   
-  for (const url of urls) {
+  for (let i = 0; i < strategies.length; i++) {
     try {
-      console.log('Trying to load recipes from:', url);
-      const response = await fetch(url, { cache: 'no-store' });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-      
+      console.log(`Trying strategy ${i + 1}...`);
+      const response = await strategies[i]();
+      if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       const data = await response.json();
-      
-      if (data && typeof data === 'object') {
+      if (data && typeof data === 'object' && Object.keys(data).length > 0) {
         window.recipes = data;
-        console.log('Recipes loaded successfully from:', url);
+        console.log('✅ Recipes loaded successfully with strategy', i + 1);
         console.log('Number of recipes:', Object.keys(data).length);
         hideLoading();
         renderCards();
@@ -168,16 +158,17 @@ async function loadRecipes() {
         updateFavoriteUI();
         return data;
       } else {
-        throw new Error('Invalid data format');
+        throw new Error('Invalid or empty data format');
       }
     } catch (error) {
-      console.warn('Failed to load from:', url, error.message);
+      console.warn(`❌ Strategy ${i + 1} failed:`, error.message);
       continue;
     }
   }
-  
-  // If all URLs fail, show error
-  console.error('Failed to load recipes from all sources');
+
+  console.error('❌ Failed to load recipes from all sources');
+  hideLoading();
+  showMobileError();
   showToast('Unable to load recipes. Please check your internet connection and refresh the page.', 'error', 5000);
   return null;
 }
@@ -208,8 +199,12 @@ let favorites = getFavorites();
 function updateFavoriteUI() {
   favorites = getFavorites(); // Always sync with localStorage
   document.querySelectorAll('.recipe-card').forEach(card => {
-    const title = card.querySelector('.card-title').textContent;
+    const titleElement = card.querySelector('.card-title');
+    if (!titleElement) return;
+    const title = titleElement.textContent;
     const heart = card.querySelector('.bi-heart, .bi-heart-fill');
+    if (!heart) return;
+
     if (favorites[title]) {
       heart.classList.add('bi-heart-fill');
       heart.classList.remove('bi-heart');
@@ -1216,21 +1211,6 @@ function clearSearchAndApplyFilter() {
 }
 
 function initUI() {
-  // Initialize daily fact banner
-  const dailyFacts = [
-    "Coffee is the second most traded commodity in the world after oil",
-    "A cup of black coffee only has 1-2 calories", 
-    "The word 'coffee' comes from the Arabic word 'qahwah'",
-    "Coffee beans are actually the seeds of a fruit called a coffee cherry",
-    "Brazil produces about 1/3 of the world's coffee"
-  ];
-
-  const dailyFactBanner = document.getElementById('dailyFactBanner');
-  if (dailyFactBanner) {
-    const randomFact = dailyFacts[Math.floor(Math.random() * dailyFacts.length)];
-    dailyFactBanner.textContent = "☕ Did you know? " + randomFact;
-  }
-
   // Make BrewIt logo clickable to go home (full reload)
   const homeLogo = document.getElementById('homeLogo');
   if (homeLogo) {

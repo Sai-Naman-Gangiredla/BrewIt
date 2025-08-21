@@ -3,6 +3,7 @@
   "short_name": "BrewIt",
   "description": "170+ coffee recipes with detailed instructions, nutrition info, and customization options",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#2d2217",
   "theme_color": "#2d2217",

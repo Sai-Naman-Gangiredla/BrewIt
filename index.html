@@ -46,18 +46,11 @@
   <!-- Preload critical resources -->
   <link rel="preload" href="./src/data/recipes.json" as="fetch" crossorigin>
   
-  
   <link rel="canonical" href="https://sai-naman-gangiredla.github.io/BrewIt/">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="./src/styles/styles.css?v=1.3.0&t=1703123456789">
+  <!-- Fixed CSS link without cache-busting conflicts -->
+  <link rel="stylesheet" href="./src/styles/styles.css">
   
-  <script>
-  // Force cache refresh for CSS
-  const cssLink = document.querySelector('link[href*="styles.css"]');
-  if (cssLink) {
-    cssLink.href = './src/styles/styles.css?v=1.3.0&t=' + Date.now();
-  }
-  </script>
   <!-- 1. Chart.js CDN in <head> -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
@@ -249,389 +242,223 @@
     },
     "nutrition": {
       "@type": "NutritionInformation",
-      "calories": "120 calories",
-      "carbohydrateContent": "12g",
-      "proteinContent": "6g"
-    },
-    "suitableForDiet": "VegetarianDiet",
-    "keywords": "cappuccino, coffee, recipe, hot",
-    "datePublished": "2024-01-01",
-    "dateModified": "2024-12-01"
-  }
-  </script>
-
-  <!-- Recipe Structured Data - Latte -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Recipe",
-    "name": "Latte",
-    "description": "Smooth latte with steamed milk and minimal foam",
-    "image": "https://sai-naman-gangiredla.github.io/BrewIt/public/images/latte.jpg",
-    "recipeCategory": "Coffee",
-    "recipeCuisine": "Italian",
-    "prepTime": "PT5M",
-    "cookTime": "PT3M",
-    "totalTime": "PT8M",
-    "recipeYield": "1 serving",
-    "recipeIngredient": [
-      "1 shot espresso",
-      "180ml steamed milk",
-      "Small amount of milk foam"
-    ],
-    "recipeInstructions": [
-      {
-        "@type": "HowToStep",
-        "position": 1,
-        "text": "Prepare a single shot of espresso"
-      },
-      {
-        "@type": "HowToStep",
-        "position": 2,
-        "text": "Steam milk to 65°C with minimal foam"
-      },
-      {
-        "@type": "HowToStep",
-        "position": 3,
-        "text": "Pour steamed milk over espresso"
-      },
-      {
-        "@type": "HowToStep",
-        "position": 4,
-        "text": "Add small amount of foam on top"
-      }
-    ],
-    "author": {
-      "@type": "Person",
-      "name": "Sai Naman Gangiredla",
-      "email": "sainamangangiredla@gmail.com"
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.7",
-      "reviewCount": "28"
-    },
-    "nutrition": {
-      "@type": "NutritionInformation",
       "calories": "150 calories",
-      "carbohydrateContent": "15g",
+      "carbohydrateContent": "12g",
       "proteinContent": "8g"
     },
     "suitableForDiet": "VegetarianDiet",
-    "keywords": "latte, coffee, recipe, hot",
+    "keywords": "cappuccino, coffee, recipe, hot, milk",
     "datePublished": "2024-01-01",
     "dateModified": "2024-12-01"
-  }
-  </script>
-  <!-- Enhanced Structured Data: Add WebSite schema -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "BrewIt - Coffee Recipe Hub",
-    "url": "https://sai-naman-gangiredla.github.io/BrewIt"
   }
   </script>
 </head>
 <body>
-    <div class="main-content" id="mainContent" role="main">
-
-  <header class="header">
-    <a id="homeLogo" style="text-decoration:none;cursor:pointer;">
-      <img src="./public/images/letter-b.png" alt="BrewIt logo" style="height:40px;vertical-align:middle;">
-      <span style="font-size:2.2rem;font-weight:700;color:#f5ede3;vertical-align:middle;">BrewIt</span>
-    </a>
-    <!-- Daily fact/tip banner -->
-    <div id="dailyFactBanner" style="margin: 0 0 0 24px; text-align: center; font-size: 1.1em; color: #6b3e26; background: #fffbe7; border-radius: 12px; padding: 10px 24px; max-width: 480px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); display: inline-block; vertical-align: middle;"></div>
-    <div class="center-header">Your Coffee Encyclopedia......</div>
-    <div style="text-align: center; margin-top: 10px;">
-      <a href="coffee-guide.html" style="color: #6b3e26; text-decoration: none; font-size: 0.9em; background: #ffe6b3; padding: 5px 15px; border-radius: 15px;">📖 Coffee Brewing Guide</a>
+  <div id="loadingOverlay" class="loading-overlay">
+    <div class="loading-content">
+      <div class="spinner"></div>
+      <p>Brewing your perfect coffee experience...</p>
     </div>
-  </header>
-
-  <nav class="nav" aria-label="Recipe filters and search">
-    <div class="filter-buttons">
-      <button data-category="all" id="allBtn" class="filter-btn active" aria-current="page" aria-label="Show all recipes">All</button>
-      <button data-category="hot" id="hotBtn" class="filter-btn" aria-label="Show hot coffee recipes">Hot</button>
-      <button data-category="iced" id="icedBtn" class="filter-btn" aria-label="Show iced coffee recipes">Iced</button>
-      <button data-category="favourites" id="favBtn" class="filter-btn" aria-label="Show favorite recipes"><i class="bi bi-heart" aria-hidden="true"></i></button>
-      <button id="remixNavBtn" aria-label="Go to recipe remix section">Remix</button>
-      <button id="quizNavBtn" aria-label="Take coffee quiz to find your brew">Find Your Brew</button>
-    </div>
-    <div class="search-sort-row">
-      <input type="text" id="searchInput" placeholder="Search recipes..." aria-label="Search recipes by name or ingredients" />
-      <select id="sortSelect" aria-label="Sort recipes by different criteria">
-        <option value="default">Sort by</option>
-        <option value="name">Name (A–Z)</option>
-        <option value="calories">Calories (Low–High)</option>
-        <option value="type">Type (Hot/Iced)</option>
-      </select>
-      <button id="darkModeToggle" aria-label="Toggle dark mode"><i class="bi bi-moon" aria-hidden="true"></i></button>
-    </div>
-  </nav>
-
-  <div class="card-container" id="cardContainer" aria-live="polite"></div>
-  <div id="noResults" style="display:none;text-align:center;font-size:1.2em;color:#a0522d;margin:30px 0 0 0;">No results found.</div>
-  
-  <!-- Loading spinner -->
-  <div id="loadingSpinner" style="display:flex;justify-content:center;align-items:center;padding:40px;">
-    <div style="width:40px;height:40px;border:4px solid #f3f3f3;border-top:4px solid #d2691e;border-radius:50%;animation:spin 1s linear infinite;"></div>
-    <span style="margin-left:15px;color:#f2ddc9;">Loading recipes...</span>
   </div>
-  
-  <style>
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-  </style>
 
-  <!-- Critical CSS for immediate dark theme loading -->
-  <style>
-    /* Force dark theme immediately */
-    body {
-      background-color: #181818 !important;
-      color: #f2ddc9 !important;
-      margin: 0 !important;
-      font-family: Arial, sans-serif !important;
-    }
-    
-    .header {
-      background-color: #222 !important;
-      color: #f2ddc9 !important;
-    }
-    
-    .nav {
-      background-color: #2d2217 !important;
-    }
-    
-    .card.recipe-card {
-      background: #232323 !important;
-      color: #f2ddc9 !important;
-      border: none !important;
-    }
-    
-    .center-header {
-      color: #f2ddc9 !important;
-    }
-    
-    /* Prevent white borders */
-    * {
-      box-sizing: border-box !important;
-    }
-    
-    .main-content {
-      background-color: #181818 !important;
-    }
-    
-    .card-container {
-      background-color: #181818 !important;
-    }
-  </style>
-  
-  <!-- Preload critical resources -->
-  </div> <!-- end of main-content -->
-  <button id="bottomScrollToTopBtn" style="display:block;margin:40px auto 16px auto;background:#ffe6b3;color:#6b3e26;border:none;border-radius:24px;width:80px;height:40px;font-size:1.2em;cursor:pointer;box-shadow:0 2px 8px rgba(160,82,45,0.12);">↑ Top</button>
-  <div style="text-align:center;font-size:0.98em;color:#a0522d;margin:18px 0 0 0;">
-    Images are for reference only. Actual appearance, colors, and results may vary in real life.
-  </div>
-  <footer role="contentinfo" style="width:100%;text-align:center;margin-top:32px;">&copy; 2025 BrewIt</footer>
-  <div class="modal" id="recipeModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
-    <div class="modal-content">
-      <div class="modal-left">
-        <img id="modalImage" src="" alt="Coffee Image">
+  <div class="main-content" id="mainContent" role="main">
+    <header class="header">
+      <div id="homeLogo" class="home-logo" tabindex="0" role="button" aria-label="Go to all recipes">
+        <img src="./public/images/letter-b.png" alt="BrewIt logo" style="height:40px;vertical-align:middle;">
+        <span style="font-size:2.2rem;font-weight:700;color:#f5ede3;vertical-align:middle;">BrewIt</span>
       </div>
-      <div class="modal-right">
-        <h2 id="modalTitle">Title</h2>
+      
+      <div class="center-header">
+        <div class="search-container">
+          <i class="bi bi-search search-icon"></i>
+          <input type="text" id="searchInput" placeholder="Search coffee recipes..." aria-label="Search coffee recipes">
+        </div>
+      </div>
+      
+      <div class="header-right">
+        <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
+          <i class="bi bi-moon"></i>
+        </button>
+      </div>
+    </header>
 
-        <h4>Ingredients</h4>
-        <ul id="modalIngredients"></ul>
+    <nav class="nav">
+      <button id="allBtn" class="filter-btn active" aria-current="true">All</button>
+      <button id="hotBtn" class="filter-btn">Hot</button>
+      <button id="icedBtn" class="filter-btn">Iced</button>
+      <button id="favBtn" class="filter-btn">Favourites</button>
+      <button id="remixNavBtn" class="filter-btn">Recipe Builder</button>
+      <button id="quizNavBtn" class="filter-btn">Find Your Brew</button>
+    </nav>
 
-        <div id="jargonToggleGroup" style="margin: 10px 0 18px 0; display: flex; align-items: center; gap: 10px;">
-          <label for="jargonEasyBtn" style="font-size: 1em; font-weight: 500;">Process instructions:</label>
-          <div class="segmented-toggle" role="group" aria-label="Process instructions toggle">
-            <button id="jargonEasyBtn" type="button" class="seg-btn seg-btn-active" aria-pressed="true">I don’t know coffee jargon</button>
-            <button id="jargonJargonBtn" type="button" class="seg-btn" aria-pressed="false">I know coffee jargon</button>
+    <!-- Daily Fact Section -->
+    <div id="dailyFactSection" class="daily-fact-section" role="complementary" aria-labelledby="dailyFactTitle">
+      <h3 id="dailyFactTitle" class="daily-fact-title">☕ Coffee Fact of the Day</h3>
+      <p id="dailyFactText" class="daily-fact-text"></p>
+    </div>
+
+    <!-- Recipe Cards Container -->
+    <div class="card-container" id="cardContainer" role="region" aria-label="Coffee recipes">
+      <!-- Recipe cards will be dynamically populated here -->
+    </div>
+
+    <!-- Recipe Builder Section -->
+    <div class="section section-hidden" id="remixSection" role="region" aria-labelledby="remixTitle">
+      <h2 id="remixTitle">Recipe Builder</h2>
+      <div class="remix-container">
+        <div class="remix-form">
+          <div class="form-group">
+            <label for="baseRecipe">Choose Base Recipe:</label>
+            <select id="baseRecipe" aria-describedby="baseRecipeHelp">
+              <option value="">Select a recipe...</option>
+            </select>
+            <small id="baseRecipeHelp" class="form-text">Select a coffee recipe as your starting point</small>
+          </div>
+
+          <div class="form-group">
+            <label for="customizations">Customizations:</label>
+            <div class="customization-options" role="group" aria-labelledby="customizations">
+              <label class="checkbox-label">
+                <input type="checkbox" id="extraShot" value="extra-shot"> Extra Shot (+$0.50)
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="decaf" value="decaf"> Decaf
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="oatMilk" value="oat-milk"> Oat Milk (+$0.30)
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="almondMilk" value="almond-milk"> Almond Milk (+$0.30)
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="extraHot" value="extra-hot"> Extra Hot
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="whippedCream" value="whipped-cream"> Whipped Cream (+$0.50)
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="brewStrength">Brew Strength:</label>
+            <div class="strength-controls">
+              <input type="range" id="brewStrength" min="1" max="5" value="3" 
+                     aria-valuemin="1" aria-valuemax="5" aria-valuenow="3" 
+                     aria-describedby="strengthDisplay">
+              <span id="strengthDisplay" class="strength-display">Medium</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="caffeineLevel">Caffeine Level:</label>
+            <div class="caffeine-controls">
+              <input type="range" id="caffeineLevel" min="0" max="300" value="95" step="5"
+                     aria-valuemin="0" aria-valuemax="300" aria-valuenow="95"
+                     aria-describedby="caffeineDisplay">
+              <span id="caffeineDisplay" class="caffeine-display">95mg</span>
+            </div>
+          </div>
+
+          <button id="generateRecipe" class="generate-btn">Generate My Recipe</button>
+        </div>
+
+        <div class="recipe-preview" id="recipePreview" aria-live="polite">
+          <h3>Your Custom Recipe</h3>
+          <div id="previewContent">
+            <p>Select a base recipe and customize it to see your creation!</p>
           </div>
         </div>
-        <h4 style="font-size:1.18em;font-weight:bold;margin-bottom:8px;">Process</h4>
-        <p id="modalProcess"></p>
+      </div>
+    </div>
 
-        <!-- 5. Radar chart canvas in modal -->
-        <canvas id="flavorRadarChart" width="260" height="260" style="margin: 18px auto 0 auto; display: block;"></canvas>
-        <!-- 6. Brew strength slider/input -->
-        <label for="brewStrength">Brew Strength:</label>
-        <input type="range" id="brewStrength" min="1" max="5" value="3" style="width: 120px;" aria-label="Adjust brew strength from 1 to 5" aria-valuemin="1" aria-valuemax="5" aria-valuenow="3">
-        <span id="brewStrengthValue" aria-live="polite">3</span>
-        <!-- 7. Caffeine estimate display -->
-        <div id="caffeineEstimate" style="margin-top: 8px; font-size: 1em; color: #a0522d;"></div>
+    <!-- Quiz Section -->
+    <div class="section section-hidden" id="quizSection" role="region" aria-labelledby="quizTitle">
+      <h2 id="quizTitle">Find Your Perfect Brew</h2>
+      <div class="quiz-container" id="quizContainer">
+        <div class="question-container" id="questionContainer">
+          <h3 id="questionText">What's your preferred coffee strength?</h3>
+          <div class="quiz-options" id="quizOptions">
+            <!-- Quiz options will be populated dynamically -->
+          </div>
+        </div>
+        
+        <div class="quiz-progress">
+          <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <span class="progress-text" id="progressText">Question 1 of 5</span>
+        </div>
+        
+        <div class="quiz-navigation">
+          <button id="prevQuestion" class="quiz-nav-btn" disabled>Previous</button>
+          <button id="nextQuestion" class="quiz-nav-btn">Next</button>
+          <button id="showResults" class="quiz-nav-btn" style="display:none;">Show Results</button>
+        </div>
+        
+        <div class="quiz-results" id="quizResults" style="display:none;" aria-live="polite">
+          <h3>Your Perfect Match!</h3>
+          <div id="recommendedRecipe"></div>
+        </div>
+      </div>
+    </div>
 
-        <div class="selectors">
-          <h4>Customize:</h4>
-          <ul style="list-style-type: disc; margin: 0 0 0 20px; padding: 0;">
-            <li>
-              <label for="milkType">Milk Type:
-                <select id="milkType" style="width:120px;" aria-label="Select milk type for your coffee">
-                  <option value="whole">Whole</option>
-                  <option value="skim">Skim</option>
-                  <option value="oat">Oat</option>
-                  <option value="almond">Almond</option>
-                  <option value="soy">Soy</option>
-                  <option value="coconut">Coconut</option>
-                </select>
-              </label>
-            </li>
-            <li>
-              <input type="checkbox" id="addMilk" aria-label="Add milk to your coffee"> 
-              <label for="addMilk">Milk</label>
-              <span id="milkInputSpan">
-                <input type="number" id="milkQty" min="0" max="200" value="0" style="width:60px; margin-left:8px;" aria-label="Milk quantity in milliliters" disabled> 
-                <span aria-label="milliliters">ml</span>
-              </span>
-            </li>
-            <li>
-              <input type="checkbox" id="addSugar" aria-label="Add sugar to your coffee"> 
-              <label for="addSugar">Sugar</label>
-              <span id="sugarInputSpan">
-                <input type="number" id="sugarQty" min="0" max="20" value="0" style="width:60px; margin-left:8px;" aria-label="Sugar quantity in grams" disabled> 
-                <span aria-label="grams">g</span>
-              </span>
-            </li>
-            <li>
-              <input type="checkbox" id="addIce" aria-label="Add ice to your coffee"> 
-              <label for="addIce">Ice</label>
-              <span id="iceInputSpan">
-                <input type="number" id="iceQty" min="0" max="200" value="0" style="width:60px; margin-left:8px;" aria-label="Ice quantity in grams" disabled> 
-                <span aria-label="grams">g</span>
-              </span>
-            </li>
-            <li>
-              <input type="checkbox" id="addFoam" aria-label="Add foam to your coffee"> 
-              <label for="addFoam">Foam</label>
-              <span id="foamInputSpan">
-                <input type="number" id="foamQty" min="0" max="100" value="0" style="width:60px; margin-left:8px;" aria-label="Foam quantity in milliliters" disabled> 
-                <span aria-label="milliliters">ml</span>
-              </span>
-            </li>
-            <li>
-              <label for="toppingType">Topping:
-                <select id="toppingType" style="width:120px;" aria-label="Select topping for your coffee">
-                  <option value="">None</option>
-                  <option value="whipped">Whipped Cream</option>
-                  <option value="chocolate">Chocolate</option>
-                  <option value="cinnamon">Cinnamon</option>
-                  <option value="caramel">Caramel</option>
-                  <option value="hazelnut">Hazelnut Syrup</option>
-                  <option value="honey">Honey</option>
-                  <option value="maple">Maple Syrup</option>
-                  <option value="custom">Custom Ingredient</option>
-                </select>
-              </label>
-            </li>
-            <li><button type="button" id="resetCustomize" aria-label="Reset all customization options">Reset</button></li>
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>BrewIt</h4>
+          <p>Your ultimate coffee recipe companion with 170+ recipes and brewing guides.</p>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="coffee-guide.html">Brewing Guide</a></li>
+            <li><a href="#" onclick="showSection('quizSection')">Find Your Brew</a></li>
+            <li><a href="#" onclick="showSection('remixSection')">Recipe Builder</a></li>
           </ul>
         </div>
-
-        <div class="nutrition">
-          <strong>Nutrition:</strong>
-          <p>Calories: <span id="calories">0</span> kcal</p>
-          <p>Carbs: <span id="carbs">0</span> g</p>
-          <p>Protein: <span id="protein">0</span> g</p>
-          <div style="font-size:0.95em;color:#a0522d;margin-top:8px;">Nutrition values are estimates and may vary based on ingredients and preparation. <a href="https://fdc.nal.usda.gov/" target="_blank" rel="noopener">(USDA FoodData Central)</a></div>
+        
+        <div class="footer-section">
+          <h4>Connect</h4>
+          <div class="social-links">
+            <a href="https://github.com/sai-naman-gangiredla/BrewIt" target="_blank" rel="noopener" aria-label="GitHub Repository">
+              <i class="bi bi-github"></i>
+            </a>
+          </div>
         </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2024 BrewIt. Created by Sai Naman Gangiredla & Nallam Sruja. All rights reserved.</p>
+        <button id="bottomScrollToTopBtn" class="scroll-to-top-btn" aria-label="Scroll to top">
+          <i class="bi bi-arrow-up"></i>
+        </button>
+      </div>
+    </footer>
+  </div>
 
-        <button class="close-btn" onclick="closeModal()" aria-label="Close recipe details">Back to Recipes</button>
+  <!-- Modal -->
+  <div id="recipeModal" class="modal" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-content" role="document">
+      <span class="close" aria-label="Close modal">&times;</span>
+      <div id="modalBody">
+        <!-- Modal content will be populated dynamically -->
       </div>
     </div>
   </div>
-<script src="./src/script/script.js?v=1.3.0"></script>
-  <div id="toast" style="position:fixed;left:50%;bottom:40px;transform:translateX(-50%);background:#333;color:#fff;padding:12px 28px;border-radius:24px;font-size:16px;opacity:0;pointer-events:none;z-index:99999;transition:opacity 0.3s, bottom 0.3s;"></div>
-  <!-- Toast notification for section changes -->
-  <div id="sectionToast"></div>
-  <!-- 8. Animated steam/pour container in card and/or modal image area -->
-  <div class="steam-animation" aria-hidden="true"></div>
-  
-  <!-- FAQ Section for SEO -->
-  <section id="faq" style="display: none; max-width: 800px; margin: 40px auto; padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 12px;">
-    <h2 style="color: #6b3e26; text-align: center; margin-bottom: 30px;">Frequently Asked Questions</h2>
-    
-    <div class="faq-item">
-      <h3>How many coffee recipes are available?</h3>
-      <p>BrewIt features over 170 coffee recipes, from classic espresso to specialty drinks like pumpkin spice latte and nitro cold brew.</p>
-    </div>
 
-    <div class="faq-item">
-      <h3>Can I customize the nutrition information?</h3>
-      <p>Yes! You can add milk, sugar, ice, foam, and toppings with quantity controls to see real-time nutrition calculations.</p>
-    </div>
+  <!-- Toast Container -->
+  <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true">
+    <!-- Toast notifications will appear here -->
+  </div>
 
-    <div class="faq-item">
-      <h3>Does the app work offline?</h3>
-      <p>Yes, BrewIt is a Progressive Web App (PWA) that works offline and can be installed on your device for the best experience.</p>
-    </div>
+  <!-- Back to Top Button -->
+  <button id="backToTopBtn" class="back-to-top-btn" aria-label="Back to top">
+    <i class="bi bi-arrow-up"></i>
+  </button>
 
-    <div class="faq-item">
-      <h3>How do I find my perfect coffee?</h3>
-      <p>Use our "Find Your Brew" quiz to get personalized coffee recommendations based on your preferences and taste profile.</p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Can I save my favorite recipes?</h3>
-      <p>Absolutely! Click the heart icon on any recipe to save it to your favorites, accessible from the navigation menu.</p>
-    </div>
-  </section>
-
-  <!-- FAQ Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "How many coffee recipes are available?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "BrewIt features over 170 coffee recipes, from classic espresso to specialty drinks like pumpkin spice latte and nitro cold brew."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Can I customize the nutrition information?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes! You can add milk, sugar, ice, foam, and toppings with quantity controls to see real-time nutrition calculations."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Does the app work offline?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes, BrewIt is a Progressive Web App (PWA) that works offline and can be installed on your device for the best experience."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How do I find my perfect coffee?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Use our 'Find Your Brew' quiz to get personalized coffee recommendations based on your preferences and taste profile."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Can I save my favorite recipes?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Absolutely! Click the heart icon on any recipe to save it to your favorites, accessible from the navigation menu."
-        }
-      }
-    ]
-  }
-  </script>
-  
-  <!-- Add before closing body tag -->
-  <script src="./script.js"></script>
-  </body>
+  <!-- Load JavaScript -->
+  <script src="./src/script/script.js"></script>
+</body>
 </html>
